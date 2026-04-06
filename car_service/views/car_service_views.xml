@@ -1,0 +1,20 @@
+<odoo>
+
+    <record id="car_service_list" model="ir.ui.view">
+        <field  name="name" >car.service.list</field>
+        <field name="model">car.service</field>
+        <field name="arch" type="xml" >
+
+            <list >
+                    <field string="Title" name="name"/>
+            </list>
+
+
+        </field>
+
+
+    </record>
+
+
+
+</odoo>

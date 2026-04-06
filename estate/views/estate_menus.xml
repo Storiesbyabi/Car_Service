@@ -1,0 +1,55 @@
+<odoo>
+
+    <record id="estate_property_views" model="ir.actions.act_window">
+        <field name="name">Test action</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="estate_property_tags" model="ir.actions.act_window">
+        <field name="name">Property Tags</field>
+        <field name="res_model">estate.property.tags</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="estate_property_types" model="ir.actions.act_window">
+        <field name="name">Properties Types</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">list,form</field>
+
+    </record>
+    <record id="fleet_service_log" model="ir.actions.act_window">
+        <field name="name">Service</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">list,form</field>
+
+    </record>
+
+    <menuitem id="estate_property_root" name="Estate"/>
+
+    <menuitem id="estate_property_first_menu"
+              name="First Level"
+              parent="estate_property_root"/>
+
+    <menuitem id="estate_property_action"
+              parent="estate_property_first_menu"
+              action="estate_property_views"/>
+
+    <menuitem id="estate_property_settings"
+              name="Settings"
+              parent="estate_property_root"/>
+
+    <menuitem id="estate_property_type_action"
+              parent="estate_property_settings"
+              action="estate_property_types"/>
+     <menuitem id="estate_property_tags_action"
+              parent="estate_property_settings"
+              action="estate_property_tags"/>
+    <menuitem id="fleet_service_log_action"
+                parent="estate_property_settings"
+                action="fleet_service_log"/>
+
+
+</odoo>
+
+
