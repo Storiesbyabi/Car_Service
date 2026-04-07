@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+
+         <record id="car_service_quotation" model="ir.ui.view">
+            <field name="name">car.service.quotation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"  />
+         </record>
+
+    </data>
+
+
+</odoo>
