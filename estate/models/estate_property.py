@@ -3,7 +3,7 @@ from email.policy import default
 from odoo import fields, models,api
 from datetime import timedelta
 
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.orm.decorators import readonly
 
 
@@ -86,7 +86,7 @@ class EstateProperty(models.Model):
             if record.state == 'cancelled':
                 raise UserError("Its sold cant cancelled")
             else:
-                record.state='solid'
+                record.state='sold'
 
     def action_cancelled(self):
         for record in self:
@@ -95,4 +95,9 @@ class EstateProperty(models.Model):
             else:
                 record.state = 'cancelled'
 
-
+    # Constrains
+    @api.constrains('expected_price')
+    def _check_expected_price(self):
+        for record in self:
+            if record.expected_price < 1:
+                raise ValidationError("The expected price should be positive")
