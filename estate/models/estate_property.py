@@ -1,7 +1,8 @@
-from email.policy import default
+
 
 from odoo import fields, models,api
 from datetime import timedelta
+from odoo.tools.float_utils import float_is_zero,float_compare
 
 from odoo.exceptions import UserError, ValidationError
 from odoo.orm.decorators import readonly
@@ -96,8 +97,16 @@ class EstateProperty(models.Model):
                 record.state = 'cancelled'
 
     # Constrains
-    @api.constrains('expected_price')
+    @api.constrains('expected_price','selling_price')
     def _check_expected_price(self):
         for record in self:
-            if record.expected_price < 1:
-                raise ValidationError("The expected price should be positive")
+            if record.expected_price and record.selling_price and record.best_offer < 1:
+                raise ValidationError("The price should be positive")
+
+    @api.constrains('expected_price','selling_price')
+    def _check_selling_price(self):
+        for record in self:
+            if float_compare(record.property_offers_ids.price,record.expected_price * 0.9,precision_digits=2) < 0:
+                print(record.expected_price * 0.9)
+                print(record.property_offers_ids.price)
+                raise ValidationError("The price should be above 90%")
