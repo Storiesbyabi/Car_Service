@@ -3,3 +3,4 @@ estate_property_model_1,estate_property,model_estate_property,base.group_user,1,
 estate_property_type_model_1,estate_property_type,model_estate_property_type,base.group_user,1,1,1,1
 estate_property_tags_1,estate_property_tags,model_estate_property_tags,base.group_user,1,1,1,1
 access_estate_property_offer,estate_property_offer,model_estate_property_offer,base.group_user,1,1,1,1
+access_estate_property_offers_view,estate_property_offers_view,model_estate_property_type,base.group_user,1,1,1,1

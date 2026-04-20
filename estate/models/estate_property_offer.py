@@ -1,3 +1,5 @@
+# # -*- coding: utf-8 -*-
+
 from odoo import fields, models,api
 from datetime import timedelta
 
@@ -6,6 +8,7 @@ from odoo.orm.decorators import readonly
 
 class EstatePropertyOffer(models.Model):
     _name = 'estate.property.offer'
+    _order = 'price desc'
 
     price = fields.Float()
     status = fields.Selection(copy=False,
@@ -16,6 +19,9 @@ class EstatePropertyOffer(models.Model):
 
     validity = fields.Integer(default=7)
     date_deadline = fields.Date(compute='_compute_date_deadline',inverse='_inverse_validity',store=True)
+    property_type_id = fields.Many2one(related="property_id.property_type_id")
+
+
 
 
     @api.depends('validity')
@@ -40,6 +46,7 @@ class EstatePropertyOffer(models.Model):
             record.status='accepted'
             record.property_id.buyer = record.partner_id
             record.property_id.selling_price = record.price
+            record.property_id.state = 'offer_accepted'
         return True
     def action_cancel(self):
         for record in self:
