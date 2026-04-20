@@ -1,0 +1,16 @@
+<odoo>
+
+
+ <record id="estate_property_offer_list" model="ir.ui.view">
+        <field name="name">estate.property.offers.view</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+                <list>
+                    <field name="property_type" />
+                    <field name="offer_count" />
+
+                </list>
+     </field>
+
+</record>
+</odoo>

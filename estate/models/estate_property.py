@@ -11,6 +11,7 @@ from odoo.orm.decorators import readonly
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = ('The property for Estate')
+    _order = 'id desc, sequence'
 
     name = fields.Char(required=True)
     description = fields.Text()
@@ -35,7 +36,7 @@ class EstateProperty(models.Model):
         selection=[
             ('new','New'),
             ('offer','Offer'),
-            ('received','Received'),
+            ('received','Offer Received'),
             ('offer_accepted','Offer Accepted'),
             ('sold','Sold'),
             ('cancelled','Cancelled')
@@ -43,6 +44,8 @@ class EstateProperty(models.Model):
         ],
         default='new'
     )
+
+    sequence = fields.Integer('Sequence',default=1)
 
     property_type_id = fields.Many2one(comodel_name="estate.property.type")
 
@@ -79,8 +82,8 @@ class EstateProperty(models.Model):
             self.garden_area=10
             self.garden_orientation='north'
         else:
-            self.garden_area = 0
-            self.garden_orientation= False
+            self.garden_area=0
+            self.garden_orientation=False
 
     def action_sold(self):
         for record in self:

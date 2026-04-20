@@ -1,19 +1,59 @@
 <odoo>
 
 
+    <record id="estate_property_type_list" model="ir.ui.view">
+        <field name="name">estate.property.type.list</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Property Type">
+                <list>
+                 <field name="property_type" />
+            </list>
+            </form>
+        </field>
+    </record>
 
-<!--    <record id="estate_property_type_list" model="ir.ui.view">-->
-<!--        <field name="name">estate.property.type.list</field>-->
-<!--        <field name="model">estate.property.type</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <list>-->
-<!--                 <field name="property_type"/>-->
-<!--            </list>-->
+
+    <record id="estate_property_type_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Property Type">
+                <sheet>
+
+                    <group>
+
+                        <field name="property_type"/>
+                        <div class="oe_button_box" name="button_box">
+                        <button name="%(estate_property_offers)d" type="action"
+                            class="oe_stat_button" icon="fa-star">
+                        </button>
+                    </div>
+                    </group>
 
 
-<!--        </field>-->
+                    <notebook>
+                        <page string="Properties">
+                            <field name="property_ids" >
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="expected_price"/>
+                                    <field name="state"/>
 
-<!--    </record>-->
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+
+
+
+        </field>
+
+    </record>
 
 
 </odoo>
