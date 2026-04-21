@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_school_management,access_school_management,model_school_management,base.group_user,1,1,1,1
+access_school_management_department,access_school_management_department,model_school_management_department,base.group_user,1,1,1,1
+access_school_management_class,access_school_management_class,model_school_management_class,base.group_user,1,1,1,1
+access_school_management_subject,access_school_management_subject,model_school_management_subject,base.group_user,1,1,1,1
+access_school_management_academic_year,access_school_management_academic_year,model_school_management_academic_year,base.group_user,1,1,1,1

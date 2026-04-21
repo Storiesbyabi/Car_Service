@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+
+        <record id="school_management_action" model="ir.actions.act_window">
+            <field name="name">Registration</field>
+            <field name="res_model">school.management</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <record id="school_management_department_action" model="ir.actions.act_window">
+            <field name="name">Manage Department</field>
+            <field name="res_model">school.management.department</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="school_management_class_action" model="ir.actions.act_window">
+            <field name="name">Manage Class</field>
+            <field name="res_model">school.management.class</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="school_management_subject_action" model="ir.actions.act_window">
+            <field name="name">Manage Subject</field>
+            <field name="res_model">school.management.subject</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="school_management_academic_year_action" model="ir.actions.act_window">
+            <field name="name">Manage Academic Year</field>
+            <field name="res_model">school.management.academic.year</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+
+
+
+        <menuitem id="school_management_root" name="School Management"/>
+        <menuitem id="school_management_student_root"
+                  name="Student"
+                  parent="school_management_root"
+        />
+        <menuitem id="school_management_registration_action"
+                  parent="school_management_student_root"
+                  action="school_management_action"/>
+
+        <menuitem
+                id="school_management_configuration_root"
+                parent="school_management_root"
+                name="Configuration"
+
+        />
+        <menuitem
+                id="school_management_department_configuration_action"
+                parent="school_management_configuration_root"
+                action="school_management_department_action"
+        />
+
+        <menuitem  id="school_management_class_configuration_action"
+                   parent="school_management_configuration_root"
+                   action="school_management_class_action"
+
+        />
+        <menuitem  id="school_management_subject_configuration_action"
+                   parent="school_management_configuration_root"
+                   action="school_management_subject_action"
+
+        />
+        <menuitem  id="school_management_academic_year_configuration_action"
+                   parent="school_management_configuration_root"
+                   action="school_management_academic_year_action"
+
+        />
+
+    </data>
+</odoo>

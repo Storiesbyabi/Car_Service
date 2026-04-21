@@ -1,0 +1,16 @@
+<odoo>
+
+<record id="school_management_class_view_list" model="ir.ui.view">
+        <field name="name">school.management.class.view.list</field>
+        <field name="model">school.management.class</field>
+        <field name="arch" type="xml">
+
+            <list string="Class list">
+                <field name="name"/>
+                <field name="department_id" />
+            </list>
+
+        </field>
+    </record>
+
+</odoo>

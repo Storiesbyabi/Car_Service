@@ -1,0 +1,37 @@
+<odoo>
+<data>
+    <record id="school_management_department_view_list" model="ir.ui.view">
+        <field name="name">school.management.department.view.list</field>
+        <field name="model">school.management.department</field>
+        <field name="arch" type="xml">
+
+            <list string="Department list">
+                <field name="name"/>
+                <field name="hod_id"/>
+
+            </list>
+
+        </field>
+    </record>
+
+    <record id="school_management_department_view_form" model="ir.ui.view">
+        <field name="name">school.management.department.view.form</field>
+        <field name="model">school.management.department</field>
+        <field name="arch" type="xml">
+
+            <form string="Department form">
+                <group>
+
+
+                <field name="name"/>
+                <field name="hod_id"/>
+            </group>
+            </form>
+
+        </field>
+    </record>
+
+
+
+</data>
+</odoo>
