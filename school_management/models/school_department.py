@@ -2,8 +2,9 @@
 
 from odoo import fields,models
 
-class SchoolManagementDepartment(models.Model):
-    _name = 'school.management.department'
+class SchoolDepartment(models.Model):
+    """ The school department and hod is created  """
+    _name = 'school.department'
     _description = 'Description for School'
 
     name = fields.Char()

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="school_registration_view_list" model="ir.ui.view">
+        <field name="name">school.registration.view.list</field>
+        <field name="model">school.registration</field>
+        <field name="arch" type="xml">
+            <list string="Registration list">
+                <field name="firstname"/>
+                <field name="lastname"/>
+                <field name="registration_date" />
+            </list>
+        </field>
+    </record>
+    <record id="school_registration_view_form" model="ir.ui.view">
+        <field name="name">school.registration.view.form</field>
+        <field name="model">school.registration</field>
+        <field name="arch" type="xml">
+            <form string="Registration form">
+                <field name="status" widget="statusbar" statusbar_visible="draft,registration" options="{'clickable':'1'}" />
+                <sheet>
+                    <field name="photo" widget="image" class="oe_avatar"/>
+                    <group col="2">
+                        <group>
+                            <field name="firstname" required="True"/>
+                            <field name="lastname"/>
+                            <field name="father"/>
+                            <field name="mother"/>
+                            <field name="email" widget="email" />
+                        </group>
+                        <group>
+                            <field name="phone" widget="phone" />
+                            <field name="dob"/>
+                            <field name="gender"/>
+                            <field name="tc"/>
+                            <field name="aadhar_number"  />
+                        </group>
+                        <button class="btn btn-primary btn-lg" string="Register"/>
+                        <notebook>
+                            <page string="Address">
+                                <group>
+                                    <field name="communication_address"/>
+                                    <field name="same_as_communication_address"/>
+                                    <field name="permanent_address" invisible="same_as_communication_address == True"/>
+                                </group>
+                            </page>
+                            <page string="School Details">
+                                <group>
+                                    <field name="previous_academic_department_id" options="{'no_create': True, 'no_open': True}" />
+                                    <field name="previous_class_id"
+                                           domain="[('department_id','in',previous_academic_department_id)]" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="registration_date"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_registration_view_search" model="ir.ui.view">
+        <field name="name">school.registration.view.search</field>
+        <field name="model">school.registration</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="firstname"/>
+                <field name="lastname"/>
+                <field name="registration_date" />
+            </search>
+        </field>
+    </record>
+
+</odoo>

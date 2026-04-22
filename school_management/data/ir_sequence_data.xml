@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data noupdate="1">
+       <record id="ir_sequence_school_registration" model="ir.sequence">
+           <field name="name">School Registration Sequence Numbers</field>
+           <field name="code">school.registration</field>
+           <field name="prefix">RL</field>
+           <field name="padding">5</field>
+           <field name="number_next">1</field>
+           <field name="number_increment">1</field>
+       </record>
+   </data>
+</odoo>
