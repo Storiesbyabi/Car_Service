@@ -7,7 +7,7 @@
             <list string="Registration list">
                 <field name="firstname"/>
                 <field name="lastname"/>
-                <field name="registration_date" />
+                <field name="registration_date"/>
             </list>
         </field>
     </record>
@@ -16,8 +16,15 @@
         <field name="model">school.registration</field>
         <field name="arch" type="xml">
             <form string="Registration form">
-                <field name="status" widget="statusbar" statusbar_visible="draft,registration" options="{'clickable':'1'}" />
+                <field name="status" widget="statusbar" statusbar_visible="draft,registration"
+                       options="{'clickable':'1'}"/>
                 <sheet>
+                    <button name="action_register" type="object" class="btn btn-primary btn-lg mb-4 " string="Register"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="register_sequence"  readonly="True" class="oe_inline oe_highlight" />
+                        </h1>
+                    </div>
                     <field name="photo" widget="image" class="oe_avatar"/>
                     <group col="2">
                         <group>
@@ -25,16 +32,16 @@
                             <field name="lastname"/>
                             <field name="father"/>
                             <field name="mother"/>
-                            <field name="email" widget="email" />
+                            <field name="email" widget="email"/>
                         </group>
                         <group>
-                            <field name="phone" widget="phone" />
+                            <field name="phone" widget="phone"/>
                             <field name="dob"/>
+                            <field name="age" />
                             <field name="gender"/>
-                            <field name="tc"/>
-                            <field name="aadhar_number"  />
+                            <field name="tc" options="{'accepted_file_extensions': '.pdf'}" />
+                            <field name="aadhar_number"/>
                         </group>
-                        <button class="btn btn-primary btn-lg" string="Register"/>
                         <notebook>
                             <page string="Address">
                                 <group>
@@ -45,9 +52,11 @@
                             </page>
                             <page string="School Details">
                                 <group>
-                                    <field name="previous_academic_department_id" options="{'no_create': True, 'no_open': True}" />
+                                    <field name="previous_academic_department_id"
+                                           options="{'no_create': True, 'no_open': True}"/>
                                     <field name="previous_class_id"
-                                           domain="[('department_id','in',previous_academic_department_id)]" options="{'no_create': True, 'no_open': True}"/>
+                                           domain="[('department_id','in',previous_academic_department_id)]"
+                                           options="{'no_create': True, 'no_open': True}"/>
                                     <field name="registration_date"/>
                                 </group>
                             </page>
@@ -66,9 +75,8 @@
             <search>
                 <field name="firstname"/>
                 <field name="lastname"/>
-                <field name="registration_date" />
+                <field name="registration_date"/>
             </search>
         </field>
     </record>
-
 </odoo>
