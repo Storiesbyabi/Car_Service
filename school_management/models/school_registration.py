@@ -13,7 +13,7 @@ class SchoolRegistration(models.Model):
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company,
                                  required=True)
-    students_id = fields.Many2one('school.students')
+    # students_id = fields.Many2one(comodel_name='school.students')
     firstname = fields.Char()
     lastname = fields.Char()
     father = fields.Char()

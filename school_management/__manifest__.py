@@ -10,12 +10,12 @@
      """,
     'category':'SchoolManagement/SchoolManagement',
     'depends':[
-        'base','mail'
-    ],
+        'base','mail'],
     'data':[
         'data/ir_sequence_data.xml',
         'data/school_class.xml',
         'data/school_department.xml',
+
         'data/school_subject.xml',
 'security/ir.model.access.csv',
 'views/school_department_view.xml',
