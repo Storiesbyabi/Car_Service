@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<data>
     <record id="school_students_view_list" model="ir.ui.view">
         <field name="name">school.students.view.list</field>
-        <field name="model">school.registration</field>
-        <field name="inherit_id" ref="school_management.school_registration_view_list"  />
+        <field name="model">school.students</field>
+         <field name="mode">primary</field>
+        <field name="inherit_id" ref="school_management.school_registration_view_list"/>
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='firstname']" position="after">-->
+<!--                <field name="name" />-->
+<!--            </xpath>-->
+<!--        </field>-->
+
     </record>
 
-<!--        <record id="school_students_view_form" model="ir.ui.view" >-->
-<!--            <field name="name" >school.students.view.form</field>-->
-<!--            <field name="model" >school.registration</field>-->
-<!--            <field name="inherit_id" ref="school_management.school_registration_view_form"  />-->
-<!--            <field name="arch" type="xml">-->
-<!--                <xpath expr="//field[@name='register_sequence']" position="replace" >-->
-<!--                    <field name="admission_number" readonly="True" class="oe_inline oe_highlight"/>-->
-<!--                </xpath>-->
-<!--                <xpath expr="//field[@name='firstname']" position="before" >-->
-<!--                    <field  name="previous_class_id" class="oe_inline oe_highlight"/>-->
-
-<!--                </xpath>-->
-
-<!--            </field>-->
-
-<!--        </record>-->
 
 
 
+        <record id="school_students_view_form" model="ir.ui.view" >
+            <field name="name" >school.students.view.form</field>
+            <field name="model" >school.students</field>
+             <field name="mode">primary</field>
+            <field name="inherit_id" ref="school_management.school_registration_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button" position="attributes">
+                    <attribute name="name"></attribute>
+                </xpath>
+                <xpath expr="//field[@name='register_sequence']" position="replace" >
+                    <field name="admission_number" readonly="True" class="oe_inline oe_highlight"/>
+                </xpath>
+                <xpath expr="//field[@name='firstname']" position="before" >
+                    <field  name="previous_class_id" class="oe_inline oe_highlight" string="Current Class" />
+                </xpath>
+
+            </field>
+
+        </record>
+
+
+</data>
 
 </odoo>

@@ -55,7 +55,9 @@ class SchoolRegistration(models.Model):
             if record.status == 'registration':
                 record.admission_number = (self.env['ir.sequence'].next_by_code
                                            ('school.registration.admission'))
-                print(record.admission_number)
+                self.env['school.students'].create({
+                    'school_registration_id':record.id
+                })
 
     @api.depends('dob')
     def _compute_age(self):
