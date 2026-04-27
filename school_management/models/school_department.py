@@ -1,6 +1,7 @@
 # # -*- coding: utf-8 -*-
 from odoo import fields,models
 
+
 class SchoolDepartment(models.Model):
     """ The school department and hod is created  """
     _name = 'school.department'

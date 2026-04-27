@@ -3,6 +3,8 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from odoo import fields, models, api
+
+
 class SchoolRegistration(models.Model):
     """The new student is registered here"""
     _name = 'school.registration'
@@ -35,7 +37,7 @@ class SchoolRegistration(models.Model):
     previous_academic_department_id = fields.Many2one(comodel_name='school.department')
     previous_class_id = fields.Many2one(comodel_name='school.class')
     register_sequence = fields.Char(string="Reference Number",default= lambda self: 'New')
-    admission_number = fields.Char(string='Admission Number', default= lambda self:'Ad')
+
 
     @api.model_create_multi
     def create(self,vals):
@@ -46,6 +48,7 @@ class SchoolRegistration(models.Model):
                 i['register_sequence'] = self.env['ir.sequence'].next_by_code('school.registration')
         return super().create(vals)
 
+
     def action_register(self):
         """ A button action for registration, When it is triggered the status
          will be updated to registration and a new admission sequence
@@ -53,11 +56,23 @@ class SchoolRegistration(models.Model):
         for record in self:
             record.status='registration'
             if record.status == 'registration':
-                record.admission_number = (self.env['ir.sequence'].next_by_code
-                                           ('school.registration.admission'))
                 self.env['school.students'].create({
                     'school_registration_id':record.id
                 })
+        return {
+            'name':'Pop up',
+            'type':'ir.actions.act_window',
+            'res_model':'school.registration.wizard',
+            'view_mode':'form',
+            'target':'new',
+            'context':{
+                'student_id':self.id,
+                'default_firstname':self.firstname,
+                       'default_lastname':self.lastname,
+                       'default_email':self.email,
+                       'default_phone':self.phone,
+                       'default_aadhar_number':self.aadhar_number}
+        }
 
     @api.depends('dob')
     def _compute_age(self):

@@ -16,13 +16,15 @@
         <field name="model">school.registration</field>
         <field name="arch" type="xml">
             <form string="Registration form">
+                <header>
+                <button name="action_register" type="object" class="btn btn-primary btn-md mb-4 " string="Register" invisible="status == 'registration' " />
                 <field name="status" widget="statusbar" statusbar_visible="draft,registration"
                        options="{'clickable':'1'}"/>
+                  </header>
                 <sheet>
-                    <button name="action_register" type="object" class="btn btn-primary btn-lg mb-4 " string="Register"/>
                     <div class="oe_title">
                         <h1>
-                            <field name="register_sequence"  readonly="True" class="oe_inline oe_highlight" />
+                            <field name="register_sequence" readonly="True" class="oe_inline oe_highlight"/>
                         </h1>
                     </div>
                     <field name="photo" widget="image" class="oe_avatar"/>
@@ -37,9 +39,9 @@
                         <group>
                             <field name="phone" widget="phone"/>
                             <field name="dob"/>
-                            <field name="age" />
+                            <field name="age"/>
                             <field name="gender"/>
-                            <field name="tc" options="{'accepted_file_extensions': '.pdf'}" />
+                            <field name="tc" options="{'accepted_file_extensions': '.pdf'}"/>
                             <field name="aadhar_number"/>
                         </group>
                         <notebook>

@@ -6,11 +6,6 @@
         <field name="model">school.students</field>
          <field name="mode">primary</field>
         <field name="inherit_id" ref="school_management.school_registration_view_list"/>
-<!--        <field name="arch" type="xml">-->
-<!--            <xpath expr="//field[@name='firstname']" position="after">-->
-<!--                <field name="name" />-->
-<!--            </xpath>-->
-<!--        </field>-->
 
     </record>
 
@@ -28,12 +23,13 @@
                 </xpath>
                 <xpath expr="//button" position="attributes">
                     <attribute name="name"></attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='register_sequence']" position="replace" >
                     <field name="admission_number" readonly="True" class="oe_inline oe_highlight"/>
                 </xpath>
                 <xpath expr="//field[@name='firstname']" position="before" >
-                    <field  name="previous_class_id" class="oe_inline oe_highlight" string="Current Class" />
+                    <field  name="current_class" class="oe_inline oe_highlight" string="Current Class" />
                 </xpath>
 
             </field>

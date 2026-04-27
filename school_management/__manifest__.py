@@ -15,11 +15,11 @@
         'data/ir_sequence_data.xml',
         'data/school_class.xml',
         'data/school_department.xml',
-
         'data/school_subject.xml',
 'security/ir.model.access.csv',
 'views/school_department_view.xml',
         'views/school_registration_view.xml',
+        'wizad/school_registration_wizard_view.xml',
         'views/school_students_view.xml',
         'views/school_class_view.xml',
 'views/school_subject_view.xml',

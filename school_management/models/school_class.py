@@ -1,8 +1,8 @@
 # # -*- coding: utf-8 -*-
 """ School class can be managed in this model"""
-from email.policy import default
-
 from odoo import models,fields
+
+
 class SchoolClass(models.Model):
     """ The school class and department is created and managed   """
     _name = 'school.class'
