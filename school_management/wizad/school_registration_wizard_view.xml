@@ -7,23 +7,16 @@
             <form string="Registration Wizard">
                 <group>
                     <field name="firstname" required="True"/>
-                    <field name="lastname"/>
-                    <field name="email" widget="email"/>
-                    <field name="phone" widget="phone"/>
-                    <field name="aadhar_number"/>
+                    <field name="lastname" required="True"/>
+                    <field name="email" required="True"/>
+                    <field name="phone" required="True"/>
+                    <field name="aadhar_number" required="True"/>
                 </group>
                 <footer>
-                    <button string="Register" type="object" name="action_register" />
-                    <button string="Cancel"/>
+                    <button string="Register" type="object" name="action_register"/>
+                    <button string="Cancel" special="cancel" type="object"/>
                 </footer>
-
-
             </form>
-
         </field>
-
-
     </record>
-
-
 </odoo>

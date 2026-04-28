@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """ Module for student registration """
 from datetime import date
+from email.policy import default
+
 from dateutil.relativedelta import relativedelta
 from odoo import fields, models, api
 
@@ -24,7 +26,7 @@ class SchoolRegistration(models.Model):
     same_as_communication_address = fields.Boolean()
     permanent_address = fields.Char()
     email = fields.Char()
-    phone = fields.Integer()
+    phone = fields.Char()
     dob = fields.Date()
     age = fields.Integer(compute='_compute_age')
     gender = fields.Char()
@@ -48,32 +50,6 @@ class SchoolRegistration(models.Model):
                 i['register_sequence'] = self.env['ir.sequence'].next_by_code('school.registration')
         return super().create(vals)
 
-
-    def action_register(self):
-        """ A button action for registration, When it is triggered the status
-         will be updated to registration and a new admission sequence
-         will be generated"""
-        for record in self:
-            record.status='registration'
-            if record.status == 'registration':
-                self.env['school.students'].create({
-                    'school_registration_id':record.id
-                })
-        return {
-            'name':'Pop up',
-            'type':'ir.actions.act_window',
-            'res_model':'school.registration.wizard',
-            'view_mode':'form',
-            'target':'new',
-            'context':{
-                'student_id':self.id,
-                'default_firstname':self.firstname,
-                       'default_lastname':self.lastname,
-                       'default_email':self.email,
-                       'default_phone':self.phone,
-                       'default_aadhar_number':self.aadhar_number}
-        }
-
     @api.depends('dob')
     def _compute_age(self):
         """ The age is calculated based on the give dob and current date,
@@ -85,3 +61,27 @@ class SchoolRegistration(models.Model):
                 record.age = delta.years
             else:
                 record.age = 0
+
+
+    def action_register(self):
+        """ A button action for registration, When
+         its triggered a wizard will be opened with the default
+         values """
+        return {
+            'name':'Register Student',
+            'type':'ir.actions.act_window',
+            'res_model':'school.registration.wizard',
+            'view_mode':'form',
+            'target':'new',
+            'context':{
+                'student_id':self.id,
+                'default_firstname':self.firstname,
+                       'default_lastname':self.lastname,
+                       'default_email':self.email,
+                       'default_phone':self.phone,
+                       'default_aadhar_number':self.aadhar_number,
+                        'previous_class_id':self.previous_class_id.id
+            }
+        }
+
+

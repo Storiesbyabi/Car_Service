@@ -8,7 +8,7 @@ class SchoolClass(models.Model):
     _name = 'school.class'
     _description = 'School Class'
 
-    name = fields.Char(help="class name")
+    name = fields.Integer(help="class name")
     department_id = fields.Many2one(comodel_name='school.department')
     head_of_dep_id = fields.Many2one( related='department_id.hod_id')
     school_id = fields.Many2one('res.company',default=lambda self: self.env.company

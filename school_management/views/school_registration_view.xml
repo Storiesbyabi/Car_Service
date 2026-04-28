@@ -41,7 +41,7 @@
                             <field name="dob"/>
                             <field name="age"/>
                             <field name="gender"/>
-                            <field name="tc" options="{'accepted_file_extensions': '.pdf'}"/>
+                             <field name="registration_date"/>
                             <field name="aadhar_number"/>
                         </group>
                         <notebook>
@@ -59,7 +59,7 @@
                                     <field name="previous_class_id"
                                            domain="[('department_id','in',previous_academic_department_id)]"
                                            options="{'no_create': True, 'no_open': True}"/>
-                                    <field name="registration_date"/>
+                                    <field name="tc" options="{'accepted_file_extensions': '.pdf'}"/>
                                 </group>
                             </page>
                         </notebook>
