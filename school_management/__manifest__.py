@@ -10,7 +10,7 @@
      """,
     'category':'SchoolManagement/SchoolManagement',
     'depends':[
-        'base','mail'],
+        'base','mail','sale_management'],
     'data':[
         'data/ir_sequence_data.xml',
         'data/school_class.xml',
@@ -24,6 +24,9 @@
         'views/school_class_view.xml',
 'views/school_subject_view.xml',
         'views/school_academic_year_view.xml',
+        'views/school_clubs_view.xml',
+        'views/school_events_view.xml',
+        'views/sale_order_view.xml',
         'views/school_management_menus.xml',
     ],
     'installable':True,

@@ -13,8 +13,9 @@ class SchoolStudents(models.Model):
     school_registration_id = fields.Many2one(comodel_name='school.registration', required=True, ondelete="cascade")
     admission_number = fields.Char(string='Admission Number', default='new')
     compute_rec_name = fields.Char(compute='_compute_fields_combination')
-    current_class = fields.Integer()
-
+    current_class = fields.Many2one(comodel_name="school.class")
+    clubs_ids = fields.Many2many(comodel_name='school.clubs')
+    # clubs_id = fields.Many2one(comodel_name="school.clubs")
 
 
     @api.model_create_multi

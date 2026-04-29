@@ -79,8 +79,7 @@ class SchoolRegistration(models.Model):
                        'default_lastname':self.lastname,
                        'default_email':self.email,
                        'default_phone':self.phone,
-                       'default_aadhar_number':self.aadhar_number,
-                        'previous_class_id':self.previous_class_id.id
+                       'default_aadhar_number':self.aadhar_number
             }
         }
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="school_clubs_view_list" model="ir.ui.view" >
+        <field name="name">school.clubs.view.list</field>
+        <field name="model" >school.clubs</field>
+        <field name="arch" type="xml" >
+            <list string="School Clubs">
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="school_clubs_view_form" model="ir.ui.view" >
+        <field name="name">school.clubs.view.form</field>
+        <field name="model" >school.clubs</field>
+        <field name="arch" type="xml" >
+            <form string="School Clubs">
+                <sheet>
+                    <div name="button_box" position="inside">
+                    <button  type="object"
+                            class="oe_stat_button" icon="fa-ticket" string="Events" />
+                        </div>
+                <group>
+                    <field name="name"/>
+                </group>
+                <notebook>
+                    <page string="Students">
+                            <field name="students_ids" options="{'no_create': True}" >
+                        <list editable="bottom">
+                                <field name="firstname"  />
+                        </list>
+                         </field>
+                    </page>
+                </notebook>
+               </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+</odoo>

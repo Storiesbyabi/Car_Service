@@ -34,6 +34,19 @@
 
         </record>
 
+        <record id="school_clubs_view_action" model="ir.actions.act_window">
+            <field name="name">Manage Clubs</field>
+            <field name="res_model">school.clubs</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <record id="school_events_view_action" model="ir.actions.act_window">
+            <field name="name">Manage Events</field>
+            <field name="res_model">school.events</field>
+            <field name="view_mode">list,form</field>
+
+        </record>
+
+
 
 
         <menuitem id="school_management_root" name="School Management"/>
@@ -74,6 +87,14 @@
                    parent="school_management_configuration_root"
                    action="school_academic_year_view_action"
 
+        />
+        <menuitem  id="school_clubs_view_configuration_action"
+                   parent="school_management_configuration_root"
+                   action="school_clubs_view_action"
+        />
+        <menuitem  id="school_events_view_configuration_action"
+                   parent="school_management_configuration_root"
+                   action="school_events_view_action"
         />
     </data>
 </odoo>
