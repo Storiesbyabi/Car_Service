@@ -7,4 +7,4 @@ class SchoolClubs(models.Model):
     _description = 'School Clubs'
 
     name = fields.Char()
-    students_ids =fields.Many2many('school.students' )
+    students_ids =fields.Many2many('school.students')

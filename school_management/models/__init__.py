@@ -9,3 +9,6 @@ from . import school_students
 from . import school_clubs
 from . import school_events
 from . import sale_order
+from . import res_partner
+from . import school_leaves
+from . import school_exams

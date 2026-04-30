@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="school_leaves_view_list" model="ir.ui.view">
+        <field name="name">school.leaves.view.list</field>
+        <field name="model">school.leaves</field>
+        <field name="arch" type="xml">
+            <list string="Leaves list">
+                <field name="students_id"/>
+                <field name="class_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="school_leaves_view_form" model="ir.ui.view">
+        <field name="name">school.leaves.view.form</field>
+        <field name="model">school.leaves</field>
+        <field name="arch" type="xml">
+            <form string="Leaves form">
+                <sheet>
+                <group>
+                    <field name="students_id"/>
+                <field name="class_id"/>
+                    <field  name="start_date" widget="daterange" options="{'end_date_field':'end_date'}" />
+                    <field name="end_date" invisible="1" />
+                    <field name="total_days" />
+                    <field name="half_day" />
+                    <field name="reason" />
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

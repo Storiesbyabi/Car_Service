@@ -11,7 +11,7 @@
                     <field name="email" required="True"/>
                     <field name="phone" required="True"/>
                     <field name="aadhar_number" required="True"/>
-                    <field  name="current_class" />
+                    <field  name="current_class_id" />
                 </group>
                 <footer>
                     <button string="Register" type="object" name="action_register"/>

@@ -10,7 +10,7 @@ class SchoolRegistrationWizad(models.TransientModel):
     email = fields.Char()
     phone = fields.Char()
     aadhar_number = fields.Char()
-    current_class = fields.Many2one(comodel_name="school.class")
+    current_class_id = fields.Many2one(comodel_name="school.class")
 
 
 
@@ -20,9 +20,9 @@ class SchoolRegistrationWizad(models.TransientModel):
         record = self.env['school.registration'].browse(student_id)
         self.env['school.students'].create({
             'school_registration_id': record.id,
-            'current_class': self.current_class.id
+            'current_class_id': self.current_class_id.id
         })
-        print(self.current_class.id)
+        print(self.current_class_id.id)
         record.write({
             'firstname':self.firstname,
             'lastname':self.lastname,

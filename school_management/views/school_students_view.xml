@@ -29,7 +29,7 @@
                     <field name="admission_number" readonly="True" class="oe_inline oe_highlight"/>
                 </xpath>
                 <xpath expr="//field[@name='firstname']" position="before" >
-                    <field  name="current_class" class="oe_inline oe_highlight" string="Current Class"  />
+                    <field  name="current_class_id" class="oe_inline oe_highlight" string="Current Class"  />
                 </xpath>
                 <xpath expr="//field[@name='email']" position="after" >
                     <field  name="clubs_ids"  string="Clubs" widget="many2many_tags" />
