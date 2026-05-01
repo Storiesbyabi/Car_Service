@@ -26,3 +26,5 @@ class EstatePropertyType(models.Model):
 
 
 
+
+

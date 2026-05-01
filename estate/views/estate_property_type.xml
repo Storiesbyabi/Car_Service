@@ -19,16 +19,20 @@
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
             <form string="Property Type">
+                <header>
+
+                        <button name="%(estate_property_offers)d" type="action"
+                            class="oe_stat_button" icon="fa-ticket"  >
+                            <field name="offer_count" />
+                        </button>
+
+                </header>
                 <sheet>
 
                     <group>
 
                         <field name="property_type"/>
-                        <div class="oe_button_box" name="button_box">
-                        <button name="%(estate_property_offers)d" type="action"
-                            class="oe_stat_button" icon="fa-star">
-                        </button>
-                    </div>
+
                     </group>
 
 

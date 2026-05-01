@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="school_registration_wizard_view_form" model="ir.ui.view">
+        <field name="name">school.registration.wizard.view.form</field>
+        <field name="model">school.registration.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Registration Wizard">
+                <group>
+                    <field name="firstname" required="True"/>
+                    <field name="lastname" required="True"/>
+                    <field name="email" required="True"/>
+                    <field name="phone" required="True"/>
+                    <field name="aadhar_number" required="True"/>
+                    <field  name="current_class_id" />
+                </group>
+                <footer>
+                    <button string="Register" type="object" name="action_register"/>
+                    <button string="Cancel" special="cancel" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

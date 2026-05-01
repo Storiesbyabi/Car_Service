@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="demo_subject_1" model="school.subject">
+        <field name="name">maths</field>
+    </record>
+    <record id="demo_subject_2" model="school.subject">
+        <field name="name">cse</field>
+    </record>
+</odoo>
