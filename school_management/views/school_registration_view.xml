@@ -17,9 +17,9 @@
         <field name="arch" type="xml">
             <form string="Registration form">
                 <header>
-                <button name="action_register" type="object" class="btn btn-primary btn-md mb-4 " string="Register" invisible="status == 'registration' " />
+                <button name="action_register" type="object" class="btn btn-primary btn-md mb-4 " string="Register" invisible="status != 'draft' " />
                 <field name="status" widget="statusbar" statusbar_visible="draft,registration"
-                       options="{'clickable':'1'}"/>
+                       options="{'clickable':'1'}"  />
                   </header>
                 <sheet>
                     <div class="oe_title">
@@ -61,6 +61,14 @@
                                            options="{'no_create': True, 'no_open': True}"/>
                                     <field name="tc" options="{'accepted_file_extensions': '.pdf'}"/>
                                 </group>
+                            </page>
+                            <page name="exam_page"  string="Exam" invisible="1" >
+                                <group>
+                                    <list name="exam_list" >
+
+                                    </list>
+                                </group>
+
                             </page>
                         </notebook>
                     </group>

@@ -34,7 +34,7 @@
                     <field name="date_end" invisible="1"/>
                         </group>
                     <group>
-                    <field name="organizer" />
+                    <field name="organizer_id" />
                     <field name="poster" />
                     <field name="description" />
                         </group>

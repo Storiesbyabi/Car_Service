@@ -14,17 +14,26 @@
         <field name="model">school.exams</field>
         <field name="arch" type="xml">
             <form string="Exams form">
+                <header>
+                    <button name="action_add" type="object" class="btn btn-primary" string="Add" help="Add exam to students" />
+                </header>
                 <sheet>
                 <group>
-                    <field name="name"/>
+                    <field name="name" string="Exam name" />
                     <field name="class_id"/>
                     </group>
                     <notebook>
-                        <page string="Paper">
-                            <group>
-                        <field name="papers_ids" />
-                            </group>
-                        </page>
+                          <page string="Papers">
+                              <group>
+                              <field name="papers_ids">
+                                  <list editable="top">
+                                      <field  name="subject_id" />
+                                      <field name="pass_mark" />
+                                      <field name="max_mark" />
+                                  </list>
+                              </field>
+                              </group>
+                          </page>
                     </notebook>
                 </sheet>
             </form>

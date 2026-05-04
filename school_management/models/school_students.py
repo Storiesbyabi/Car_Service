@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from email.policy import default
+
 from odoo import fields,models,api
+from odoo.orm.decorators import readonly
 
 
 class SchoolStudents(models.Model):
@@ -15,12 +18,12 @@ class SchoolStudents(models.Model):
     compute_rec_name = fields.Char(compute='_compute_fields_combination')
     current_class_id = fields.Many2one(comodel_name="school.class")
     clubs_ids = fields.Many2many(comodel_name='school.clubs')
-    # clubs_id = fields.Many2one(comodel_name="school.clubs")
+    exam_ids = fields.One2many('school.exams','students_id',readonly=True)
 
 
     @api.model_create_multi
     def create(self, vals):
-        """Automaticaly generate an admission number for each student registration
+        """Automatically generate an admission number for each student registration
         when a new record is registered     ."""
         for i in vals:
             if i.get('admission_number', 'new') == 'new':
@@ -37,3 +40,7 @@ class SchoolStudents(models.Model):
                 record.display_name = f"{record.admission_number}{record.firstname}"
             else:
                 record.display_name = record._name
+
+    def action_register(self):
+        """ To avoid action error in btn """
+        pass

@@ -12,7 +12,7 @@ class SchoolEvents(models.Model):
     clubs_id = fields.Many2one(comodel_name="school.clubs")
     date_begin = fields.Date()
     date_end = fields.Date()
-    organizer = fields.Many2one(comodel_name="res.partner")
+    organizer_id = fields.Many2one(comodel_name="res.partner")
     poster = fields.Image()
     description = fields.Char()
     status = fields.Selection(selection=[('draft','Draft'),('scheduled','Scheduled'),('ongoing','Ongoing'),('ended','Ended'),('cancel','Canceled')],default='draft')

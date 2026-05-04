@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import date, timedelta
-from email.policy import default
-
 from odoo import fields,models
 
 
@@ -13,7 +11,6 @@ class SchoolLeaves(models.Model):
     class_id = fields.Many2one(related='students_id.current_class_id')
     start_date = fields.Date(default=date.today())
     end_date = fields.Date(default=date.today())
-
     total_days = fields.Integer(compute="_compute_total_days")
     half_day = fields.Boolean()
     reason = fields.Char()

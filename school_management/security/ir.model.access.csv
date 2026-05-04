@@ -10,3 +10,4 @@ access_school_clubs,access.school.clubs,model_school_clubs,base.group_user,1,1,1
 access_school_events,access.school.events,model_school_events,base.group_user,1,1,1,1
 access_school_leaves,access.school.leaves,model_school_leaves,base.group_user,1,1,1,1
 access_school_exams,access.school.exams,model_school_exams,base.group_user,1,1,1,1
+access_school_papers,access.school.papers,model_school_papers,base.group_user,1,1,1,1
