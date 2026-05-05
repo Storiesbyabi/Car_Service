@@ -17,10 +17,11 @@
         <field name="arch" type="xml">
             <form string="Registration form">
                 <header>
-                <button name="action_register" type="object" class="btn btn-primary btn-md mb-4 " string="Register" invisible="status != 'draft' " />
-                <field name="status" widget="statusbar" statusbar_visible="draft,registration"
-                       options="{'clickable':'1'}"  />
-                  </header>
+                    <button name="action_register" type="object" class="btn btn-primary btn-md mb-4 " string="Register"
+                            invisible="status != 'draft' "/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,registration"
+                           options="{'clickable':'1'}"/>
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -41,7 +42,7 @@
                             <field name="dob"/>
                             <field name="age"/>
                             <field name="gender"/>
-                             <field name="registration_date"/>
+                            <field name="registration_date"/>
                             <field name="aadhar_number"/>
                         </group>
                         <notebook>
@@ -62,11 +63,13 @@
                                     <field name="tc" options="{'accepted_file_extensions': '.pdf'}"/>
                                 </group>
                             </page>
-                            <page name="exam_page"  string="Exam" invisible="1" >
+                            <page name="exam_page" string="Exam" invisible="is_student == False">
                                 <group>
-                                    <list name="exam_list" >
-
+                                     <field name="exam_ids" options='{"no_open": True, "no_create": True}'>
+                                    <list editable="bottom">
+                                       <field name="name" />
                                     </list>
+                                     </field>
                                 </group>
 
                             </page>

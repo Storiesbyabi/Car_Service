@@ -38,8 +38,8 @@ class SchoolRegistration(models.Model):
     previous_academic_department_id = fields.Many2one(comodel_name='school.department')
     previous_class_id = fields.Many2one(comodel_name='school.class')
     register_sequence = fields.Char(string="Reference Number",default= lambda self: 'New')
-    status_bar = fields.Boolean(default=False)
-    is_exam = fields.Boolean(default=False)
+    exam_ids = fields.One2many('school.exams','students_id',readonly=True)
+    is_student = fields.Boolean()
 
 
     @api.model_create_multi

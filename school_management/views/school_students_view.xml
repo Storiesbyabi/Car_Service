@@ -29,15 +29,7 @@
                 </xpath>
                 <xpath expr="//field[@name='email']" position="after">
                     <field name="clubs_ids" string="Clubs" widget="many2many_tags"/>
-                </xpath>
-                <!--                -->
-                <xpath expr="//list[@name='exam_list']" position="inside">
-                    <field name="exam_ids"  string="Exams" options="{'no_create': True, 'no_open': True}" />
-                </xpath>
-                <xpath expr="//page[@name='exam_page']" position="attributes">
-                    <attribute name="invisible">0</attribute>
-                </xpath>
-                <!--                -->
+                </xpath>    
 
             </field>
         </record>

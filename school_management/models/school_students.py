@@ -18,6 +18,7 @@ class SchoolStudents(models.Model):
     compute_rec_name = fields.Char(compute='_compute_fields_combination')
     current_class_id = fields.Many2one(comodel_name="school.class")
     clubs_ids = fields.Many2many(comodel_name='school.clubs')
+    is_student = fields.Boolean(default=True)
     exam_ids = fields.One2many('school.exams','students_id',readonly=True)
 
 
