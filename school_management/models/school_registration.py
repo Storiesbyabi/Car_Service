@@ -17,7 +17,6 @@ class SchoolRegistration(models.Model):
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company,
                                  required=True)
-    # students_id = fields.Many2one(comodel_name='school.students')
     firstname = fields.Char()
     lastname = fields.Char()
     father = fields.Char()
@@ -39,6 +38,8 @@ class SchoolRegistration(models.Model):
     previous_academic_department_id = fields.Many2one(comodel_name='school.department')
     previous_class_id = fields.Many2one(comodel_name='school.class')
     register_sequence = fields.Char(string="Reference Number",default= lambda self: 'New')
+    exam_ids = fields.One2many('school.exams','students_id',readonly=True)
+    is_student = fields.Boolean()
 
 
     @api.model_create_multi
