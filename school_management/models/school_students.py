@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from email.policy import default
-
 from odoo import fields,models,api
-from odoo.orm.decorators import readonly
 
 
 class SchoolStudents(models.Model):
@@ -20,15 +17,24 @@ class SchoolStudents(models.Model):
     clubs_ids = fields.Many2many(comodel_name='school.clubs')
     is_student = fields.Boolean(default=True)
     exam_ids = fields.One2many('school.exams','students_id',readonly=True)
-
+    std_status = fields.Selection(selection=[('absent','Absent'),('present','Present')],default='present')
 
     @api.model_create_multi
     def create(self, vals):
         """Automatically generate an admission number for each student registration
-        when a new record is registered     ."""
+        when a new record is registered. """
         for i in vals:
             if i.get('admission_number', 'new') == 'new':
                 i['admission_number'] = self.env['ir.sequence'].next_by_code('school.registration.admission')
+
+            user= {
+                'name': i.get('firstname'),
+                'login': i.get('email')
+            }
+            self.env['res.users'].create(user)
+
+
+
         return super().create(vals)
 
 
@@ -38,7 +44,7 @@ class SchoolStudents(models.Model):
          and display in the _rec_name """
         for record in self:
             if record.admission_number:
-                record.display_name = f"{record.admission_number}{record.firstname}"
+                record.display_name = f"{record.admission_number} {record.firstname}"
             else:
                 record.display_name = record._name
 

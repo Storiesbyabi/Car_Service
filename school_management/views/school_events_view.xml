@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="school_events_view_list" model="ir.ui.view" >
+    <record id="school_events_view_list" model="ir.ui.view">
         <field name="name">school.events.view.list</field>
-        <field name="model" >school.events</field>
-        <field name="arch" type="xml" >
+        <field name="model">school.events</field>
+        <field name="arch" type="xml">
             <list string="School Events">
-                <field name="name" />
+                <field name="name"/>
 
             </list>
         </field>
     </record>
 
-    <record id="school_events_view_form" model="ir.ui.view" >
+    <record id="school_events_view_form" model="ir.ui.view">
         <field name="name">school.events.view.form</field>
-        <field name="model" >school.events</field>
-        <field name="arch" type="xml" >
+        <field name="model">school.events</field>
+        <field name="arch" type="xml">
             <form string="School Events">
                 <header>
                     <button name="action_confirm" type="object" string="Confirm" invisible="status == 'ongoing' or
-                    status == 'ended' or status == 'cancel' " class="btn btn-primary"  />
-                    <button name="action_end" type="object" string="Event End" invisible="status != 'ongoing' " />
-                    <button name="action_cancel" type="object" string="Cancel"  invisible="status == 'draft'
+                    status == 'ended' or status == 'cancel' " class="btn btn-primary"/>
+                    <button name="action_end" type="object" string="Event End" invisible="status != 'ongoing' "/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="status == 'draft'
                     or status == 'cancel' or status == 'ended' "/>
                     <field name="status" widget="statusbar"
-                           statusbar_visible="draft,scheduled,ongoing,received,ended" />
+                           statusbar_visible="draft,scheduled,ongoing,received,ended"/>
                 </header>
                 <sheet>
-                <group col="2">
-                    <group>
-                    <field name="name"/>
-                    <field name="clubs_id"  />
-                    <field name="date_begin" widget="daterange" options="{'end_date_field':'date_end'}" />
-                    <field name="date_end" invisible="1"/>
+                    <group col="2">
+                        <group>
+                            <field name="name"/>
+                            <field name="clubs_id"/>
+                            <field name="date_begin" widget="daterange" options="{'end_date_field':'date_end'}"/>
+                            <field name="date_end" invisible="1"/>
                         </group>
-                    <group>
-                    <field name="organizer_id" />
-                    <field name="poster" />
-                    <field name="description" />
+                        <group>
+                            <field name="organizer_id"/>
+                            <field name="poster"/>
+                            <field name="description"/>
+                            <field name="active"/>
                         </group>
-                </group>
+                    </group>
                 </sheet>
                 <chatter/>
             </form>
         </field>
+    </record>
+
+    <record id="school_events_view_filter" model="ir.ui.view">
+    <field name="name">school.events.view.filter</field>
+    <field name="model">school.events</field>
+    <field name="arch" type="xml">
+        <search string="Search school events">
+            <filter string="Archived"
+                    domain="[('active','=',False)]"
+                    name="achived"
+            />
+
+        </search>
+    </field>
     </record>
 
 </odoo>

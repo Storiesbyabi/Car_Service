@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from datetime import date, timedelta
-from odoo import fields,models
+from odoo import fields,models,api
 
 
 class SchoolLeaves(models.Model):
     _name = 'school.leaves'
     _description = 'School Leaves'
+    _rec_name = 'students_id'
 
     students_id = fields.Many2one(comodel_name='school.students', required=True,ondelete='cascade' )
     class_id = fields.Many2one(related='students_id.current_class_id')
@@ -25,3 +26,10 @@ class SchoolLeaves(models.Model):
             if current_date.weekday() < 5:
                 self.total_days +=1
             current_date += timedelta(days=1)
+
+    @api.onchange('students_id')
+    def _change_status(self):
+        std=self.students_id.id
+        student = self.env['school.students'].browse(std)
+        if student.std_status and date.today() == self.start_date:
+            student.std_status ='absent'

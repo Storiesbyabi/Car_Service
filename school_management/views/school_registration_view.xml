@@ -4,7 +4,7 @@
         <field name="name">school.registration.view.list</field>
         <field name="model">school.registration</field>
         <field name="arch" type="xml">
-            <list string="Registration list">
+            <list string="Registration list"  name="registration_list">
                 <field name="firstname"/>
                 <field name="lastname"/>
                 <field name="registration_date"/>

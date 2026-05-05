@@ -41,7 +41,6 @@ class SchoolRegistration(models.Model):
     exam_ids = fields.One2many('school.exams','students_id',readonly=True)
     is_student = fields.Boolean()
 
-
     @api.model_create_multi
     def create(self,vals):
         """Automaticaly generate a reference number for each student registration

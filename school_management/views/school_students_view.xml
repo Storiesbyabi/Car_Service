@@ -6,6 +6,12 @@
             <field name="model">school.students</field>
             <field name="mode">primary</field>
             <field name="inherit_id" ref="school_management.school_registration_view_list"/>
+            <field name="arch" type="xml" >
+                <xpath expr="//list" position="attributes">
+                    <attribute name="decoration-danger" >std_status == 'absent'</attribute>
+                </xpath>
+
+            </field>
 
         </record>
 
@@ -17,8 +23,8 @@
             <field name="inherit_id" ref="school_management.school_registration_view_form"/>
             <field name="arch" type="xml">
                 <!--                -->
-                <xpath expr="//field[@name='status']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="std_status" widget="statusbar" statusbar_visibility="absent,present" options="{'clickable': '1'}"/>
                 </xpath>
                 <!--                -->
                 <xpath expr="//field[@name='register_sequence']" position="replace">
@@ -29,7 +35,7 @@
                 </xpath>
                 <xpath expr="//field[@name='email']" position="after">
                     <field name="clubs_ids" string="Clubs" widget="many2many_tags"/>
-                </xpath>    
+                </xpath>
 
             </field>
         </record>

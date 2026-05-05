@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="email_template" model="mail.template" >
+            <field name="name" >Email Template</field>
+            <field name="model_id" ref="school_management.model_school_events"/>
+            <field name="subject">Subject {{ object.name }}</field>
+            <field name="email_from">
+                {{ user.email_formatted }}
+            </field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>
+                        Hello,
+                        <br/>
+                        <br/>
+                        This is our first email template!
+                        <br/>
+                        <br/>
+                        Mitchell Admin
+                    </p>
+                </div>
+            </field>
+
+
+        </record>
+
+
+    </data>
+
+
+</odoo>
