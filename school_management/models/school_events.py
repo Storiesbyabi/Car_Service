@@ -2,6 +2,8 @@
 from odoo import models, fields, api
 from datetime import timedelta, date
 
+from odoo.orm.fields_relational import Many2one
+
 
 class SchoolEvents(models.Model):
     """ To Manage School Events in School """
@@ -14,11 +16,15 @@ class SchoolEvents(models.Model):
     date_begin = fields.Date()
     date_end = fields.Date(required=True)
     organizer_id = fields.Many2one(comodel_name="res.partner")
-    poster = fields.Image()
+    poster = fields.Image(store=True)
     description = fields.Char()
     status = fields.Selection(selection=[('draft','Draft'),('scheduled','Scheduled'),('ongoing','Ongoing'),('ended','Ended'),('cancel','Canceled')],default='draft')
     active = fields.Boolean(default=True)
-    partner_id = fields.Many2one(comodel_name='res.partner')
+    partner_id = Many2one(comodel_name='res.partner', domain="[('partner_selection', '=', 'teacher')]")
+
+
+
+
 
 
     def action_confirm(self):
@@ -29,7 +35,6 @@ class SchoolEvents(models.Model):
                 record.status = 'scheduled'
             else:
                 record.status = 'ongoing'
-
 
     def action_cancel(self):
         """ Btn action for changing the status to cancel """
@@ -42,13 +47,22 @@ class SchoolEvents(models.Model):
             record.status = 'ended'
 
 
-    @api.onchange('date_begin')
-    def _invite(self):
-        for i in self:
-            days = i.date_begin - timedelta(days=2)
-            if date.today() == days:
-                mail_template = self.env.ref('school_management.email_template')
-                mail_template.send_mail(self.id,force_send=False)
-                print("Triggered")
+    @api.model
+    def _send_event_reminder(self):
+        """ Send an email to the employees before 2 days of event """
+        target_days = date.today() + timedelta(days=2)
+        records = self.search([('date_begin', '=', target_days)])
+        template = self.env.ref('school_management.email_template', raise_if_not_found=False)
+        partners = self.env['res.partner'].search([('partner_selection', '=', 'teacher')])
+        partners_email = ','.join(partners.mapped('email'))
 
+        attachment = self.env['ir_attachment'].search([
+            ('res_model', '=','school_events')
+        ],limit=1)
+
+        print(attachment)
+
+
+        for record in records:
+            template.send_mail(record.id, force_send=False, email_values={'email_to':partners_email})
 

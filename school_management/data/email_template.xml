@@ -8,18 +8,18 @@
             <field name="email_from">
                 {{ user.email_formatted }}
             </field>
-            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="partner_to">{{ object.partner_id.email }}</field>
             <field name="body_html" type="html">
                 <div>
                     <p>
-                        Hello,
+                        Hello <t t-out="object.partner_id.complete_name" />,
+                        The <t t-out="object.name" /> event will be held on <t t-out="object.date_begin" />.
+                        The event will be organized by <t  t-out="object.organizer_id.name" />.
                         <br/>
                         <br/>
-                        This is our first email template!
-                        <br/>
-                        <br/>
-                        Mitchell Admin
+                        <t t-out="object.description" />
                     </p>
+                   <img t-if="object.poster" t-att-src="'data:image/jpg;base64,%s' % object.poster"/>
                 </div>
             </field>
 

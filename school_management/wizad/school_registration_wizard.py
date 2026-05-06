@@ -18,6 +18,8 @@ class SchoolRegistrationWizad(models.TransientModel):
         """ A Btn action for updating the model school.registration """
         student_id = self.env.context.get('student_id')
         record = self.env['school.registration'].browse(student_id)
+        print(123123123, record)
+        print(123123123, record.firstname)
         self.env['school.students'].create({
             'school_registration_id': record.id,
             'current_class_id': self.current_class_id.id

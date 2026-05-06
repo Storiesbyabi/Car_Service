@@ -23,18 +23,18 @@ class SchoolStudents(models.Model):
     def create(self, vals):
         """Automatically generate an admission number for each student registration
         when a new record is registered. """
-        for i in vals:
-            if i.get('admission_number', 'new') == 'new':
-                i['admission_number'] = self.env['ir.sequence'].next_by_code('school.registration.admission')
-
-            user= {
-                'name': i.get('firstname'),
-                'login': i.get('email')
-            }
-            self.env['res.users'].create(user)
-
-
-
+        for val in vals:
+            if val.get('admission_number', 'new') == 'new':
+                val['admission_number'] = self.env['ir.sequence'].next_by_code('school.registration.admission')
+            user_name = val.get('firstname')
+            user_email = val.get('email')
+            if user_email and user_name:
+                user = {
+                    'name': user_name,
+                    'login': user_email,
+                    'email': user_email
+                }
+                self.env['res.users'].create(user)
         return super().create(vals)
 
 
