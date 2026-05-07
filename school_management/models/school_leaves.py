@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import date, timedelta
-from odoo import fields,models,api
+from odoo import fields,models
 
 
 class SchoolLeaves(models.Model):
@@ -27,8 +27,8 @@ class SchoolLeaves(models.Model):
                 self.total_days +=1
             current_date += timedelta(days=1)
 
-    @api.onchange('students_id')
-    def _change_status(self):
+
+    def action_confirm(self):
         std=self.students_id.id
         student = self.env['school.students'].browse(std)
         if student.std_status and date.today() == self.start_date:

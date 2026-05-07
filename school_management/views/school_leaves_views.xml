@@ -15,6 +15,9 @@
         <field name="model">school.leaves</field>
         <field name="arch" type="xml">
             <form string="Leaves form">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary" />
+                </header>
                 <sheet>
                 <group>
                     <field name="students_id"/>

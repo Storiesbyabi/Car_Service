@@ -30,6 +30,7 @@
         'views/res_partner_view.xml',
         'views/school_leaves_views.xml',
         'views/school_exams_views.xml',
+        'data/user_creation_automation.xml',
         'data/email_template.xml',
         'data/ir_cron_data.xml',
         'views/school_management_menus.xml',

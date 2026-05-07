@@ -19,6 +19,7 @@ class SchoolStudents(models.Model):
     exam_ids = fields.One2many('school.exams','students_id',readonly=True)
     std_status = fields.Selection(selection=[('absent','Absent'),('present','Present')],default='present')
 
+
     @api.model_create_multi
     def create(self, vals):
         """Automatically generate an admission number for each student registration
@@ -26,16 +27,17 @@ class SchoolStudents(models.Model):
         for val in vals:
             if val.get('admission_number', 'new') == 'new':
                 val['admission_number'] = self.env['ir.sequence'].next_by_code('school.registration.admission')
-            user_name = val.get('firstname')
-            user_email = val.get('email')
-            if user_email and user_name:
-                user = {
-                    'name': user_name,
-                    'login': user_email,
-                    'email': user_email
-                }
-                self.env['res.users'].create(user)
+            # user_name = val.get('firstname')
+            # user_email = val.get('email')
+            # if user_email and user_name:
+            #     user = {
+            #         'name': user_name,
+            #         'login': user_email,
+            #         'email': user_email
+            #     }
+            #     self.env['res.users'].create(user)
         return super().create(vals)
+
 
 
     @api.depends('admission_number','firstname')
@@ -49,5 +51,7 @@ class SchoolStudents(models.Model):
                 record.display_name = record._name
 
     def action_register(self):
-        """ To avoid action error in btn """
-        pass
+        """ To change the status of new record
+         to registration"""
+        for record in self:
+            record.status = 'registration'

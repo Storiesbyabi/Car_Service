@@ -13,14 +13,14 @@
                 <div>
                     <p>
                         Hello <t t-out="object.partner_id.complete_name" />,
+                        <br/>
                         The <t t-out="object.name" /> event will be held on <t t-out="object.date_begin" />.
                         The event will be organized by <t  t-out="object.organizer_id.name" />.
                         <br/>
                         <br/>
                         <t t-out="object.description" />
-                    </p>
-                   <img t-if="object.poster" t-att-src="'data:image/jpg;base64,%s' % object.poster"/>
-                </div>
+                    </p></div>
+                                   <img  t-att-src="'data:image/jpeg;base64,%s' % ctx.get('poster')" width="540" class="illustration_border" />
             </field>
 
 
