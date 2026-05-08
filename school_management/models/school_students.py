@@ -25,19 +25,26 @@ class SchoolStudents(models.Model):
         """Automatically generate an admission number for each student registration
         when a new record is registered. """
         for val in vals:
+            print("val",val)
             if val.get('admission_number', 'new') == 'new':
                 val['admission_number'] = self.env['ir.sequence'].next_by_code('school.registration.admission')
             # user_name = val.get('firstname')
             # user_email = val.get('email')
-            # if user_email and user_name:
-            #     user = {
-            #         'name': user_name,
-            #         'login': user_email,
-            #         'email': user_email
-            #     }
-            #     self.env['res.users'].create(user)
+
         return super().create(vals)
 
+    def _action_user_creation(self):
+        """ A method for automation rule, It will
+          create a user when new record is created"""
+        for record in self:
+            if record.firstname and record.email:
+                print(444)
+                record.status = 'registration'
+                self.env['res.users'].create({
+                    'name': record.firstname,
+                    'login': record.email,
+                    'email': record.email
+                })
 
 
     @api.depends('admission_number','firstname')
@@ -53,5 +60,4 @@ class SchoolStudents(models.Model):
     def action_register(self):
         """ To change the status of new record
          to registration"""
-        for record in self:
-            record.status = 'registration'
+        pass

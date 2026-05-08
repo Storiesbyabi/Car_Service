@@ -4,7 +4,7 @@
         <field name="name">school.registration.view.list</field>
         <field name="model">school.registration</field>
         <field name="arch" type="xml">
-            <list string="Registration list"  name="registration_list">
+            <list string="Registration list" name="registration_list">
                 <field name="firstname"/>
                 <field name="lastname"/>
                 <field name="registration_date"/>
@@ -31,7 +31,7 @@
                     <field name="photo" widget="image" class="oe_avatar"/>
                     <group col="2">
                         <group>
-                            <field name="firstname" required="True"/>
+                            <field name="firstname"/>
                             <field name="lastname"/>
                             <field name="father"/>
                             <field name="mother"/>
@@ -65,11 +65,11 @@
                             </page>
                             <page name="exam_page" string="Exam" invisible="is_student == False">
                                 <group>
-                                     <field name="exam_ids" options='{"no_open": True, "no_create": True}'>
-                                    <list editable="bottom">
-                                       <field name="name" />
-                                    </list>
-                                     </field>
+                                    <field name="exam_ids" options='{"no_open": True, "no_create": True}'>
+                                        <list editable="bottom">
+                                            <field name="name"/>
+                                        </list>
+                                    </field>
                                 </group>
 
                             </page>

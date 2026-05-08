@@ -1,5 +1,5 @@
 # # -*- coding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields, api
 
 class SchoolRegistrationWizad(models.TransientModel):
     _name = 'school.registration.wizard'
@@ -13,23 +13,20 @@ class SchoolRegistrationWizad(models.TransientModel):
     current_class_id = fields.Many2one(comodel_name="school.class")
 
 
-
     def action_register(self):
         """ A Btn action for updating the model school.registration """
         student_id = self.env.context.get('student_id')
         record = self.env['school.registration'].browse(student_id)
-        print(123123123, record)
-        print(123123123, record.firstname)
         self.env['school.students'].create({
             'school_registration_id': record.id,
-            'current_class_id': self.current_class_id.id
+            'current_class_id': self.current_class_id.id,
         })
         print(self.current_class_id.id)
-        record.write({
-            'firstname':self.firstname,
-            'lastname':self.lastname,
-            'email':self.email,
-            'phone':self.phone,
-            'aadhar_number': self.aadhar_number,
-            'status':'registration'
-        })
+        if self.firstname:
+            record.write({
+                'firstname': self.firstname,
+                'lastname': self.lastname,
+                'email': self.email,
+                'phone': self.phone,
+                'aadhar_number': self.aadhar_number,
+            })

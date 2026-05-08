@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+       <record model="res.groups" id="student_group_manager">
+           <field name="name">student_access</field>
+       </record>
+        <record model="res.groups" id="teacher_group_manager">
+           <field name="name">Teacher Access</field>
+       </record>
+        <record model="res.groups" id="staff_group_manager">
+           <field name="name">Office Staff Access</field>
+       </record>
+   </data>
+</odoo>

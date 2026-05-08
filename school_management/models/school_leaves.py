@@ -31,5 +31,10 @@ class SchoolLeaves(models.Model):
     def action_confirm(self):
         std=self.students_id.id
         student = self.env['school.students'].browse(std)
-        if student.std_status and date.today() == self.start_date:
-            student.std_status ='absent'
+        start = self.start_date
+        end = self.end_date
+        today = date.today()
+        while start <= end:
+            if start == today:
+                student.std_status = 'absent'
+            start += timedelta(days=1)
