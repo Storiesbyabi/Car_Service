@@ -36,7 +36,22 @@
                           </page>
                     </notebook>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
+     <record id="school_exams_view_search" model="ir.ui.view">
+        <field name="name">school.exams.view.search</field>
+        <field name="model">school.exams</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Exam"/>
+                <field name="class_id" string="Class"/>
+                <field name="papers_ids" string="Subject"/>
+                <filter name="Class" context="{'group_by':'class_id'}" string="Class" />
+            </search>
+        </field>
+    </record>
+
+
 </odoo>

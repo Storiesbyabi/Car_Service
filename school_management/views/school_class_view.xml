@@ -23,6 +23,7 @@
                     <field name="school_id" string="School" />
                 </group>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>

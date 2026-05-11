@@ -35,8 +35,9 @@ class SchoolRegistration(models.Model):
                               default='draft')
     previous_academic_department_id = fields.Many2one(comodel_name='school.department')
     previous_class_id = fields.Many2one(comodel_name='school.class')
-    register_sequence = fields.Char(string="Reference Number", default=lambda self: 'New')
+    register_sequence = fields.Char(string="Reference Number", default=lambda self:'New')
     exam_ids = fields.One2many('school.exams', 'students_id', readonly=True)
+    events_ids = fields.One2many('school.events','students_id',readonly=True)
     is_student = fields.Boolean()
 
     @api.model_create_multi
@@ -46,7 +47,7 @@ class SchoolRegistration(models.Model):
         for i in vals:
             if i.get('register_sequence', 'New') == 'New':
                 i['register_sequence'] = self.env['ir.sequence'].next_by_code('school.registration')
-
+                print("val",i)
         return super().create(vals)
 
     @api.depends('dob')
@@ -65,6 +66,7 @@ class SchoolRegistration(models.Model):
         """ A button action for registration, When
          its triggered a wizard will be opened with the default
          values """
+
         return {
             'name': 'Register Student',
             'type': 'ir.actions.act_window',
@@ -73,7 +75,7 @@ class SchoolRegistration(models.Model):
             'target': 'new',
             'context': {
                 'student_id': self.id,
-                'default_name': self.firstname,
+                'default_firstname': self.firstname,
                 'default_lastname': self.lastname,
                 'default_email': self.email,
                 'default_phone': self.phone,

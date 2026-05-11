@@ -10,9 +10,7 @@
                 <xpath expr="//list" position="attributes">
                     <attribute name="decoration-danger" >std_status == 'absent'</attribute>
                 </xpath>
-
             </field>
-
         </record>
 
 

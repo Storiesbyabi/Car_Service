@@ -29,7 +29,26 @@
                     <field name="reason" />
                 </group>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
+
+    <record id="school_leaves_view_search" model="ir.ui.view">
+        <field name="name">school.leaves.view.search</field>
+        <field name="model">school.leaves</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="students_id"/>
+                <field name="class_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="total_days"/>
+                <field name="half_day"/>
+                <filter name="Class" context="{'group_by':'class_id'}" string="Class" />
+            </search>
+        </field>
+    </record>
+
+
 </odoo>

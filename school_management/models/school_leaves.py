@@ -7,6 +7,8 @@ class SchoolLeaves(models.Model):
     _name = 'school.leaves'
     _description = 'School Leaves'
     _rec_name = 'students_id'
+    _inherit = 'mail.thread'
+
 
     students_id = fields.Many2one(comodel_name='school.students', required=True,ondelete='cascade' )
     class_id = fields.Many2one(related='students_id.current_class_id')

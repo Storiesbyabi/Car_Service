@@ -1,4 +1,13 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_student_detail,access.student.detail,model_school_students,school_management.student_group_manager,1,0,0,0
+access_student_clubs,access.student.clubs,model_school_clubs,school_management.student_group_manager,1,0,0,0
+access_student_registration,access.student.registration,model_school_registration,school_management.student_group_manager,1,0,0,0
+access_student_leaves,access.student.leaves,model_school_leaves,school_management.student_group_manager,1,0,1,0
+access_student_exams,access.student.exams,model_school_exams,school_management.student_group_manager,1,0,0,0
+access_student_events,access.student.events,model_school_events,school_management.student_group_manager,1,0,0,0
+access_teacher_leaves,access.teacher.leaves,model_school_leaves,school_management.teacher_group_manager,1,0,1,0
+access_teacher_exams,access.teacher.exams,model_school_exams,school_management.teacher_group_manager,1,1,1,0
+access_teacher_students,access.teacher.students,model_school_students,school_management.teacher_group_manager,1,1,1,0
 access_school_registration,access.school.registration,model_school_registration,school_management.staff_group_manager,1,1,1,1
 access_school_students,access.school.students,model_school_students,school_management.staff_group_manager,1,1,1,1
 access_school_department,access.school.department,model_school_department,school_management.staff_group_manager,1,1,1,1
@@ -11,8 +20,3 @@ access_school_events,access.school.events,model_school_events,school_management.
 access_school_leaves,access.school.leaves,model_school_leaves,school_management.staff_group_manager,1,1,1,1
 access_school_exams,access.school.exams,model_school_exams,school_management.staff_group_manager,1,1,1,1
 access_school_papers,access.school.papers,model_school_papers,school_management.staff_group_manager,1,1,1,1
-access_student_detail,access.student.detail,model_school_students,school_management.student_group_manager,1,0,0,0
-access_student_leaves,access.student.leaves,model_school_leaves,school_management.student_group_manager,1,0,1,0
-access_teacher_leaves,access.teacher.leaves,model_school_leaves,school_management.teacher_group_manager,1,0,1,0
-access_teacher_exams,access.teacher.exams,model_school_exams,school_management.teacher_group_manager,1,1,1,0
-access_teacher_students,access.teacher.students,model_school_students,school_management.teacher_group_manager,1,1,1,0

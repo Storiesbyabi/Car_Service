@@ -6,6 +6,7 @@ class SchoolExams(models.Model):
     """ Managing the exam conducting in this school """
     _name = 'school.exams'
     _description = 'School Exams'
+    _inherit = 'mail.thread'
 
     name = fields.Char()
     class_id = fields.Many2one(comodel_name='school.class')

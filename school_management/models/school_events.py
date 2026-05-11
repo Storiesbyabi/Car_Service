@@ -10,7 +10,7 @@ class SchoolEvents(models.Model):
     _description = 'School events'
     _inherit = 'mail.thread'
 
-    name = fields.Char(string="School Event", required=True)
+    name = fields.Char( required=True)
     clubs_id = fields.Many2one(comodel_name="school.clubs")
     date_begin = fields.Date()
     date_end = fields.Date(required=True)
@@ -20,6 +20,7 @@ class SchoolEvents(models.Model):
     status = fields.Selection(selection=[('draft','Draft'),('scheduled','Scheduled'),('ongoing','Ongoing'),('ended','Ended'),('cancel','Canceled')],default='draft')
     active = fields.Boolean(default=True)
     partner_id = Many2one(comodel_name='res.partner', domain="[('partner_selection', '=', 'teacher')]")
+    students_id = Many2one(comodel_name='school.registration')
 
 
     def action_confirm(self):
@@ -28,6 +29,15 @@ class SchoolEvents(models.Model):
         for record in self:
             if record.status == 'draft':
                 record.status = 'scheduled'
+
+            students = self.env['school.students'].search([('clubs_ids', '=', self.clubs_id.id)])
+            if students:
+                for student in students:
+                    print("student",student)
+                    student.write({
+                        'events_ids': [(4, self.id)]
+                    })
+
             else:
                 record.status = 'ongoing'
 

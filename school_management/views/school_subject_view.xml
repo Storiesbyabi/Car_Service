@@ -18,10 +18,14 @@
         <field name="model">school.subject</field>
         <field name="arch" type="xml">
 
-            <list string="Subject form">
+            <form string="Subject form">
+                <sheet>
+                <group>
                 <field name="name"/>
                 <field name="department_id" />
-            </list>
+                </group>
+                </sheet>
+            </form>
 
         </field>
     </record>

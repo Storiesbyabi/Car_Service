@@ -21,7 +21,6 @@ class SchoolRegistrationWizad(models.TransientModel):
             'school_registration_id': record.id,
             'current_class_id': self.current_class_id.id,
         })
-        print(self.current_class_id.id)
         if self.firstname:
             record.write({
                 'firstname': self.firstname,
