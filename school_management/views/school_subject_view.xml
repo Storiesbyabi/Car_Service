@@ -25,6 +25,7 @@
                 <field name="department_id" />
                 </group>
                 </sheet>
+                <chatter />
             </form>
 
         </field>

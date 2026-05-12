@@ -17,6 +17,7 @@ class SchoolLeaves(models.Model):
     total_days = fields.Integer(compute="_compute_total_days")
     half_day = fields.Boolean()
     reason = fields.Char()
+    is_leave = fields.Boolean()
 
 
     def _compute_total_days(self):
@@ -31,11 +32,13 @@ class SchoolLeaves(models.Model):
 
 
     def action_confirm(self):
-        std=self.students_id.id
+        std = self.students_id.id
         student = self.env['school.students'].browse(std)
         start = self.start_date
         end = self.end_date
         today = date.today()
+        self.is_leave = True
+
         while start <= end:
             if start == today:
                 student.std_status = 'absent'

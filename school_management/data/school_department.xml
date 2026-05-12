@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <data noupdate="1" >
       <record id="demo_department_1" model="school.department">
         <field name="name">LP</field>
           <field name="hod_id" ref="base.res_partner_1" />
@@ -12,4 +13,5 @@
         <field name="name">HS</field>
         <field name="hod_id" ref="base.res_partner_3" />
     </record>
+    </data>
 </odoo>

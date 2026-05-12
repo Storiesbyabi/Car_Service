@@ -3,6 +3,8 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from odoo import fields, models, api
+import re
+from odoo.exceptions import ValidationError
 
 
 class SchoolRegistration(models.Model):
@@ -12,6 +14,7 @@ class SchoolRegistration(models.Model):
     _inherit = 'mail.thread'
     _rec_name = 'register_sequence'
     _unique_aadhar = models.Constraint('unique(aadhar_number)', 'The Aadhar number should be unique')
+    _unique_email = models.Constraint('unique(email)', 'The email should be unique')
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company,
                                  required=True)
@@ -43,11 +46,16 @@ class SchoolRegistration(models.Model):
     @api.model_create_multi
     def create(self, vals):
         """Automatically generate a reference number for each student registration
-        when a new record is created and saved."""
+        when a new record is created."""
         for i in vals:
             if i.get('register_sequence', 'New') == 'New':
                 i['register_sequence'] = self.env['ir.sequence'].next_by_code('school.registration')
                 print("val",i)
+            if i.get('email'):
+                match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+                                 i.get('email'))
+                if match == None:
+                    raise ValidationError('Not a valid E-mail ID')
         return super().create(vals)
 
     @api.depends('dob')
@@ -75,6 +83,7 @@ class SchoolRegistration(models.Model):
             'target': 'new',
             'context': {
                 'student_id': self.id,
+                'default_photo':self.photo,
                 'default_firstname': self.firstname,
                 'default_lastname': self.lastname,
                 'default_email': self.email,

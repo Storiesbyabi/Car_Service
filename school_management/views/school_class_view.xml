@@ -20,7 +20,6 @@
                     <field name="name"/>
                     <field name="department_id"/>
                     <field name="head_of_dep_id"/>
-                    <field name="school_id" string="School" />
                 </group>
                 </sheet>
                 <chatter/>

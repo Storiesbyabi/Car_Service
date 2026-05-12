@@ -11,10 +11,10 @@
                     <field name="email" required="True"/>
                     <field name="phone" required="True"/>
                     <field name="aadhar_number" required="True"/>
-                    <field  name="current_class_id" />
+                    <field  name="current_class_id" options="{'no_create': True}" />
                 </group>
                 <footer>
-                    <button string="Register" type="object" name="action_register"/>
+                    <button string="Register" type="object" name="action_register" class="btn btn-primary   "/>
                     <button string="Cancel" special="cancel" type="object"/>
                 </footer>
             </form>

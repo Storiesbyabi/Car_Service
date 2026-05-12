@@ -20,7 +20,7 @@
                     <button name="action_register" type="object" class="btn btn-primary btn-md mb-4 " string="Register"
                             invisible="status != 'draft' "/>
                     <field name="status" widget="statusbar" statusbar_visible="draft,registration"
-                           options="{'clickable':'1'}"  />
+                           options="{'clickable':'1'}"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -31,7 +31,6 @@
                     <field name="photo" widget="image" class="oe_avatar"/>
                     <group col="2">
                         <group>
-                            <field name="company_id" />
                             <field name="firstname"/>
                             <field name="lastname"/>
                             <field name="father"/>
@@ -56,6 +55,7 @@
                             </page>
                             <page string="School Details">
                                 <group>
+                                    <field name="company_id"/>
                                     <field name="previous_academic_department_id"
                                            options="{'no_create': True, 'no_open': True}"/>
                                     <field name="previous_class_id"

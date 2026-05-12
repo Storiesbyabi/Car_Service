@@ -17,7 +17,7 @@
             <form string="School Clubs">
                 <sheet>
                     <div name="button_box" position="inside">
-                    <button  type="object"
+                    <button name="%(school_events_view_action)d" type="action"
                             class="oe_stat_button" icon="fa-ticket" string="Events" />
                         </div>
                 <group>

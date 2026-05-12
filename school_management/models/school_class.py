@@ -11,6 +11,5 @@ class SchoolClass(models.Model):
 
     name = fields.Integer(help="class name")
     department_id = fields.Many2one(comodel_name='school.department')
-    head_of_dep_id = fields.Many2one( related='department_id.hod_id',string='Head of Department')
-    school_id = fields.Many2one('res.company',default=lambda self: self.env.company
-                                 )
+    head_of_dep_id = fields.Many2one( related='department_id.hod_id', string='Head of Department')
+    school_id = fields.Many2one('res.company', default=lambda self: self.env.company)

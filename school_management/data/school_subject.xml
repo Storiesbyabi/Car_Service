@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <data noupdate="1">
     <record id="demo_subject_1" model="school.subject">
         <field name="name">maths</field>
+        <field name="department_id" ref="school_management.demo_department_1"/>
     </record>
     <record id="demo_subject_2" model="school.subject">
         <field name="name">cse</field>
+        <field name="department_id" ref="school_management.demo_department_2"/>
     </record>
+    </data>
 </odoo>

@@ -6,6 +6,7 @@ class SchoolSubject(models.Model):
     """ The school subject is created  """
     _name = 'school.subject'
     _description = 'School Subject'
+    _inherit = 'mail.thread'
 
     name = fields.Char()
     department_id = fields.Many2one(comodel_name='school.department')

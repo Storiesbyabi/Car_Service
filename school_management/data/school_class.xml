@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <odoo>
-    <record id="demo_class_1" model="school.class">
-        <field name="name">1</field>
-    </record>
-    <record id="demo_class_2" model="school.class">
-        <field name="name">2</field>
-    </record>
-    <record id="demo_class_3" model="school.class">
-        <field name="name">3</field>
-    </record>
+    <data noupdate="1">
+        <record id="demo_class_1" model="school.class">
+            <field name="name">1</field>
+            <field name="department_id" ref="school_management.demo_department_1"/>
+        </record>
+        <record id="demo_class_2" model="school.class">
+            <field name="name">2</field>
+            <field name="department_id" ref="school_management.demo_department_2"/>
+        </record>
+        <record id="demo_class_3" model="school.class">
+            <field name="name">3</field>
+            <field name="department_id" ref="school_management.demo_department_3"/>
+        </record>
+    </data>
 </odoo>

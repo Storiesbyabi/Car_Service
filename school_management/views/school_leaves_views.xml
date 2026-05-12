@@ -16,17 +16,17 @@
         <field name="arch" type="xml">
             <form string="Leaves form">
                 <header>
-                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary" />
+                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary" invisible="is_leave == True"/>
                 </header>
                 <sheet>
                 <group>
-                    <field name="students_id"/>
-                <field name="class_id"/>
-                    <field  name="start_date" widget="daterange" options="{'end_date_field':'end_date'}" />
-                    <field name="end_date" invisible="1" />
-                    <field name="total_days" />
-                    <field name="half_day" />
-                    <field name="reason" />
+                    <field name="students_id" readonly="is_leave == True"/>
+                <field name="class_id" readonly="is_leave == True" />
+                    <field  name="start_date" widget="daterange" options="{'end_date_field':'end_date'}" readonly="is_leave == True"/>
+                    <field name="end_date" invisible="1" readonly="is_leave == True"/>
+                    <field name="total_days" readonly="is_leave == True"/>
+                    <field name="half_day" readonly="is_leave == True"/>
+                    <field name="reason" readonly="is_leave == True"/>
                 </group>
                 </sheet>
                 <chatter/>

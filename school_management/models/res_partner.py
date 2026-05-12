@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields,models
+from odoo import fields,models,api
 
 
 class ResPartner(models.Model):
@@ -10,4 +10,3 @@ class ResPartner(models.Model):
 
     partner_selection = fields.Selection(selection=[('teacher','Teacher'),('student','Student'),
                                           ('office_staff','Office Staff')], string='Partner')
-

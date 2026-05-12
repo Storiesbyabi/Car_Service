@@ -8,4 +8,4 @@ class SchoolManagementAcademicYear(models.Model):
     _name = 'school.academic.year'
     _description = 'Academic year'
 
-    name = fields.Char()
+    name = fields.Char(required=True)
