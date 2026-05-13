@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="school_clubs_view_list" model="ir.ui.view" >
+    <record id="school_clubs_views_list" model="ir.ui.view" >
         <field name="name">school.clubs.view.list</field>
         <field name="model" >school.clubs</field>
         <field name="arch" type="xml" >
@@ -10,14 +10,14 @@
         </field>
     </record>
 
-    <record id="school_clubs_view_form" model="ir.ui.view" >
+    <record id="school_clubs_views_form" model="ir.ui.view" >
         <field name="name">school.clubs.view.form</field>
         <field name="model" >school.clubs</field>
         <field name="arch" type="xml" >
             <form string="School Clubs">
                 <sheet>
                     <div name="button_box" position="inside">
-                    <button name="%(school_events_view_action)d" type="action"
+                    <button  type="object"
                             class="oe_stat_button" icon="fa-ticket" string="Events" />
                         </div>
                 <group>
@@ -27,7 +27,7 @@
                     <page string="Students">
                             <field name="students_ids" options="{'no_create': True}" >
                         <list editable="bottom">
-                                <field name="firstname"  />
+                                <field name="firstname"/>
                         </list>
                          </field>
                     </page>

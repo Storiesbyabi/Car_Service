@@ -22,24 +22,23 @@ class SchoolEvents(models.Model):
     partner_id = Many2one(comodel_name='res.partner', domain="[('partner_selection', '=', 'teacher')]")
     students_id = Many2one(comodel_name='school.registration')
 
-
     def action_confirm(self):
+
         """ Btn action for changing the status to
           scheduled and ongoing based on condition"""
-        for record in self:
-            if record.status == 'draft':
-                record.status = 'scheduled'
+        if self.status == 'draft':
+            self.status = 'scheduled'
+        elif self.status == 'scheduled':
+            self.status = 'ongoing'
 
-            students = self.env['school.students'].search([('clubs_ids', '=', self.clubs_id.id)])
-            if students:
-                for student in students:
-                    print("student",student)
-                    student.write({
-                        'events_ids': [(4, self.id)]
-                    })
+        students = self.env['school.students'].search([('clubs_ids', '=', self.clubs_id.id)])
+        if students:
+            for student in students:
+                print("student", student)
+                student.write({
+                    'events_ids': [(4, self.id)]
+                })
 
-            else:
-                record.status = 'ongoing'
 
     def action_cancel(self):
         """ Btn action for changing the status to cancel """

@@ -20,14 +20,14 @@
                 <sheet>
                 <group>
                     <field name="name" string="Exam name" />
-                    <field name="class_id"/>
+                    <field name="class_id" options="{'no_create':True}"/>
                     </group>
                     <notebook>
                           <page string="Papers">
                               <group>
-                              <field name="papers_ids">
-                                  <list editable="top">
-                                      <field  name="subject_id" />
+                              <field name="papers_ids" string="">
+                                  <list editable="bottom">
+                                      <field  name="subject_id" options="{'no_create':True}"/>
                                       <field name="pass_mark" />
                                       <field name="max_mark" />
                                   </list>

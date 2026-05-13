@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="school_academic_year_view_list" model="ir.ui.view">
+    <record id="school_academic_year_views_list" model="ir.ui.view">
         <field name="name">school.academic.year.view.list</field>
         <field name="model">school.academic.year</field>
         <field name="arch" type="xml">
@@ -9,7 +9,7 @@
             </list>
         </field>
     </record>
-    <record id="school_academic_year_view_search" model="ir.ui.view" >
+    <record id="school_academic_year_views_search" model="ir.ui.view" >
         <field name="name" >school.academic.year.view.search</field>
         <field name="model">school.academic.year</field>
         <field name="arch" type="xml">

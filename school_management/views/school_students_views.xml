@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="school_students_view_list" model="ir.ui.view">
+        <record id="school_students_views_list" model="ir.ui.view">
             <field name="name">school.students.view.list</field>
             <field name="model">school.students</field>
             <field name="mode">primary</field>
-            <field name="inherit_id" ref="school_management.school_registration_view_list"/>
+            <field name="inherit_id" ref="school_management.school_registration_views_list"/>
             <field name="arch" type="xml" >
                 <xpath expr="//list" position="attributes">
                     <attribute name="decoration-danger" >std_status == 'absent'</attribute>
@@ -14,15 +14,19 @@
         </record>
 
 
-        <record id="school_students_view_form" model="ir.ui.view">
+        <record id="school_students_views_form" model="ir.ui.view">
             <field name="name">school.students.view.form</field>
             <field name="model">school.students</field>
             <field name="mode">primary</field>
-            <field name="inherit_id" ref="school_management.school_registration_view_form"/>
+            <field name="inherit_id" ref="school_management.school_registration_views_form"/>
             <field name="arch" type="xml">
                 <!--                -->
                 <xpath expr="//field[@name='status']" position="replace">
                     <field name="std_status" widget="statusbar" statusbar_visibility="absent,present" options="{'clickable': '1'}"/>
+                </xpath>
+                <xpath expr="//button[@name='action_register']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="name"></attribute>
                 </xpath>
                 <!--                -->
                 <xpath expr="//field[@name='register_sequence']" position="replace">

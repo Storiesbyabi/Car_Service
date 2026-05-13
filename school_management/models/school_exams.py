@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields,models
+from odoo import fields,models, api
 
 
 class SchoolExams(models.Model):
@@ -8,15 +8,22 @@ class SchoolExams(models.Model):
     _description = 'School Exams'
     _inherit = 'mail.thread'
 
-    name = fields.Char()
+    name = fields.Char(required=True)
     class_id = fields.Many2one(comodel_name='school.class')
     papers_ids = fields.One2many('school.papers','exams_id')
     students_id = fields.Many2one(comodel_name='school.students')
 
     def action_add(self):
-        students = self.env['school.students'].search([('current_class_id','=',self.class_id.id)])
-        if students:
-            for student in students:
-                student.write({
-                    'exam_ids':[(4,self.id)]
-                })
+        self.class_id.student_ids.write({
+            'exam_ids': [fields.Command.link(self.id)]
+        })
+
+    @api.onchange('class_id')
+    def subject(self):
+        subject_id = self.papers_ids.subject_id.id
+        domain = [(subject_id,'=',self.class_id.department_id.id)]
+        print("domain",domain)
+
+        return {
+            'domain':{'papers_ids':domain}
+        }

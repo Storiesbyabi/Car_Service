@@ -28,8 +28,6 @@ class SchoolStudents(models.Model):
             print("val",val)
             if val.get('admission_number', 'new') == 'new':
                 val['admission_number'] = self.env['ir.sequence'].next_by_code('school.registration.admission')
-            # user_name = val.get('firstname')
-            # user_email = val.get('email')
 
         return super().create(vals)
 
@@ -56,8 +54,3 @@ class SchoolStudents(models.Model):
                 record.display_name = f"{record.admission_number} {record.firstname}"
             else:
                 record.display_name = record._name
-
-    def action_register(self):
-        """ To change the status of new record
-         to registration"""
-        pass

@@ -17,6 +17,7 @@
             <form string="Leaves form">
                 <header>
                     <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary" invisible="is_leave == True"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm" />
                 </header>
                 <sheet>
                 <group>
@@ -24,7 +25,7 @@
                 <field name="class_id" readonly="is_leave == True" />
                     <field  name="start_date" widget="daterange" options="{'end_date_field':'end_date'}" readonly="is_leave == True"/>
                     <field name="end_date" invisible="1" readonly="is_leave == True"/>
-                    <field name="total_days" readonly="is_leave == True"/>
+                    <field name="total_days" />
                     <field name="half_day" readonly="is_leave == True"/>
                     <field name="reason" readonly="is_leave == True"/>
                 </group>

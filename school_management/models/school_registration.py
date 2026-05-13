@@ -74,7 +74,6 @@ class SchoolRegistration(models.Model):
         """ A button action for registration, When
          its triggered a wizard will be opened with the default
          values """
-
         return {
             'name': 'Register Student',
             'type': 'ir.actions.act_window',

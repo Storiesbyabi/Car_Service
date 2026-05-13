@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="school_events_view_list" model="ir.ui.view">
+    <record id="school_events_views_list" model="ir.ui.view">
         <field name="name">school.events.view.list</field>
         <field name="model">school.events</field>
         <field name="arch" type="xml">
@@ -11,7 +11,7 @@
         </field>
     </record>
 
-    <record id="school_events_view_form" model="ir.ui.view">
+    <record id="school_events_views_form" model="ir.ui.view">
         <field name="name">school.events.view.form</field>
         <field name="model">school.events</field>
         <field name="arch" type="xml">
@@ -48,7 +48,7 @@
         </field>
     </record>
 
-    <record id="school_events_view_filter" model="ir.ui.view">
+    <record id="school_events_views_filter" model="ir.ui.view">
     <field name="name">school.events.view.filter</field>
     <field name="model">school.events</field>
     <field name="arch" type="xml">
