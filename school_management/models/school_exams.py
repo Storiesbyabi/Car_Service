@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields,models, api
+from odoo import fields,models
 
 
 class SchoolExams(models.Model):
@@ -12,18 +12,11 @@ class SchoolExams(models.Model):
     class_id = fields.Many2one(comodel_name='school.class')
     papers_ids = fields.One2many('school.papers','exams_id')
     students_id = fields.Many2one(comodel_name='school.students')
+    class_department_id = fields.Many2one('school.department',related="class_id.department_id")
+    is_exam = fields.Boolean()
 
     def action_add(self):
         self.class_id.student_ids.write({
             'exam_ids': [fields.Command.link(self.id)]
         })
-
-    @api.onchange('class_id')
-    def subject(self):
-        subject_id = self.papers_ids.subject_id.id
-        domain = [(subject_id,'=',self.class_id.department_id.id)]
-        print("domain",domain)
-
-        return {
-            'domain':{'papers_ids':domain}
-        }
+        self.is_exam = True

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<record id="rfq_wizard_view_form" model="ir.ui.view">
+        <field name="name">rfq.wizard.view.form</field>
+        <field name="model">rfq.wizard</field>
+        <field name="arch" type="xml">
+            <form string="qfr Wizard">
+                <group>
+                <field name="product_id" />
+                <field name="quantity" />
+                <field name="price" />
+                 </group>
+                <footer>
+                <button string="Confirm" type="object" class="btn-primary" name="action_confirm" />
+                    <button string="Cancel" special="cancel" type="object"/>
+                </footer>
+            </form>
+        </field>
+</record>
+</odoo>

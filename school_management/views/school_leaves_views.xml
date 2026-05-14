@@ -51,5 +51,10 @@
         </field>
     </record>
 
+    <record id="school_leaves_view_action" model="ir.actions.act_window">
+            <field name="name">Leaves</field>
+            <field name="res_model">school.leaves</field>
+            <field name="view_mode">list,form</field>
+        </record>
 
 </odoo>

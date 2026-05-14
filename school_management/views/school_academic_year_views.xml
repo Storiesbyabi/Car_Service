@@ -18,4 +18,11 @@
             </search>
         </field>
     </record>
+
+    <record id="school_academic_year_views_action" model="ir.actions.act_window">
+            <field name="name">Manage Academic Year</field>
+            <field name="res_model">school.academic.year</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
 </odoo>

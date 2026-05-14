@@ -10,3 +10,14 @@ class SchoolClubs(models.Model):
 
     name = fields.Char(required=True)
     students_ids = fields.Many2many('school.students', ondelete="cascade")
+
+
+    def action_event(self):
+        """ To filter the events based on clubs"""
+        return {
+            'name':'Events',
+            'type':'ir.actions.act_window',
+            'res_model': 'school.events',
+            'view_mode':'list,form',
+            'domain':[('clubs_id','=',self.id)]
+        }

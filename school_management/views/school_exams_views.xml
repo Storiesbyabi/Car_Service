@@ -15,7 +15,7 @@
         <field name="arch" type="xml">
             <form string="Exams form">
                 <header>
-                    <button name="action_add" type="object" class="btn btn-primary" string="Add" help="Add exam to students" />
+                    <button name="action_add" type="object" class="btn btn-primary" string="Add" help="Add exam to students" invisible="is_exam == True" />
                 </header>
                 <sheet>
                 <group>
@@ -53,5 +53,10 @@
         </field>
     </record>
 
+    <record id="school_exams_view_action" model="ir.actions.act_window">
+            <field name="name">Exams</field>
+            <field name="res_model">school.exams</field>
+            <field name="view_mode">list,form</field>
+        </record>
 
 </odoo>

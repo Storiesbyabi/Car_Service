@@ -34,15 +34,18 @@ class SchoolStudents(models.Model):
     def _action_user_creation(self):
         """ A method for automation rule, It will
           create a user when new record is created"""
-        for record in self:
-            if record.firstname and record.email:
-                print(444)
-                record.status = 'registration'
-                self.env['res.users'].create({
-                    'name': record.firstname,
-                    'login': record.email,
-                    'email': record.email
-                })
+        if self.firstname and self.email:
+            print(444)
+            self.status = 'registration'
+            student_group = self.env.ref('school_management.student_group_manager')
+            user = self.env['res.users'].create({
+                'name': self.firstname,
+                'login': self.email,
+                'email': self.email
+            })
+            user.write({
+                'group_ids': [fields.Command.link(student_group.id)]
+            })
 
 
     @api.depends('admission_number','firstname')

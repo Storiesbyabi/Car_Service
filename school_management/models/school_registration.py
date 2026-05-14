@@ -13,10 +13,13 @@ class SchoolRegistration(models.Model):
     _description = 'School registration'
     _inherit = 'mail.thread'
     _rec_name = 'register_sequence'
-    _unique_aadhar = models.Constraint('unique(aadhar_number)', 'The Aadhar number should be unique')
-    _unique_email = models.Constraint('unique(email)', 'The email should be unique')
+    _unique_aadhar = models.Constraint('unique(aadhar_number)',
+                                       'The Aadhar number should be unique')
+    _unique_email = models.Constraint('unique(email)',
+                                      'The email should be unique')
 
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company,
+    company_id = fields.Many2one('res.company',
+                                 default=lambda self: self.env.company,
                                  required=True)
     firstname = fields.Char(required=True)
     lastname = fields.Char()
@@ -31,16 +34,19 @@ class SchoolRegistration(models.Model):
     age = fields.Integer(compute='_compute_age')
     gender = fields.Char()
     registration_date = fields.Date(default=date.today())
-    photo = fields.Image()
+    photo = fields.Image(required=True)
     tc = fields.Image()
     aadhar_number = fields.Char()
-    status = fields.Selection(selection=[('draft', 'Draft'), ('registration', 'Registration')],
+    status = fields.Selection(selection=[('draft', 'Draft'),
+                                ('registration', 'Registration')],
                               default='draft')
     previous_academic_department_id = fields.Many2one(comodel_name='school.department')
     previous_class_id = fields.Many2one(comodel_name='school.class')
     register_sequence = fields.Char(string="Reference Number", default=lambda self:'New')
-    exam_ids = fields.One2many('school.exams', 'students_id', readonly=True)
-    events_ids = fields.One2many('school.events','students_id',readonly=True)
+    exam_ids = fields.One2many('school.exams',
+                               'students_id', readonly=True)
+    events_ids = fields.One2many('school.events',
+                                 'students_id',readonly=True)
     is_student = fields.Boolean()
 
     @api.model_create_multi
@@ -52,7 +58,8 @@ class SchoolRegistration(models.Model):
                 i['register_sequence'] = self.env['ir.sequence'].next_by_code('school.registration')
                 print("val",i)
             if i.get('email'):
-                match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+                match = re.match(
+                    '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
                                  i.get('email'))
                 if match == None:
                     raise ValidationError('Not a valid E-mail ID')

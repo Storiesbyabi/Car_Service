@@ -10,20 +10,23 @@ class SchoolEvents(models.Model):
     _description = 'School events'
     _inherit = 'mail.thread'
 
-    name = fields.Char( required=True)
+    name = fields.Char(required=True)
     clubs_id = fields.Many2one(comodel_name="school.clubs")
     date_begin = fields.Date()
     date_end = fields.Date(required=True)
     organizer_id = fields.Many2one(comodel_name="res.partner")
     poster = fields.Image()
     description = fields.Char()
-    status = fields.Selection(selection=[('draft','Draft'),('scheduled','Scheduled'),('ongoing','Ongoing'),('ended','Ended'),('cancel','Canceled')],default='draft')
+    status = fields.Selection(
+        selection=[('draft', 'Draft'), ('scheduled', 'Scheduled'),
+                   ('ongoing', 'Ongoing'), ('ended', 'Ended'),
+                   ('cancel', 'Canceled')], default='draft')
     active = fields.Boolean(default=True)
-    partner_id = Many2one(comodel_name='res.partner', domain="[('partner_selection', '=', 'teacher')]")
+    partner_id = Many2one(comodel_name='res.partner',
+                          domain="[('partner_selection', '=', 'teacher')]")
     students_id = Many2one(comodel_name='school.registration')
 
     def action_confirm(self):
-
         """ Btn action for changing the status to
           scheduled and ongoing based on condition"""
         if self.status == 'draft':
@@ -36,9 +39,8 @@ class SchoolEvents(models.Model):
             for student in students:
                 print("student", student)
                 student.write({
-                    'events_ids': [(4, self.id)]
+                    'events_ids': [fields.Command.link(self.id)]
                 })
-
 
     def action_cancel(self):
         """ Btn action for changing the status to cancel """
@@ -51,7 +53,6 @@ class SchoolEvents(models.Model):
             record.status = 'ended'
             record.active = False
 
-
     @api.model
     def _send_event_reminder(self):
         """ Send an email to the employees before 2 days of event.
@@ -59,11 +60,11 @@ class SchoolEvents(models.Model):
          email template """
         target_days = date.today() + timedelta(days=2)
         records = self.search([('date_begin', '=', target_days)])
-        template = self.env.ref('school_management.email_template', raise_if_not_found=False)
+        template = self.env.ref('school_management.email_template_data', raise_if_not_found=False)
         partners = self.env['res.partner'].search([('partner_selection', '=', 'teacher')])
         partners_email = ','.join(partners.mapped('email'))
         for record in records:
             poster_img = record.poster
             poster_img = poster_img.decode('utf-8')
-            template.with_context(poster=poster_img).send_mail(record.id, force_send=False, email_values={'email_to':partners_email})
-
+            template.with_context(poster=poster_img).send_mail(record.id, force_send=False,
+                                                               email_values={'email_to': partners_email})

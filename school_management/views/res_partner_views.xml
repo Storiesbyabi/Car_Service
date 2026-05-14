@@ -9,7 +9,42 @@
             <xpath expr="//field[@name='function']" position="before" >
                <field  name="partner_selection" />
                 </xpath>
+            <xpath expr="//field[@name='company_type']" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
+            <xpath expr="//field[@name='parent_id']" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
+            <xpath expr="//field[@name='function']" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
+            <xpath expr="//field[@name='website']" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
+            <xpath expr="//notebook" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
+            <xpath expr="//button[@type='action']" position="attributes" >
+                <attribute  name="invisible">1</attribute>
+                </xpath>
 
         </field>
     </record>
+    <record id="school_teachers_view_action" model="ir.actions.act_window">
+            <field name="name">Teachers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="context" >{'default_partner_selection':'teacher'}</field>
+            <field name="domain">[('partner_selection', '=', 'teacher')]</field>
+        </record>
+     <record id="school_office_staffs_view_action" model="ir.actions.act_window">
+            <field name="name">Office Staffs</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="context" >{'default_partner_selection':'office_staff'}</field>
+            <field name="domain">[('partner_selection', '=', 'office_staff')]</field>
+        </record>
 </odoo>
