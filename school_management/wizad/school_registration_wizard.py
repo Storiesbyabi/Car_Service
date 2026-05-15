@@ -33,7 +33,6 @@ class SchoolRegistrationWizad(models.TransientModel):
             })
             print("Wizard btn")
         effect_image = self.photo.decode('utf-8')
-
         return {
            'effect': {
                'fadeout': 'slow',

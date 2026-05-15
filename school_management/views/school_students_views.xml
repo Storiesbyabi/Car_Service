@@ -10,6 +10,9 @@
                 <xpath expr="//list" position="attributes">
                     <attribute name="decoration-danger" >std_status == 'absent'</attribute>
                 </xpath>
+                <xpath expr="//field[@name='lastname']" position="after">
+                    <field name="current_class_id" />
+                </xpath>
             </field>
         </record>
 

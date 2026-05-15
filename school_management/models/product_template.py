@@ -4,7 +4,8 @@ from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
-
+    """  To add a button for triggering the
+     wizard """
     _inherit = 'product.template'
 
 
