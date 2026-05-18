@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 {
     'name':'Import Order lines',
+'version': '1.0',
+    'summary': 'Imported order Lines',
+    'description': """
+     Sales Order Line
+     =================
+     Used for importing sales order from exel
+     """,
     'depends':[
         'base','sale_management'
     ],

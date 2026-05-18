@@ -5,10 +5,9 @@ from odoo import  models,fields
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-
-
-
     def action_wizard(self):
+        """ When clicking the import btn a wizard will
+        be open"""
         return {
             'name': 'Sale Order Wizard',
             'type': 'ir.actions.act_window',
