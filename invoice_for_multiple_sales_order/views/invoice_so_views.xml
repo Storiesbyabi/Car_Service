@@ -8,7 +8,7 @@
         <field name="arch" type="xml" >
                     <xpath expr="//field[@name='partner_id']" position="after" >
                         <group>
-                <field name="related_so_to_invoice_ids" widget="many2many_tags" string="So" />
+                <field name="related_so_to_invoice_ids" widget="many2many_tags" string="Related Sales Order" />
                         </group>
                 </xpath>
         </field>
