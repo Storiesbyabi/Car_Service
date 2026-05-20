@@ -5,42 +5,43 @@ from odoo import fields, models, api
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    related_so_to_invoice_ids = fields.Many2many(comodel_name='sale.order',string='So',domain="[('invoice_status','=','to invoice'),('partner_id','=',partner_id)]")
+    related_so_to_invoice_ids = fields.Many2many(comodel_name='sale.order',string='So',
+                                                 domain="[('invoice_status','=','to invoice'),('partner_id','=',partner_id)]")
+    invoice_line = fields.One2many('account.move.line',
+        'move_id',compute='_invoice_lines_data',store=True,readonly=False)
 
-    @api.onchange('related_so_to_invoice_ids')
-    def invoice_lines_data(self):
-        so_id = self.related_so_to_invoice_ids
+    @api.depends('related_so_to_invoice_ids')
+    def _invoice_lines_data(self):
+        """ It's used to create invoice lines based on
+         related sale order, also create invoice lines
+         and linked to the SO"""
+        if self.state == 'draft':
+            invoice_lines = []
+            for so in self.related_so_to_invoice_ids:
+                for line in so.order_line:
+                    invoice_lines.append(
+                        fields.Command.create({
+                            'product_id': line.product_id.id,
+                            'sale_line_ids': [fields.Command.link(line.id)]
+                        })
+                    )
+            print('invoice', invoice_lines)
+            self.invoice_line_ids = invoice_lines
+            print('invoice lines', self.invoice_line_ids)
 
-        print('sale order',so_id)
-
-        sale_order_id = so_id.order_line
-        print(sale_order_id)
-
-        if sale_order_id:
-            for i in sale_order_id.product_id.ids:
-                self.invoice_line_ids = [fields.Command.create({
-                    'product_id': i
-
-                })]
-                for i in self.invoice_line_ids.ids:
-                    print(i)
-                    so_id.order_line.invoice_lines = [fields.Command.link(
-                        i
-                    )]
-            self.move_type = 'out_invoice'
-
-            print('move_type',self.move_type)
-
-
-
-            print(22,self.invoice_line_ids.ids)
-
-            print('invoice_ids',so_id.order_line.invoice_lines)
-
-
-
-
-
-
-
-
+    # @api.onchange('related_so_to_invoice_ids')
+    # def invoice_lines_data(self):
+    #     invoice_lines = []
+    #     for so in self.related_so_to_invoice_ids:
+    #         for line in so.order_line:
+    #
+    #             invoice_lines.append(
+    #                 fields.Command.create({
+    #                     'product_id':line.product_id.id,
+    #                     'sale_line_ids':[fields.Command.link(line.id)]
+    #                 })
+    #             )
+    #
+    #     print('invoice',invoice_lines)
+    #     self.invoice_line_ids = invoice_lines
+    #     print('invoice lines', self.invoice_line_ids)
