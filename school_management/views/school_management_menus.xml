@@ -33,6 +33,7 @@
                 name="Configuration"
                 sequence="3"
         />
+
         <menuitem
                 id="school_department_views_configuration_action"
                 parent="school_management_configuration_root"
@@ -62,9 +63,25 @@
                   parent="school_management_Employees_root"
                   action="school_teachers_view_action"
         />
-        <menuitem id="school_office_staffs_view_employees_action"
-                  parent="school_management_Employees_root"
-                  action="school_office_staffs_view_action"
+        <menuitem
+                id="school_management_report_root"
+                parent="school_management_root"
+                name="Reports"
+                sequence="4"
         />
+        <menuitem id="leave_view_reports_action"
+                  parent="school_management_report_root"
+                  action="school_management.leave_information_views_action"
+
+        />
+        <menuitem id="club_view_reports_action"
+                  parent="school_management_report_root"
+                  action="club_data_views_action"
+        />
+        <menuitem id="student_view_reports_action"
+                  parent="school_management_report_root"
+                  action="student_information_views_action"
+        />
+
     </data>
 </odoo>

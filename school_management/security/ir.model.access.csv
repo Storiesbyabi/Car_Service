@@ -21,3 +21,4 @@ access_school_leaves,access.school.leaves,model_school_leaves,school_management.
 access_school_exams,access.school.exams,model_school_exams,school_management.staff_group_manager,1,1,1,1
 access_school_papers,access.school.papers,model_school_papers,school_management.staff_group_manager,1,1,1,1
 access_rfq_wizard,access.rfq.wizard,model_rfq_wizard,school_management.staff_group_manager,1,1,1,1
+access_school_report_wizard,access.school.report.wizard,model_school_report_wizard,school_management.staff_group_manager,1,1,1,1
