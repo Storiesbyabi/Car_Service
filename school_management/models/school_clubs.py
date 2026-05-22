@@ -9,7 +9,7 @@ class SchoolClubs(models.Model):
     _inherit = 'mail.thread'
 
     name = fields.Char(required=True)
-    students_ids = fields.Many2many('school.students', ondelete="cascade")
+    students_ids = fields.Many2many('school.students',ondelete="cascade")
 
 
     def action_event(self):

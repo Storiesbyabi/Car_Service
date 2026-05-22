@@ -1,1 +1,2 @@
-from . import school_report_print
+from . import school_club_report
+from . import school_student_report

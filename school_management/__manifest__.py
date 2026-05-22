@@ -10,7 +10,7 @@
      """,
     'category': 'SchoolManagement/SchoolManagement',
     'depends': [
-        'base', 'mail', 'sale_management', 'contacts', 'purchase'],
+        'base', 'mail', 'sale_management', 'contacts', 'purchase','web'],
     'data': [
         'data/ir_sequence_data.xml',
         'data/school_department_data.xml',

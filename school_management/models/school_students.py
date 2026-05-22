@@ -19,7 +19,6 @@ class SchoolStudents(models.Model):
     exam_ids = fields.One2many('school.exams','students_id',readonly=True)
     std_status = fields.Selection(selection=[('absent','Absent'),('present','Present')],default='present')
 
-
     @api.model_create_multi
     def create(self, vals):
         """Automatically generate an admission number for each student registration
