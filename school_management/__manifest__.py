@@ -37,6 +37,8 @@
         'views/res_partner_views.xml',
         'views/school_leaves_views.xml',
         'wizad/school_report_wizard_views.xml',
+        'report/leave_report_template.xml',
+        'report/student_template_report.xml',
         'report/club_template_report.xml',
         'report/school_report_action.xml',
         'views/school_exams_views.xml',

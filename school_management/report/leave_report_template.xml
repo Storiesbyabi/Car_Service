@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_leave_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h1>Leave Reports</h1>
+                    </div>
+                    <t t-foreach="report" t-as="o">
+                        <t t-if="docs.student_leave == 'class'">
+                            <h3>Class
+                                <t t-esc="o['class']"/>
+                            </h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="padding:12px">Students Name</th>
+                                        <th style="padding:12px">Admission no</th>
+                                        <th style="padding:12px">Start Date</th>
+                                        <th style="padding:12px">End Date</th>
+                                        <th style="padding:12px">Total days</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['firstname']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['admission_number']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['start_date']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['end_date']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['total_days']"/>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+
+                            <h3>Student
+                                <t t-esc="o['firstname']"/>
+                            </h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="padding:12px">Admission no</th>
+                                        <th style="padding:12px">Start Date</th>
+                                        <th style="padding:12px">End Date</th>
+                                        <th style="padding:12px">Total days</th>
+                                        <th style="padding:12px">email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['admission_number']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['start_date']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['end_date']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['total_days']"/>
+                                        </td>
+                                        <td style="padding:12px">
+                                            <t t-esc="o['email']"/>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+
+    </template>
+</odoo>

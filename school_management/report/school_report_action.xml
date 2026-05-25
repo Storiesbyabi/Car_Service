@@ -18,6 +18,14 @@
         <field name="report_file">school_management.report_student_template</field>
         <field name="binding_type">report</field>
     </record>
+        <record id="action_leave_report"  model="ir.actions.report">
+        <field name="name">Leave Report</field>
+            <field name="model">school.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_management.report_leave_template</field>
+        <field name="report_file">school_management.report_leave_template</field>
+        <field name="binding_type">report</field>
+    </record>
 
     </data>
 </odoo>

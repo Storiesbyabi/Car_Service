@@ -10,7 +10,7 @@ class SchoolStudentReport(models.AbstractModel):
     def _get_report_values(self, docids,data=None):
         docs = self.env['school.report.wizard'].browse(docids)
 
-        query = """ select r.firstname,r.phone,r.email,s.admission_number,c.name as class,d.name from school_registration as r
+        query = """ select r.firstname,r.phone,r.email,s.admission_number,c.name as class,d.name as dep from school_registration as r
         inner join school_students as s on r.id = s.school_registration_id
         inner join school_class as c on s.current_class_id = c.id
         inner join school_department as d on c.department_id = d.id
@@ -32,8 +32,9 @@ class SchoolStudentReport(models.AbstractModel):
 
         print(report)
 
-        # return {
-        #     'doc_ids': docids,
-        #     'doc_model': 'school_report_wizard',
-        #     'docs': docs,
-        # }
+        return {
+            'doc_ids': docids,
+            'doc_model': 'school_report_wizard',
+            'docs': docs,
+            'report':report
+        }

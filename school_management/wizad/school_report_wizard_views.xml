@@ -7,11 +7,14 @@
             <form string="Report Wizard">
                 <group>
                     <field name="student_leave" invisible=" report_type != 'leave'"/>
+                    <field name="students_ids" invisible=" student_leave == 'class' " widget="many2many_tags" />
                     <field name="student_info" invisible=" report_type != 'student'"/>
-                    <field name="class_ids" widget="many2many_tags" invisible=" report_type == 'club' or student_info == 'department' " options="{'no_create': True}" />
+                    <field name="class_ids" widget="many2many_tags" invisible=" report_type == 'club' or student_info == 'department' or student_leave == 'student' " options="{'no_create': True}" />
                     <field name="type_selection" invisible=" report_type != 'leave'" />
                     <field name="department_ids" invisible=" report_type != 'student' or student_info == 'class' " widget="many2many_tags" options="{'no_create': True}" />
                     <field name="club_ids" invisible=" report_type != 'club'" widget="many2many_tags" options="{'no_create': True}" />
+                    <field  name="start_date" widget="daterange" options="{'end_date_field':'end_date'}" invisible=" type_selection != 'custom' " />
+                    <field name="end_date" invisible="1" />
                 </group>
                 <footer>
                 <button string="Print Report" type="object" class="btn-primary" name="action_print" />

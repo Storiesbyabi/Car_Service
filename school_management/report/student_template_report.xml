@@ -7,25 +7,24 @@
                         <div class="text-center">
                             <h1>Student Reports</h1>
                         </div>
-                        <t t-foreach="docs.club_ids" t-as="o">
-                        <h3><t t-esc="" /></h3>
+                        <t t-foreach="report" t-as="o">
+                        <h3><t t-esc="o['dep']" /></h3>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                <th style="padding:12px">Club Name</th>
                                 <th style="padding:12px">Students Name</th>
-                                <th style="padding:12px">Students Admission</th>
-                                <th style="padding:12px">Current Class </th>
-
+                                <th style="padding:12px">Phone</th>
+                                <th style="padding:12px">email</th>
+                                <th style="padding:12px">Admission no</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                             <tr>
-                                <td style="padding:12px"><t t-esc="o.name"/></td>
-                                <td style="padding:12px" ><t t-esc="o.students_ids.firstname"/></td>
-                                <td style="padding:12px" ><t t-esc="o.students_ids.admission_number"/></td>
-                                <td style="padding:12px" ><t t-esc="o.students_ids.current_class_id.name"/></td>
+                                <td style="padding:12px"><t t-esc="o['firstname']"/></td>
+                                <td style="padding:12px" ><t t-esc="o['phone']"/></td>
+                                <td style="padding:12px" ><t t-esc="o['email']"/></td>
+                                <td style="padding:12px" ><t t-esc="o['admission_number']"/></td>
                             </tr>
 
                             </tbody>
