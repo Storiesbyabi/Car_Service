@@ -46,4 +46,9 @@
     ],
     'installable': True,
     'application': True,
+    'assets':{
+        'web.assets_backend':[
+            'school_management/static/src/js/action_manager.js'
+        ]
+    }
 }

@@ -31,7 +31,7 @@
                 id="school_management_configuration_root"
                 parent="school_management_root"
                 name="Configuration"
-                sequence="3"
+                sequence="4"
         />
 
         <menuitem
@@ -67,7 +67,7 @@
                 id="school_management_report_root"
                 parent="school_management_root"
                 name="Reports"
-                sequence="4"
+                sequence="3"
         />
         <menuitem id="leave_view_reports_action"
                   parent="school_management_report_root"

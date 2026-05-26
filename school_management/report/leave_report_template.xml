@@ -8,23 +8,37 @@
                         <h1>Leave Reports</h1>
                     </div>
                     <t t-foreach="report" t-as="o">
-                        <t t-if="docs.student_leave == 'class'">
-                            <h3>Class
+                        <h3>Class
+                            <t t-if="docs.student_leave == 'class'">
                                 <t t-esc="o['class']"/>
-                            </h3>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="padding:12px">Students Name</th>
+                            </t>
+                            <t t-else="">
+                                <t t-esc="o['firstname']"/>
+                            </t>
+                        </h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <t t-if="docs.student_leave == 'class'">
+                                        <th style="padding:12px" scope="col">Students Name</th>
                                         <th style="padding:12px">Admission no</th>
                                         <th style="padding:12px">Start Date</th>
                                         <th style="padding:12px">End Date</th>
                                         <th style="padding:12px">Total days</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                    </t>
+                                    <t t-else="">
+                                        <th style="padding:12px">Admission no</th>
+                                        <th style="padding:12px">Start Date</th>
+                                        <th style="padding:12px">End Date</th>
+                                        <th style="padding:12px">Total days</th>
+                                        <th style="padding:12px">email</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                    <tr>
+                                <tr>
+                                    <t t-if="docs.student_leave == 'class'">
                                         <td style="padding:12px">
                                             <t t-esc="o['firstname']"/>
                                         </td>
@@ -40,29 +54,8 @@
                                         <td style="padding:12px">
                                             <t t-esc="o['total_days']"/>
                                         </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </t>
-                        <t t-else="">
-
-                            <h3>Student
-                                <t t-esc="o['firstname']"/>
-                            </h3>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="padding:12px">Admission no</th>
-                                        <th style="padding:12px">Start Date</th>
-                                        <th style="padding:12px">End Date</th>
-                                        <th style="padding:12px">Total days</th>
-                                        <th style="padding:12px">email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <tr>
+                                    </t>
+                                    <t t-else="">
                                         <td style="padding:12px">
                                             <t t-esc="o['admission_number']"/>
                                         </td>
@@ -78,12 +71,10 @@
                                         <td style="padding:12px">
                                             <t t-esc="o['email']"/>
                                         </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-
-                        </t>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
                     </t>
                 </div>
             </t>
