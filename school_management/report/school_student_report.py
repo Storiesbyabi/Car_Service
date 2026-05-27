@@ -8,7 +8,7 @@ class SchoolStudentReport(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids,data=None):
-        docs = self.env['school.report.wizard'].browse(docids)
+        docs = self.env['school.student.report.wizard'].browse(docids)
 
         query = """ select r.firstname,r.phone,r.email,s.admission_number,c.name as class,d.name as dep from school_registration as r
         inner join school_students as s on r.id = s.school_registration_id

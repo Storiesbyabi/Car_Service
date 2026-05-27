@@ -13,4 +13,3 @@ from . import res_partner
 from . import school_leaves
 from . import school_exams
 from . import school_papers
-from . import product_template

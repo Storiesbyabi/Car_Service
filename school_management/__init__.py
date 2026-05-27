@@ -1,5 +1,5 @@
 # # -*- coding: utf-8 -*-
 from . import models
-from . import wizad
+from . import wizard
 from . import report
 from . import controllers

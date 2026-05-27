@@ -8,7 +8,7 @@ class SchoolClubReport(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids,data=None):
-        docs = self.env['school.report.wizard'].browse(docids)
+        docs = self.env['school.club.report.wizard'].browse(docids)
 
         # print(docs.club_ids.students_ids.firstname)
 

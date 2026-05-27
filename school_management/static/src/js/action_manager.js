@@ -12,6 +12,7 @@ and downloads the generated file.
 */
 registry.category("ir.actions.report handlers").add("xlsx", async function (action) {
    if (action.report_type === 'xlsx') {
+       console.log("Js")
        BlockUI;
       await download({
               url: '/xlsx_reports',

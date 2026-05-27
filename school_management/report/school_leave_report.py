@@ -11,7 +11,7 @@ class SchoolLeaveReport(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        docs = self.env['school.report.wizard'].browse(docids)
+        docs = self.env['school.leave.report.wizard'].browse(docids)
 
         query = """ select r.firstname,r.phone,r.email,s.admission_number
         ,l.state as status,l.start_date,l.end_date,l.total_days
@@ -21,6 +21,7 @@ class SchoolLeaveReport(models.AbstractModel):
         inner join school_department as d on c.department_id = d.id
         inner join school_leaves as l on s.id = l.students_id
         """
+        print('docs',docs)
         params = []
         today = datetime.today().date()
         if docs.student_leave == 'class':
@@ -62,6 +63,7 @@ class SchoolLeaveReport(models.AbstractModel):
             params.append(start_str)
             params.append(end_str)
             print(222, start_str, end_str)
+        print('params',params)
         self.env.cr.execute(query, params)
         report = self.env.cr.dictfetchall()
         print(report)

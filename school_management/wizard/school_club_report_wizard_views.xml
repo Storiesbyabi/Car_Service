@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="school_club_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">school.club.report.wizard.view.form</field>
+        <field name="model">school.club.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Report Wizard">
+                <group>
+                    <field name="club_ids"  widget="many2many_tags" options="{'no_create': True}" />
+                </group>
+                <footer>
+                <button string="Print Report" type="object" class="btn-primary" name="action_print" />
+                    <button string="Xlsx Report" type="object" class="btn-primary" name="action_xlsx_report" />
+                    <button string="Cancel" special="cancel" type="object"/>
+                </footer>
+            </form>
+        </field>
+</record>
+    <record id="club_data_views_action" model="ir.actions.act_window">
+        <field name="name">Club Data</field>
+        <field name="res_model">school.club.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'report_type':'club'}</field>
+    </record>
+</odoo>
