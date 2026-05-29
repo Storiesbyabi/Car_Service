@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import io
 import json
-from odoo import fields,models
+from datetime import date
+from odoo import fields, models
 from odoo.exceptions import UserError
 from odoo.tools import json_default
+
 try:
     from odoo.tools.misc import xlsxwriter
 except ImportError:
@@ -47,8 +49,8 @@ class SchoolStudentReportWizard(models.TransientModel):
             raise UserError('Student Info is empty')
         data = {
             'class_ids': self.class_ids.ids,
-            'department_ids':self.department_ids.ids,
-            'student_info':self.student_info
+            'department_ids': self.department_ids.ids,
+            'student_info': self.student_info
         }
         return {
             'type': 'ir.actions.report',
@@ -59,15 +61,18 @@ class SchoolStudentReportWizard(models.TransientModel):
                      },
             'report_type': 'xlsx',
         }
-    def get_xlsx_report(self,data,response):
-        query = """ select r.firstname,r.phone,r.email,s.admission_number,c.name as class,d.name as dep from school_registration as r
+
+    def get_xlsx_report(self, data, response):
+        query = """ select r.firstname,r.phone,r.email,s.admission_number,cm.name as school,
+        c.name as class,d.name as dep from school_registration as r
                 inner join school_students as s on r.id = s.school_registration_id
                 inner join school_class as c on s.current_class_id = c.id
                 inner join school_department as d on c.department_id = d.id
+                inner join res_company as cm on r.company_id = cm.id
                 """
         params = []
         if data['student_info'] == 'class':
-            classes= data['class_ids']
+            classes = data['class_ids']
             query += """ where c.name in  %s"""
             params.append(tuple(classes))
         elif data['student_info'] == 'department':
@@ -77,7 +82,7 @@ class SchoolStudentReportWizard(models.TransientModel):
             params.append(tuple(department))
             print(tuple(department))
 
-        self.env.cr.execute(query,params)
+        self.env.cr.execute(query, params)
         docs = self.env.cr.dictfetchall()
 
         output = io.BytesIO()
@@ -90,20 +95,38 @@ class SchoolStudentReportWizard(models.TransientModel):
             {'align': 'center', 'bold': True, 'font_size': '15px', 'border': 1})
         head = workbook.add_format(
             {'align': 'center', 'bold': True, 'font_size': '20px'})
-        sheet.set_row(7,20)
-        sheet.set_column(7, 3, 10)
-        sheet.set_column(7,4,30)
-        sheet.set_column(7, 5, 30)
-        row = 8
-        sheet.write(7, 2, 'Name', subhead)
-        sheet.write(7, 3, 'Phone', subhead)
-        sheet.write(7, 4, 'email', subhead)
-        sheet.write(7, 5, 'Admission no', subhead)
+
+        print = workbook.add_format(
+            {'align': 'center', 'bold': True, 'font_size': '13px'})
+        dateformat = workbook.add_format(
+            {'font_size': '10px', 'align': 'center'}
+        )
+        today = date.today()
+        today = str(today)
+
+        sheet.set_row(9, 20)
+        sheet.set_column(7,0,15)
+        sheet.set_column(9, 3, 10)
+        sheet.set_column(9, 4, 30)
+        sheet.set_column(9, 5, 30)
+        row = 10
+        sheet.write(7,0,'Print Date:',print)
+        sheet.write(9, 2, 'SL No', subhead)
+        sheet.write(9, 3, 'Name', subhead)
+        sheet.write(9, 4, 'Phone', subhead)
+        sheet.write(9, 5, 'email', subhead)
+        sheet.write(9, 6, 'Admission no', subhead)
+        sheet.write(9, 7, 'School', subhead)
+
+        sheet.write(7,1,today,dateformat)
+
+        sl = 1
         if data['student_info'] == 'class':
             sheet.merge_range('C3:K6', 'Class REPORT', head)
-
             for doc in docs:
                 col = 2
+                sheet.write(row, col, sl, cell_format)
+                col += 1
                 sheet.write(row, col, doc['firstname'], cell_format)
                 col += 1
                 sheet.write(row, col, doc['phone'], cell_format)
@@ -111,11 +134,16 @@ class SchoolStudentReportWizard(models.TransientModel):
                 sheet.write(row, col, doc['email'], cell_format)
                 col += 1
                 sheet.write(row, col, doc['admission_number'], cell_format)
+                col +=1
+                sheet.write(row, col, doc['school'], cell_format)
                 row += 1
+                sl += 1
         else:
             sheet.merge_range('C3:K6', 'Department REPORT', head)
             for doc in docs:
                 col = 2
+                sheet.write(row, col, sl, cell_format)
+                col += 1
                 sheet.write(row, col, doc['firstname'], cell_format)
                 col += 1
                 sheet.write(row, col, doc['phone'], cell_format)
@@ -123,7 +151,10 @@ class SchoolStudentReportWizard(models.TransientModel):
                 sheet.write(row, col, doc['email'], cell_format)
                 col += 1
                 sheet.write(row, col, doc['admission_number'], cell_format)
+                col +=1
+                sheet.write(row, col, doc['school'], cell_format)
                 row += 1
+                sl += 1
         workbook.close()
         output.seek(0)
         response.stream.write(output.read())

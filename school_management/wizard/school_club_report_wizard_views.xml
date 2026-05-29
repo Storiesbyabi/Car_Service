@@ -9,8 +9,8 @@
                     <field name="club_ids"  widget="many2many_tags" options="{'no_create': True}" />
                 </group>
                 <footer>
-                <button string="Print Report" type="object" class="btn-primary" name="action_print" />
-                    <button string="Xlsx Report" type="object" class="btn-primary" name="action_xlsx_report" />
+                <button string="Print PDF" type="object" class="btn-primary" name="action_print" />
+                    <button string="Print XLSX" type="object" class="btn-primary" name="action_xlsx_report" />
                     <button string="Cancel" special="cancel" type="object"/>
                 </footer>
             </form>

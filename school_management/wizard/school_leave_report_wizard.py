@@ -77,12 +77,14 @@ class SchoolLeaveReportWizad(models.TransientModel):
         """
         print('get_xlsx_report')
         query = """ select r.firstname,r.phone,r.email,s.admission_number
-                ,l.state as status,l.start_date::text,l.end_date::text,l.total_days
+                ,l.state as status,l.start_date::text,l.end_date::text,l.total_days,
+                cm.name as school
                 ,c.name as class,d.name as dep from school_registration as r
                 inner join school_students as s on r.id = s.school_registration_id
                 inner join school_class as c on s.current_class_id = c.id
                 inner join school_department as d on c.department_id = d.id
                 inner join school_leaves as l on s.id = l.students_id
+                inner join res_company as cm on r.company_id = cm.id
                 """
         params = []
         today = datetime.today().date()
@@ -142,19 +144,35 @@ class SchoolLeaveReportWizad(models.TransientModel):
             {'align': 'center', 'bold': True, 'font_size': '15px', 'border': 1})
         head = workbook.add_format(
             {'align': 'center', 'bold': True, 'font_size': '20px'})
-        row = 8
-        sheet.set_row(7,20)
+        printformat = workbook.add_format(
+            {'align': 'center', 'bold': True, 'font_size': '13px'})
+        dateformat = workbook.add_format(
+            {'font_size': '10px', 'align': 'center'}
+        )
+
+        today = date.today()
+        today = str(today)
+        sheet.write(7, 1, today, dateformat)
+        row = 10
+        sheet.set_row(9,20)
+        sl = 1
         if data['student_leave'] == 'class':
             sheet.merge_range('C3:K6', 'Class REPORT', head)
-            sheet.set_column(7,4,15)
-            sheet.set_column(7,5,15)
-            sheet.write(7, 2, 'Name', subhead)
-            sheet.write(7, 3, 'Ad No', subhead)
-            sheet.write(7, 4, 'Start', subhead)
-            sheet.write(7, 5, 'End', subhead)
-            sheet.write(7, 6, 'Total', subhead)
+            sheet.set_column(7, 0, 15)
+            sheet.set_column(9,4,15)
+            sheet.set_column(9,5,15)
+            sheet.write(7, 0, 'Print Date:', printformat)
+            sheet.write(9, 2, 'SL No', subhead)
+            sheet.write(9, 3, 'Name', subhead)
+            sheet.write(9, 4, 'Ad No', subhead)
+            sheet.write(9, 5, 'Start', subhead)
+            sheet.write(9, 6, 'End', subhead)
+            sheet.write(9,7, 'Total', subhead)
+            sheet.write(9, 8, 'School', subhead)
             for r in docs:
                 col = 2
+                sheet.write(row, col, sl, cell_format)
+                col += 1
                 sheet.write(row, col, r['firstname'], cell_format)
                 col += 1
                 sheet.write(row, col, r['admission_number'], cell_format)
@@ -164,18 +182,27 @@ class SchoolLeaveReportWizad(models.TransientModel):
                 sheet.write(row, col, r['end_date'], cell_format)
                 col += 1
                 sheet.write(row, col, r['total_days'], cell_format)
+                col += 1
+                sheet.write(row, col, r['school'], cell_format)
                 row += 1
+                sl +=1
         elif data['student_leave'] == 'student':
             sheet.merge_range('C3:K6', 'Student REPORT', head)
-            sheet.set_column(7, 3, 15)
-            sheet.set_column(7, 4, 15)
-            sheet.write(7, 2, 'Ad No', subhead)
-            sheet.write(7, 3, 'Start', subhead)
-            sheet.write(7, 4, 'End', subhead)
-            sheet.write(7, 5, 'Total', subhead)
-            sheet.write(7, 6, 'Email', subhead)
+            sheet.set_column(7, 0, 15)
+            sheet.set_column(9, 3, 15)
+            sheet.set_column(9, 4, 15)
+            sheet.write(7, 0, 'Print Date:', printformat)
+            sheet.write(9, 2, 'SL No', subhead)
+            sheet.write(9, 3, 'Ad No', subhead)
+            sheet.write(9, 4, 'Start', subhead)
+            sheet.write(9, 5, 'End', subhead)
+            sheet.write(9, 6, 'Total', subhead)
+            sheet.write(9, 7, 'Email', subhead)
+            sheet.write(9, 8, 'School', subhead)
             for r in docs:
                 col = 2
+                sheet.write(row, col, sl, cell_format)
+                col += 1
                 sheet.write(row, col, r['admission_number'], cell_format)
                 col += 1
                 sheet.write(row, col, r['start_date'], cell_format)
@@ -185,7 +212,10 @@ class SchoolLeaveReportWizad(models.TransientModel):
                 sheet.write(row, col, r['total_days'], cell_format)
                 col += 1
                 sheet.write(row, col, r['email'], cell_format)
-                row +=1
+                col += 1
+                sheet.write(row, col, r['school'], cell_format)
+                row += 1
+                sl +=1
 
         workbook.close()
         output.seek(0)

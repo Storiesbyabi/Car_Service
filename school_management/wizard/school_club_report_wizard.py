@@ -2,6 +2,7 @@
 import io
 import json
 from odoo import fields,models
+from datetime import date
 from odoo.tools import json_default
 
 try:
@@ -50,18 +51,33 @@ class SchoolClubReportWizard(models.TransientModel):
             {'align': 'center', 'bold': True, 'font_size': '20px'})
         subhead = workbook.add_format(
             {'align': 'center', 'bold': True, 'font_size': '15px','border': 1,})
+        printformat = workbook.add_format(
+            {'align': 'center', 'bold': True, 'font_size': '13px'})
+        dateformat = workbook.add_format(
+            {'font_size': '10px', 'align': 'center'}
+        )
+        today = date.today()
+        today = str(today)
         sheet.merge_range('C3:K6', 'Clubs REPORT', head)
 
-        row = 8
-        sheet.set_row(7, 20)
-        sheet.set_column(7, 4, 15)
-        sheet.write(7,2,'Club',subhead)
-        sheet.write(7,3,'Name',subhead)
-        sheet.write(7,4,'Ad No',subhead)
-        sheet.write(7,5,'Class',subhead)
+        row = 10
+        sheet.set_column(7, 0, 15)
+        sheet.write(7, 0, 'Print Date:', printformat)
+        sheet.write(7, 1, today, dateformat)
+        sheet.set_row(9, 20)
+        sheet.set_column(9, 4, 15)
+        sheet.write(9,2,'Sl No',subhead)
+        sheet.write(9,3,'Club',subhead)
+        sheet.write(9,4,'Name',subhead)
+        sheet.write(9,5,'Ad No',subhead)
+        sheet.write(9,6,'Class',subhead)
+        sheet.write(9,7,'School',subhead)
+        sl = 1
         for o in clubs:
             d = self.env['school.clubs'].browse(o)
             col = 2
+            sheet.write(row, col, sl, cell_format)
+            col += 1
             sheet.write(row, col, d.name, cell_format)
             col += 1
             sheet.write(row, col, d.students_ids.firstname, cell_format)
@@ -69,6 +85,9 @@ class SchoolClubReportWizard(models.TransientModel):
             sheet.write(row, col, d.students_ids.admission_number, cell_format)
             col += 1
             sheet.write(row, col, d.students_ids.current_class_id.name, cell_format)
+            col += 1
+            sheet.write(row, col, d.students_ids.company_id.name, cell_format)
+            sl +=1
             row += 1
         workbook.close()
         output.seek(0)
