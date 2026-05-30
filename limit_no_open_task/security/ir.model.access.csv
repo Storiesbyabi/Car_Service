@@ -1,0 +1,2 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_project_approve,access.project.approve,model_project_approve,limit_no_open_task.admin,1,1,1,1

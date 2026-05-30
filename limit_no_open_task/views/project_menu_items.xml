@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<menuitem id="approve_menu" name="Approve order" parent="project.menu_main_pm" action="project_approve_views_action"  sequence="13" />
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="res.groups" id="assigner">
+           <field name="name">assigner</field>
+       </record>
+        <record model="res.groups" id="admin">
+           <field name="name">admin</field>
+       </record>
+   </data>
+</odoo>
