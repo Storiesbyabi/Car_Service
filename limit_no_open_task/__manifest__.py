@@ -6,18 +6,14 @@
     'description': """
      Limit Number of Open Task
      =================
-     Used for importing sales order from exel
+     Used for importing sales order from excel
      """,
     'depends': [
         'base', 'project'
     ],
     'data': [
-'security/project_task_groups.xml',
-        'security/ir.model.access.csv',
-        'views/project_approve_views.xml',
+        'security/project_task_groups.xml',
         'views/res_user_views.xml',
-        'views/project_task_views.xml',
-        'views/project_menu_items.xml'
 
     ],
     'application': True,
