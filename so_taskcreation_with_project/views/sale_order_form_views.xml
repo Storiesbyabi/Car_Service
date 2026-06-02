@@ -10,7 +10,7 @@
                 <field name="related_project_id" string="Related Project" domain="[('partner_id','=',partner_id)]"/>
                 </xpath>
             <xpath expr="//button[@name='payment_action_capture']" position="before" >
-                <button name="action_task" type="object" string="Create Task" class="btn-primary" invisible="state != 'sale' and not related_project_id.task_ids and not related_project_id" />
+                <button name="action_task" type="object" string="Create Task" class="btn-primary" invisible="state != 'sale' or not related_project_id.task_ids or not related_project_id" />
                 </xpath>
             <xpath expr="//div[@name='button_box']" position="inside" >
                 <button name="action_smart_btn" type="object" string="Task" class="oe_stat_button" icon="fa-id-card-o" />

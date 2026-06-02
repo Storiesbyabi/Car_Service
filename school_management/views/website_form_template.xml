@@ -1,0 +1,133 @@
+<odoo>
+<template id="web_form_template">
+   <t t-call="website.layout">
+       <div id="wrap" class="oe_structure oe_empty">
+           <section >
+               <div class="container">
+                   <form action="/webform/submit" enctype="multipart/form-data" class="o_mark_required" method="POST">
+                       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                       <div class="row">
+                           <!-- First n Field -->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="firstname">
+                                       First Name<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="firstname" type="text" class="form-control" name="firstname" required="1"/>
+                                   </div>
+                               </div>
+                           </div>
+<!--                           Last name-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="lastname">
+                                       Last Name<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="lastname" type="text" class="form-control" name="lastname"/>
+                                   </div>
+                               </div>
+                           </div>
+<!--                            Father-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="father">
+                                       Father<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="father" type="text" class="form-control" name="father" />
+                                   </div>
+                               </div>
+                           </div>
+<!--                           Mother-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="mother">
+                                       Mother<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="mother" type="text" class="form-control" name="mother" />
+                                   </div>
+                               </div>
+                           </div>
+                           <!-- Phone Field -->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="phone">
+                                       Phone<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="phone" type="text" class="form-control" name="phone" />
+                                   </div>
+                               </div>
+                           </div>
+                           <!-- Email Field -->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="email">
+                                       Email<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="email" type="email" class="form-control" name="email" required="1"/>
+                                   </div>
+                               </div>
+                           </div>
+                            <!--Gender-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="gender">
+                                       Gender<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="gender" type="text" class="form-control" name="gender" />
+                                   </div>
+                               </div>
+                           </div>
+                           <!--Dob-->
+                            <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="dob">
+                                       DOB<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="dob" type="date" class="form-control" name="dob" />
+                                   </div>
+                               </div>
+                           </div>
+                            <!--Image-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="image">
+                                       Image<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="image" type="file" class="form-control" name="image" options="{'accepted_file_extensions': '.jpeg'}" required="1"/>
+                                   </div>
+                               </div>
+                           </div>
+
+                            <!--Address-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="address">
+                                       Address<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <textarea id="address"  class="form-control" name="address" />
+                                   </div>
+                               </div>
+                           </div>
+                           <!-- Submit Button -->
+                           <div class="form-group col-12">
+                               <div style="width: 200px;"></div>
+                               <button type="submit" class="btn btn-primary">Submit</button>
+                           </div>
+                       </div>
+                   </form>
+               </div>
+           </section>
+       </div>
+   </t>
+</template>
+</odoo>

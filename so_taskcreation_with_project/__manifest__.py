@@ -9,7 +9,7 @@
      Used for importing sales order from excel
      """,
     'depends': [
-        'base', 'sale','sale_management','project'
+        'base', 'sale','sale_management','project',
     ],
     'data': [
         'views/sale_order_form_views.xml'

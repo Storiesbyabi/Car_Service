@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 {
     'name': 'School Management',
     'version': '1.0',
@@ -10,7 +10,7 @@
      """,
     'category': 'SchoolManagement/SchoolManagement',
     'depends': [
-        'base', 'mail', 'sale_management', 'contacts','web'],
+        'base', 'mail', 'sale_management', 'contacts', 'web', 'website'],
     'data': [
         'data/ir_sequence_data.xml',
         'data/school_department_data.xml',
@@ -43,11 +43,13 @@
         'report/school_report_action.xml',
         'views/school_exams_views.xml',
         'views/school_management_menus.xml',
+        'views/website_form_template.xml',
+        'views/website_register_menu.xml'
     ],
     'installable': True,
     'application': True,
-    'assets':{
-        'web.assets_backend':[
+    'assets': {
+        'web.assets_backend': [
             'school_management/static/src/js/action_manager.js'
         ]
     }
