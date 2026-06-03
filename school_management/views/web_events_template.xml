@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="web_events_template">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section>
+                    <div class="container">
+                        <form action="/events/submit" enctype="multipart/form-data" class="o_mark_required"
+                              method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="row">
+                                <!-- Name Field -->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="name">
+                                            Name
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="name" type="text" class="form-control" name="name"
+                                                   required="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <!-- Clubs Field -->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="clubs">
+                                            Clubs
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                             <select id="clubs" name="clubs" required="True" class="form-control">
+                                                <t t-foreach="clubs" t-as="club">
+                                                    <option t-att-value="club.id" t-esc="club.name"/>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                           date begin-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;"
+                                               for="date_begin">
+                                            Date Begin
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="date_begin" type="date" class="form-control" name="date_begin"
+                                                   required="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                            Date End-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="date_end">
+                                            Date End
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="date_end" type="date" class="form-control" name="date_end"
+                                                   required="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Organizer Field -->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="organizer">
+                                            Organizer
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                             <select id="organizer" name="organizer" required="True" class="form-control">
+                                                <t t-foreach="partners" t-as="partner">
+                                                    <option t-att-value="partner.id" t-esc="partner.name"/>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Description-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="description">
+                                            Description
+                                        </label>
+                                        <div class="col-sm">
+                                            <textarea id="description" class="form-control" name="description"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <!-- Active day-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="active">
+                                            Active
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="active" type="checkbox" class="form-check-input"
+                                                   name="active" value="True"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Submit Button -->
+                                <div class="form-group col-12">
+                                    <div style="width: 200px;"></div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

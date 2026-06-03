@@ -22,7 +22,7 @@
                            <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="lastname">
-                                       Last Name<span class="text-danger"> *</span>
+                                       Last Name
                                    </label>
                                    <div class="col-sm">
                                        <input id="lastname" type="text" class="form-control" name="lastname"/>
@@ -33,7 +33,7 @@
                            <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="father">
-                                       Father<span class="text-danger"> *</span>
+                                       Father
                                    </label>
                                    <div class="col-sm">
                                        <input id="father" type="text" class="form-control" name="father" />
@@ -44,7 +44,7 @@
                            <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="mother">
-                                       Mother<span class="text-danger"> *</span>
+                                       Mother
                                    </label>
                                    <div class="col-sm">
                                        <input id="mother" type="text" class="form-control" name="mother" />
@@ -55,7 +55,7 @@
                            <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="phone">
-                                       Phone<span class="text-danger"> *</span>
+                                       Phone
                                    </label>
                                    <div class="col-sm">
                                        <input id="phone" type="text" class="form-control" name="phone" />
@@ -77,7 +77,7 @@
                            <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="gender">
-                                       Gender<span class="text-danger"> *</span>
+                                       Gender
                                    </label>
                                    <div class="col-sm">
                                        <input id="gender" type="text" class="form-control" name="gender" />
@@ -88,7 +88,7 @@
                             <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="dob">
-                                       DOB<span class="text-danger"> *</span>
+                                       DOB
                                    </label>
                                    <div class="col-sm">
                                        <input id="dob" type="date" class="form-control" name="dob" />
@@ -96,22 +96,22 @@
                                </div>
                            </div>
                             <!--Image-->
-                           <div class="form-group col-12">
-                               <div class="row">
-                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="image">
-                                       Image<span class="text-danger"> *</span>
-                                   </label>
-                                   <div class="col-sm">
-                                       <input id="image" type="file" class="form-control" name="image" options="{'accepted_file_extensions': '.jpeg'}" required="1"/>
-                                   </div>
-                               </div>
-                           </div>
+<!--                           <div class="form-group col-12">-->
+<!--                               <div class="row">-->
+<!--                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="image">-->
+<!--                                       Image<span class="text-danger"> *</span>-->
+<!--                                   </label>-->
+<!--                                   <div class="col-sm">-->
+<!--                                       <input id="image" type="file" class="form-control" name="image" options="{'accepted_file_extensions': '.jpeg'}" required="1"/>-->
+<!--                                   </div>-->
+<!--                               </div>-->
+<!--                           </div>-->
 
                             <!--Address-->
                            <div class="form-group col-12">
                                <div class="row">
                                    <label class="col-form-label col-sm-auto" style="width: 200px;" for="address">
-                                       Address<span class="text-danger"> *</span>
+                                       Address
                                    </label>
                                    <div class="col-sm">
                                        <textarea id="address"  class="form-control" name="address" />

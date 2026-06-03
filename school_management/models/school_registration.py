@@ -34,7 +34,7 @@ class SchoolRegistration(models.Model):
     age = fields.Integer(compute='_compute_age')
     gender = fields.Char()
     registration_date = fields.Date(default=date.today())
-    photo = fields.Image(required=True)
+    photo = fields.Image()
     tc = fields.Image()
     aadhar_number = fields.Char()
     status = fields.Selection(selection=[('draft', 'Draft'),

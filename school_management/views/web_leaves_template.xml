@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="web_leaves_template">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section>
+                    <div class="container">
+                        <form action="/leaves/submit" enctype="multipart/form-data" class="o_mark_required"
+                              method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="row">
+                                <!-- Students Field -->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="students">
+                                            Students
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                            <select id="students" name="studentss" required="True" class="form-control">
+                                                <t t-foreach="students" t-as="student">
+                                                    <option t-att-value="student.id" t-esc="student.firstname"/>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                           Start date-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;"
+                                               for="start_date">
+                                            Start date
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="start_date" type="date" class="form-control" name="start_date"
+                                                   required="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--                            End date-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="end_date">
+                                            End Date
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="end_date" type="date" class="form-control" name="end_date"
+                                                   required="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Half day-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="half_day">
+                                            Half Day
+                                        </label>
+                                        <div class="col-sm">
+                                            <input id="half_day" type="checkbox" class="form-check-input"
+                                                   name="half_day" value="False"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Reason-->
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="reason">
+                                            Reason
+                                        </label>
+                                        <div class="col-sm">
+                                            <textarea id="reason" class="form-control" name="reason"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Submit Button -->
+                                <div class="form-group col-12">
+                                    <div style="width: 200px;"></div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

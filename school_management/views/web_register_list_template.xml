@@ -1,0 +1,21 @@
+<odoo>
+<template id="web_register_list_template">
+   <t t-call="website.layout">
+       <div id="wrap" class="oe_structure oe_empty">
+           <section >
+               <div class="container">
+                   <button class="btn btn-primary m-3" onclick="window.location.href='/register/register-new'" >Register</button>
+                   <ul class="list-group ">
+                        <t t-foreach="registers" t-as="register">
+                            <li class="list-unstyled list-group-item d-flex justify-content-around" >
+                                <t t-att-value="register.id" t-esc="register.firstname"/>
+                                <button class="btn btn-primary" name="edit" >Edit</button>
+                            </li>
+                        </t>
+                   </ul>
+               </div>
+           </section>
+       </div>
+   </t>
+</template>
+</odoo>
