@@ -9,6 +9,7 @@ class SchoolEvents(models.Model):
     _name = 'school.events'
     _description = 'School events'
     _inherit = 'mail.thread'
+    _order = 'create_date desc'
 
     name = fields.Char(required=True)
     clubs_id = fields.Many2one(comodel_name="school.clubs")

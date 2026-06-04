@@ -1,0 +1,125 @@
+<odoo>
+<template id="web_form_edit_template">
+   <t t-call="website.layout">
+       <div id="wrap" class="oe_structure oe_empty">
+           <section >
+               <div class="container">
+                   <form action="/register/edit/submit" enctype="multipart/form-data" class="o_mark_required" method="POST">
+                       <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <t t-foreach="record" t-as="r">
+                            <input type="hidden" name="id" t-att-value="r.id" />
+                       <div class="row">
+                           <!-- First n Field -->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="firstname">
+                                       First Name<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="firstname" type="text" class="form-control" name="firstname" required="1" t-att-value="r.firstname"/>
+                                   </div>
+                               </div>
+                           </div>
+<!--                           Last name-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="lastname">
+                                       Last Name
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="lastname" type="text" class="form-control" name="lastname" t-att-value="r.lastname"/>
+                                   </div>
+                               </div>
+                           </div>
+<!--                            Father-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="father">
+                                       Father
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="father" type="text" class="form-control" name="father" t-att-value="r.father"/>
+                                   </div>
+                               </div>
+                           </div>
+<!--                           Mother-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="mother">
+                                       Mother
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="mother" type="text" class="form-control" name="mother" t-att-value="r.mother"/>
+                                   </div>
+                               </div>
+                           </div>
+                           <!-- Phone Field -->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="phone">
+                                       Phone
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="phone" type="text" class="form-control" name="phone" t-att-value="r.phone"/>
+                                   </div>
+                               </div>
+                           </div>
+                           <!-- Email Field -->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="email">
+                                       Email<span class="text-danger"> *</span>
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="email" type="email" class="form-control" name="email" required="1" t-att-value="r.email"/>
+                                   </div>
+                               </div>
+                           </div>
+                            <!--Gender-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="gender">
+                                       Gender
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="gender" type="text" class="form-control" name="gender" t-att-value="r.gender"/>
+                                   </div>
+                               </div>
+                           </div>
+                           <!--Dob-->
+                            <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="dob">
+                                       DOB
+                                   </label>
+                                   <div class="col-sm">
+                                       <input id="dob" type="date" class="form-control" name="dob" t-att-value="r.dob" />
+                                   </div>
+                               </div>
+                           </div>
+                            <!--Address-->
+                           <div class="form-group col-12">
+                               <div class="row">
+                                   <label class="col-form-label col-sm-auto" style="width: 200px;" for="address">
+                                       Address
+                                   </label>
+                                   <div class="col-sm">
+                                       <textarea id="address"  class="form-control" name="address" t-att-value="r.communication_address" />
+                                   </div>
+                               </div>
+                           </div>
+                           <!-- Submit Button -->
+                           <div class="form-group col-12">
+                               <div style="width: 200px;"></div>
+                               <button type="submit" class="btn btn-primary">Submit</button>
+                           </div>
+                       </div>
+                        </t>
+                   </form>
+
+               </div>
+           </section>
+       </div>
+   </t>
+</template>
+</odoo>

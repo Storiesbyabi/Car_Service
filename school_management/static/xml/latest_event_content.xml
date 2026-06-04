@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+   <t t-name="school_management.event_data">
+       <section class="events_section">
+           <div class="container">
+               <h3 class="section_heading">Latest Events</h3>
+               <div class="categories_wrapper">
+
+
+                       <ul class="list-group" >
+                           <t t-foreach="result" t-as="event" t-key="event.id">
+                           <li class="list-unstyled list-group-item d-flex justify-content-around">
+                                <a
+                                t-attf-href="'/events/view/%s'% {event}">
+                               <t t-esc="result[event]"/></a>
+                           </li>
+                           </t>
+                       </ul>
+
+
+                       <div class="categories">
+<!--                           <div class="img_wrapper">-->
+<!--                               <t t-if="category.image_1920">-->
+<!--                                   <img t-att-src="'data:image/png;base64,' + category.image_1920"-->
+<!--                                        class="img img-fluid rotate-center"-->
+<!--                                        t-att-alt="category.name or 'Category Image'"-->
+<!--                                        loading="lazy"/>-->
+<!--                               </t>-->
+<!--                               <t t-else="">-->
+<!--                                   <img src="/theme_og_store/static/src/img/default_category.svg"-->
+<!--                                        class="img img-fluid rotate-center"-->
+<!--                                        alt="Default Category Image"-->
+<!--                                        loading="lazy"/>-->
+<!--                               </t>-->
+<!--                           </div>-->
+
+
+
+
+
+                       </div>
+
+               </div>
+           </div>
+       </section>
+   </t>
+</templates>

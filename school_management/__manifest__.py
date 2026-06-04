@@ -43,16 +43,21 @@
         'report/school_report_action.xml',
         'views/school_exams_views.xml',
         'views/school_management_menus.xml',
+        'views/snippets/latest_event_template.xml',
         'views/web_register_list_template.xml',
         'views/web_leaves_template.xml',
         'views/web_events_template.xml',
         'views/web_thank_you_template.xml',
         'views/web_form_template.xml',
+        'views/web_form_edit_template.xml',
         'views/web_register_menu.xml'
     ],
     'installable': True,
     'application': True,
     'assets': {
+        'web.assets_frontend':[
+            'school_management/static/xml/latest_event_content.xml',
+            'school_management/static/src/js/latest_event.js'],
         'web.assets_backend': [
             'school_management/static/src/js/action_manager.js'
         ]

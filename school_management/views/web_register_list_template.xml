@@ -5,11 +5,11 @@
            <section >
                <div class="container">
                    <button class="btn btn-primary m-3" onclick="window.location.href='/register/register-new'" >Register</button>
-                   <ul class="list-group ">
+                   <ul class="list-group">
                         <t t-foreach="registers" t-as="register">
                             <li class="list-unstyled list-group-item d-flex justify-content-around" >
                                 <t t-att-value="register.id" t-esc="register.firstname"/>
-                                <button class="btn btn-primary" name="edit" >Edit</button>
+                                <a t-att-href="'/register/edit/%s'% register.id" class="btn btn-primary" name="edit" >Edit</a>
                             </li>
                         </t>
                    </ul>

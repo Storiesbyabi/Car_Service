@@ -6,13 +6,33 @@ class WebFormController(http.Controller):
     @http.route('/register', type='http', auth='public', website=True)
     def web_form(self, **kwargs):
         registers = request.env['school.registration'].sudo().search([])
-        if kwargs.get('default_id'):
-            print('id',default_id)
         return request.render('school_management.web_register_list_template',{'registers':registers})
 
-    @http.route('/register/edit', type='http', auth='public', website=True)
-    def action_edit(self, **kwargs):
-        print('id',kwargs.get('edit'))
+    @http.route('/register/edit/<int:record_id>', type='http', auth='public', website=True)
+    def action_edit(self,record_id, **post):
+        print('id',record_id)
+        record=request.env['school.registration'].sudo().browse(record_id)
+        return request.render('school_management.web_form_edit_template',{'record':record})
+
+    @http.route('/register/edit/submit', type='http', auth='public', website=True, methods=['POST'])
+    def action_edit_submit(self, **post):
+        print('name',post.get('firstname'))
+        record_id=post.get('id')
+        print('id',post.get('id'))
+        data = request.env['school.registration'].sudo().browse(int(record_id))
+        print('data',data)
+        data.write({
+            'firstname': post.get('firstname'),
+            'lastname': post.get('lastname'),
+            'email': post.get('email'),
+            'father': post.get('father'),
+            'mother': post.get('mother'),
+            'phone': post.get('phone'),
+            'gender': post.get('gender'),
+            'dob': post.get('dob'),
+            'communication_address': post.get('address'),
+        })
+        return request.redirect('/thank-you-page')
 
 
     @http.route('/register/register-new', auth='public', website=True)
@@ -22,18 +42,19 @@ class WebFormController(http.Controller):
 
     @http.route('/webform/submit', type='http', auth='public', website=True, methods=['POST'])
     def handle_web_form_submission(self, **post):
-       request.env['school.registration'].sudo().create({
-           'firstname': post.get('firstname'),
-           'lastname': post.get('lastname',''),
-           'email': post.get('email'),
-           'father': post.get('father',''),
-           'mother': post.get('mother',''),
-           'phone': post.get('phone',''),
-           'gender': post.get('gender',''),
-           'dob': post.get('dob',''),
-           'communication_address': post.get('address',''),
-       })
-       return request.redirect('/thank-you-page')
+        request.env['school.registration'].sudo().create({
+            'firstname': post.get('firstname'),
+            'lastname': post.get('lastname', ''),
+            'email': post.get('email'),
+            'father': post.get('father', ''),
+            'mother': post.get('mother', ''),
+            'phone': post.get('phone', ''),
+            'gender': post.get('gender', ''),
+            'dob': post.get('dob', ''),
+            'communication_address': post.get('address', ''),
+        })
+
+        return request.redirect('/thank-you-page')
 
     @http.route('/leaves', type='http', auth='public', website=True)
     def leave_web_form(self, **kwargs):
@@ -60,6 +81,8 @@ class WebFormController(http.Controller):
                              {'clubs':clubs,'partners':partners})
     @http.route('/events/submit', type='http', auth='public', website=True, methods=['POST'])
     def web_event_submission(self, **post):
+        # print('poster',post.get('poster'))
+
        request.env['school.events'].sudo().create({
            'name': post.get('name'),
            'clubs_id': post.get('clubs'),
