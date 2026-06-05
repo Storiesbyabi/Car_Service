@@ -47,6 +47,7 @@
         'views/web_register_list_template.xml',
         'views/web_leaves_template.xml',
         'views/web_events_template.xml',
+        'views/web_event_view_template.xml',
         'views/web_thank_you_template.xml',
         'views/web_form_template.xml',
         'views/web_form_edit_template.xml',

@@ -81,7 +81,6 @@ class WebFormController(http.Controller):
                              {'clubs':clubs,'partners':partners})
     @http.route('/events/submit', type='http', auth='public', website=True, methods=['POST'])
     def web_event_submission(self, **post):
-        # print('poster',post.get('poster'))
 
        request.env['school.events'].sudo().create({
            'name': post.get('name'),

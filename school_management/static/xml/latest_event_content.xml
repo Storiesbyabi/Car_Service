@@ -1,47 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<templates xml:space="preserve">
+<template xml:space="preserve">
    <t t-name="school_management.event_data">
        <section class="events_section">
-           <div class="container">
-               <h3 class="section_heading">Latest Events</h3>
-               <div class="categories_wrapper">
+                    <div class="container d-flex  ">
 
 
-                       <ul class="list-group" >
-                           <t t-foreach="result" t-as="event" t-key="event.id">
-                           <li class="list-unstyled list-group-item d-flex justify-content-around">
-                                <a
-                                t-attf-href="'/events/view/%s'% {event}">
-                               <t t-esc="result[event]"/></a>
-                           </li>
-                           </t>
-                       </ul>
+                        <t t-set="uniq" t-value="datetime.datetime.now().microsecond"/>
+        <div t-attf-id="myCarouselCards{{uniq}}" class="s_carousel_cards s_carousel_cards_with_img s_carousel_boxed container carousel carousel-fade slide" data-bs-interval="10000" data-bs-ride="true" data-option-name="CarouselCards" style="--card-img-size-h: 60%; --CardBody-extra-height: 0px;">
 
-
-                       <div class="categories">
-<!--                           <div class="img_wrapper">-->
-<!--                               <t t-if="category.image_1920">-->
-<!--                                   <img t-att-src="'data:image/png;base64,' + category.image_1920"-->
-<!--                                        class="img img-fluid rotate-center"-->
-<!--                                        t-att-alt="category.name or 'Category Image'"-->
-<!--                                        loading="lazy"/>-->
-<!--                               </t>-->
-<!--                               <t t-else="">-->
-<!--                                   <img src="/theme_og_store/static/src/img/default_category.svg"-->
-<!--                                        class="img img-fluid rotate-center"-->
-<!--                                        alt="Default Category Image"-->
-<!--                                        loading="lazy"/>-->
-<!--                               </t>-->
-<!--                           </div>-->
+        <t t-foreach="result" t-as="event" t-key="event.id">
+       <div class="s_carousel_cards_item carousel-item active p-0" data-name="Slide">
 
 
 
+                    <div class="card m-3" style="width: 18rem;">
+                        <t t-if="result[event][1]">
+                    <img class="card-img-top" t-att-src="'data:image/png;base64,' + result[event][1]"
+                         alt="Card image cap"/></t>
+                        <t t-else="">
+                            <img class="card-img-top" src="school_management/static/src/img/images.png"
+                                 alt="Card image cap"/>
+                        </t>
+                        <div class="card-body">
+                        <h5 class="card-title"><t t-esc="result[event][0]"/></h5>
+                            <p class="card-text"><t t-esc="result[event][2]" /></p>
+                            <a t-attf-href="/events/view/#{event}" class="btn btn-primary">Go To Event</a>
+                        </div>
+                    </div>
+       </div>
+                        </t>
+</div>
 
 
-                       </div>
+                        <div class="o_horizontal_controllers position-absolute start-0 end-0 bottom-0 o_not_editable">
+                <div class="o_horizontal_controllers_row d-flex gap-3 justify-content-between flex-nowrap">
+                    <!-- Indicators -->
+                    <div class="s_carousel_indicators_dots carousel-indicators align-items-center flex-shrink-1 w-auto mb-0">
+                        <button type="button" t-attf-data-bs-target="#myCarouselCards{{uniq}}" data-bs-slide-to="0" class="active"/>
+                        <button type="button" t-attf-data-bs-target="#myCarouselCards{{uniq}}" data-bs-slide-to="1"/>
+                        <button type="button" t-attf-data-bs-target="#myCarouselCards{{uniq}}" data-bs-slide-to="2"/>
+                    </div>
+                    <!-- Controls -->
+                    <div class="o_arrows_wrapper gap-2 align-items-center w-auto p-0">
+                        <button class="carousel-control-prev bottom-0 o_not_editable" contenteditable="false" t-attf-data-bs-target="#myCarouselCards{{uniq}}" data-bs-slide="prev" aria-label="Previous" title="Previous">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"/>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next bottom-0 o_not_editable" contenteditable="false" t-attf-data-bs-target="#myCarouselCards{{uniq}}" data-bs-slide="next" role="img" aria-label="Next" title="Next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"/>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-               </div>
-           </div>
        </section>
-   </t>
-</templates>
+</t>
+</template>

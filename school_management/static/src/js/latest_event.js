@@ -12,3 +12,4 @@ publicWidget.registry.get_latest_event = publicWidget.Widget.extend({
        }
    },
 });
+

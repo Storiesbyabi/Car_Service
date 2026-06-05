@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="web_event_view_template">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+            <section>
+            <div class="container">
+                <t t-foreach="event" t-as="e">
+                <div class="row">
+                    <!-- Name Field -->
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <label class="col-form-label col-sm-auto" style="width: 200px;" for="name">
+                                Name
+                            </label>
+                            <div class="col-sm">
+                                <input id="name" type="text" class="form-control" name="name" t-att-value="e.name"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Clubs Field -->
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <label class="col-form-label col-sm-auto" style="width: 200px;" for="clubs">
+                                Clubs
+                            </label>
+                            <div class="col-sm">
+                                <input t-att-value="e.clubs_id.name" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                           date begin-->
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <label class="col-form-label col-sm-auto" style="width: 200px;"
+                                   for="date_begin">
+                                Date Begin
+                            </label>
+                            <div class="col-sm">
+                                <input id="date_begin" t-att-value="e.date_begin" class="form-control" name="date_begin"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                            Date End-->
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <label class="col-form-label col-sm-auto" style="width: 200px;" for="date_end">
+                                Date End
+                            </label>
+                            <div class="col-sm">
+                                <input id="date_end" class="form-control" name="date_end" t-att-value="e.date_end"
+                                       readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Organizer Field -->
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <label class="col-form-label col-sm-auto" style="width: 200px;" for="organizer">
+                                Organizer
+
+                            </label>
+                            <div class="col-sm">
+                            <input class="form-control" t-att-value="e.organizer_id.name"
+                                   readonly="readonly"/>
+                        </div>
+                    </div>
+                </div>
+                <!--Description-->
+                <div class="form-group col-12">
+                    <div class="row">
+                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="description">
+                            Description
+                        </label>
+                        <div class="col-sm">
+                            <textarea id="description" t-att-value="e.description" class="form-control"
+                                      name="description" readonly="readonly"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- Active day-->
+                <div class="form-group col-12">
+                    <div class="row">
+                        <label class="col-form-label col-sm-auto" style="width: 200px;" for="active">
+                            Active
+                        </label>
+                        <div class="col-sm">
+                            <t t-if="e.active">
+                            <input id="active"  class="form-control"
+                                   name="active" value="Yes" readonly="readonly"/>
+                            </t>
+                                <t t-else="">
+                                    <input id="active"  class="form-control"
+                                   name="active" value="No" readonly="readonly"/>
+                                </t>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                    <t t-if="poster">
+                                         <img class="card-img-top" t-att-src="'data:image/png;base64,' + poster" alt="Card image cap"/></t>
+                    <t t-else="">
+                        <img class="card-img-top" src="school_management/static/src/img/images.png" alt="Card image cap"/>
+                    </t>
+        </t>
+
+    </div>
+</section>
+        </div>
+        </t>
+        </template>
+        </odoo>
