@@ -17,10 +17,12 @@ class WebsiteEvent(http.Controller):
                decode = event.poster.decode('utf-8')
            else:
                decode = False
-
+           time = datetime.now().microsecond
+           print('time',time)
            event_list.append(event.name)
            event_list.append(decode)
            event_list.append(event.description)
+           event_list.append(time)
            values[event.id] = event_list
            print(event_list[2])
        return values
@@ -31,7 +33,10 @@ class WebsiteEvent(http.Controller):
        print('record',record_id)
        event = request.env['school.events'].sudo().browse(record_id)
        print('event_club',event.active)
-       poster = event.poster.decode('utf-8')
+       if event.poster:
+           poster = event.poster.decode('utf-8')
+       else:
+           poster = False
        return request.render('school_management.web_event_view_template',{'event':event,'poster':poster})
 
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template xml:space="preserve">
+   <t t-name="school_management.event_data">
+       <section class="events_section">
+            <div class="container">
+
+
+           <div t-attf-id="Carousel#{heroCarousel}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+
+       <t t-foreach="result_list" t-as="result" t-key="result.id">
+               <div class="carousel-item active d-flex" >
+            <t t-foreach="result" t-as="event" t-key="event.id" >
+
+      <div class="carousel-overlay">
+
+<!--Card-->
+                    <div class="card m-3" style="width: 18rem;">
+                        <t t-if="result[event][1]">
+                    <img class="card-img-top" t-att-src="'data:image/png;base64,' + result[event][1]"
+                         alt="Card image cap"/></t>
+                        <t t-else="">
+                            <img class="card-img-top" src="school_management/static/src/img/images.png"
+                                 alt="Card image cap"/>
+                        </t>
+                        <div class="card-body">
+                        <h5 class="card-title"><t t-esc="result[event][0]"/></h5>
+                            <p class="card-text"><t t-esc="result[event][2]" /></p>
+                            <a t-attf-href="/events/view/#{event}" class="btn btn-primary">Go To Event</a>
+                        </div>
+                    </div>
+<!--          card-->
+           </div>
+     </t>
+    </div>
+
+       </t>
+
+
+            </div>
+
+
+        </div>
+                <button class="carousel-control-prev text-dark" type="button"
+    t-attf-data-bs-target="#Carousel#{heroCarousel}" data-bs-slide="prev">
+    &#10094;
+  </button>
+
+  <button class="carousel-control-next text-dark " id="btn-next" type="button"
+    t-attf-data-bs-target="#Carousel#{heroCarousel}" data-bs-slide="next">
+    &#10095;
+  </button>
+
+</div>
+       </section>
+</t>
+</template>

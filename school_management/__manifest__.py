@@ -57,7 +57,7 @@
     'application': True,
     'assets': {
         'web.assets_frontend':[
-            'school_management/static/xml/latest_event_content.xml',
+            'school_management/static/src/xml/latest_event_content.xml',
             'school_management/static/src/js/latest_event.js'],
         'web.assets_backend': [
             'school_management/static/src/js/action_manager.js'
