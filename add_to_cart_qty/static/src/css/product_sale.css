@@ -1,0 +1,7 @@
+#add_qty{
+    opacity: 0;
+}
+.oe_product_cart:hover #add_qty{
+    opacity: 1;
+}
+
