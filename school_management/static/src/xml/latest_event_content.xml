@@ -2,15 +2,16 @@
 <template xml:space="preserve">
    <t t-name="school_management.event_data">
        <section class="events_section">
-            <div class="container">
 
 
-           <div t-attf-id="Carousel#{heroCarousel}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+           <div t-attf-id="Carousel#{heroCarousel}" class="container carousel slide " data-bs-ride="carousel">
   <div class="carousel-inner">
 
 
        <t t-foreach="result_list" t-as="result" t-key="result.id">
-               <div class="carousel-item active d-flex" >
+               <div class="carousel-item active">
+                   <div class="d-flex">
             <t t-foreach="result" t-as="event" t-key="event.id" >
 
       <div class="carousel-overlay">
@@ -34,6 +35,7 @@
            </div>
      </t>
     </div>
+           </div>
 
        </t>
 
@@ -52,7 +54,7 @@
     &#10095;
   </button>
 
-</div>
+
        </section>
 </t>
 </template>

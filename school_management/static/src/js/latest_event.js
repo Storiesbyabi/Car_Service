@@ -10,6 +10,8 @@ publicWidget.registry.get_latest_event = publicWidget.Widget.extend({
 
    async willStart(){
        const result = await rpc('/get_latest_event', {});
+       let heroCarousel = Math.floor(Math.random() * 10) + 1;
+       console.log('carousel',heroCarousel)
        if(result){
            const sliceAt = 4;
 const dataArr = Object.entries(result);
@@ -22,16 +24,6 @@ const obC = Object.fromEntries(dataArr.slice(8))
            console.log('obc',obC)
            console.log('list',list)
            console.log('result',result)
-        var ids = document.getElementById('latest_event')
-           let heroCarousel = 1
-           console.log('ids',ids)
-           if(ids.length() >= 2){
-                heroCarousel += 1;
-               console.log('Lenids',ids.length())
-           }
-           heroCarousel.toString()
-
-
            this.$target.empty().html(renderToElement('school_management.event_data', {result_list: list,heroCarousel:heroCarousel}))
        }
    },
