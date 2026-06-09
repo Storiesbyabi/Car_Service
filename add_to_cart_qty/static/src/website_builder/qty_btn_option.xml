@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve" >
+<!--    <t t-name="add_to_cart_qty.add_to_qty">-->
+    <t t-name="qty" t-inherit="website_sale.ProductsListPageOption">
+
+    <xpath expr="//BuilderRow[@label.translate='Tags']" position="after">
+       <BuilderRow label.translate="Add Qty" level="1">
+            <BuilderCheckbox id="'o_wsale_tags_filter_opt'" actionParam="{views: ['website_sale.filter_products_tags']}"/>
+        </BuilderRow>
+    </xpath>
+<!--    </t>-->
+    </t>
+</templates>

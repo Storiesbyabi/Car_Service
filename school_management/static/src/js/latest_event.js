@@ -10,7 +10,7 @@ publicWidget.registry.get_latest_event = publicWidget.Widget.extend({
 
    async willStart(){
        const result = await rpc('/get_latest_event', {});
-       let heroCarousel = Math.floor(Math.random() * 10) + 1;
+       let heroCarousel = result['unique_id'];
        console.log('carousel',heroCarousel)
        if(result){
            const sliceAt = 4;

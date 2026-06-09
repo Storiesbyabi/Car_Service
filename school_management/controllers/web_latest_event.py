@@ -2,6 +2,7 @@
 from odoo import http
 from odoo.http import request
 from datetime import datetime
+import uuid
 class WebsiteEvent(http.Controller):
    @http.route('/get_latest_event', auth="public", type='jsonrpc',
                website=True)
@@ -13,6 +14,7 @@ class WebsiteEvent(http.Controller):
 
        for event in events:
            event_list = []
+           uniId=uuid.uuid4()
            if event.poster:
                decode = event.poster.decode('utf-8')
            else:
@@ -24,6 +26,7 @@ class WebsiteEvent(http.Controller):
            event_list.append(event.description)
            event_list.append(time)
            values[event.id] = event_list
+           values['unique_id'] = uniId
            print(event_list[2])
        return values
 
