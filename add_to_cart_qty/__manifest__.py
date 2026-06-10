@@ -18,7 +18,7 @@
             'add_to_cart_qty/static/src/css/product_sale.css',
         ],
 'website.website_builder_assets': [
-            'add_to_cart_qty/static/src/website_builder/qty_btn_option.xml']
+            'add_to_cart_qty/static/src/**/*']
         },
 'installable': True,
 }
