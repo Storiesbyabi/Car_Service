@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sale_order_form_views" model="ir.ui.view">
+        <field name="name" >sale.order.form.views</field>
+        <field name="model" >sale.order</field>
+        <field name="inherit_id"  ref="sale.view_order_form" />
+        <field name="arch" type="xml" >
+
+            <xpath expr="//button[@name='payment_action_capture']" position="before" >
+                <button type="object" name="action_pay_at_counter" string="Pay at Counter" class="btn-primary" />
+                </xpath>
+            <xpath expr="//field[@name='source_id']" position="after" >
+                <field name="session_id"  />
+                </xpath>
+
+        </field>
+    </record>
+</odoo>
