@@ -6,12 +6,16 @@
         <field name="arch" type="xml">
             <form string="Payment Wizard">
                 <group>
-                    <field name="pos_payment_id" domain="[('config_ids','=',session_id.config_id)]"  options="{'no_create': True}" />
                     <field name="total_amount"  options="{'no_create': True}" />
                     <field name="paid_amount"  options="{'no_create': True}" />
-                    <field name="remaining_amount"  options="{'no_create': True}" />
-
+                    <field name="remaining_amount" readonly="True" options="{'no_create': True}" />
                 </group>
+                <field name="wizard_ids">
+                <list editable="top">
+                <field name="payment_method_id"  options="{'no_create': True}" />
+                    <field name="amount"/>
+                 </list>
+                </field>
                 <footer>
                     <button string="Pay" type="object" class="btn-primary" name="action_payment" />
                     <button string="Cancel" special="cancel" type="object"/>
