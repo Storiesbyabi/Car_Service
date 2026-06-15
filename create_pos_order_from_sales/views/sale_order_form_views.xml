@@ -7,11 +7,14 @@
         <field name="arch" type="xml" >
 
             <xpath expr="//button[@name='payment_action_capture']" position="before" >
-                <button type="object" name="action_pay_at_counter" string="Pay at Counter" class="btn-primary" />
+                <button type="object" name="action_pay_at_counter" string="Pay at Counter" class="btn-primary" invisible="state != 'sale'"  />
                 </xpath>
             <xpath expr="//field[@name='source_id']" position="after" >
                 <field name="session_id"  />
                 </xpath>
+<!--            <xpath expr="//field[@name='state']" position="attributes" >-->
+<!--                <attribute name="statusbar_visible">draft,sent,sale,pac</attribute>-->
+<!--                </xpath>-->
 
         </field>
     </record>

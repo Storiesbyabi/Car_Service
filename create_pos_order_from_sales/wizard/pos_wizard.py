@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-from docutils.frontend import store_multiple
 from odoo import fields, models, api
 from datetime import date
+from odoo.exceptions import UserError
 
 class PosWizard(models.TransientModel):
     _name = "pos.wizard"
 
     company_currency_id = fields.Many2one('res.currency', compute='_compute_company_currency_id')
     sale_order_id = fields.Many2one('sale.order')
-    total_amount = fields.Monetary(related="sale_order_id.amount_total",currency_field='company_currency_id')
+    total_amount = fields.Monetary(related="sale_order_id.amount_untaxed",currency_field='company_currency_id')
     paid_amount= fields.Float(related="sale_order_id.amount_paid", string='Paid Amount')
     remaining_amount= fields.Monetary(currency_field='company_currency_id',compute='_compute_remaining_amount',store=True)
     session_id = fields.Many2one(related="sale_order_id.session_id")
@@ -16,6 +16,7 @@ class PosWizard(models.TransientModel):
     payment_method_id = fields.Many2one('pos.payment.method')
 
     wizard_ids = fields.One2many('pos.wizard2', 'wizard_id', string="payment")
+    orders_id = fields.Integer(related='sale_order_id.orders_id')
 
 
 
@@ -24,48 +25,46 @@ class PosWizard(models.TransientModel):
 
     @api.depends('total_amount','paid_amount','wizard_ids.amount')
     def _compute_remaining_amount(self):
+        self.paid_amount = sum(self.wizard_ids.mapped('amount'))
         for rec in self.wizard_ids:
-            total_am = self.total_amount
+            print('rec',self.paid_amount)
             print('t', self.total_amount)
-            self.paid_amount += rec.wizard_ids.amount
-            self.remaining_amount = self.total_amount - self.wizard_ids.amount
+
+            remaining_amount = self.total_amount - self.paid_amount
+            if remaining_amount < 0:
+                raise UserError('Value error')
+            else:
+                self.remaining_amount = remaining_amount
             print('r', self.remaining_amount)
 
 
+
     def action_payment(self):
-        self.paid_amount = self.amount
+        print('order_id', self.orders_id)
 
-        lines=[]
-
-        for line in self.sale_order_id.order_line:
-            product = self.env['product.product'].search([('product_tmpl_id','=',line.product_template_id.id)])
-            print('product',product)
-        #     lines.append(fields.Command.create({
-        #         'product_id':product.id,
-        #         'qty':line.product_uom_qty,
-        #         'price_unit':line.price_unit,
-        #     }))
-        #
-        # order_id=self.env['pos.order'].create({
-        #     'partner_id': self.sale_order_id.partner_id.id,
-        #     'company_id': self.env.company.id,
-        #     'session_id': self.session_id.id,
-        #     'lines':lines,
-        #     'amount_tax': 0.0,
-        #     'amount_total':self.total_amount,
-        #     'amount_paid':self.amount
-        # })
         for line in self.wizard_ids:
+
             print('payment method',line.payment_method_id.name)
+            print('payment method',line.payment_method_id.id)
             print('amount',line.amount)
-        # self.env['pos.payment'].create(
-        #     {
-        #         'amount': 100,
-        #         'payment_date': date.today(),
-        #         'payment_method_id': self.payment_method_id.id,
-        #         'pos_order_id': order_id.id
-        #     }
-        # )
+            if line.amount <= 0:
+                raise UserError('Value cant be 0')
+            self.env['pos.payment'].create(
+                {
+                    'amount': line.amount,
+                    'payment_date': date.today(),
+                    'payment_method_id': line.payment_method_id.id,
+                    'pos_order_id': self.orders_id
+                }
+            )
+            order=self.env['pos.order'].browse(self.orders_id)
+            order.amount_paid += line.amount
+            order._compute_prices()
+        self.sale_order_id.amount_untaxed = self.remaining_amount
+        if self.sale_order_id.amount_untaxed == 0:
+            self.sale_order_id.state = 'pac'
+
+
 
 
 
