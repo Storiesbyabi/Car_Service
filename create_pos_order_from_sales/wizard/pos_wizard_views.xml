@@ -11,7 +11,7 @@
                     <field name="remaining_amount" readonly="True" options="{'no_create': True}" />
                 </group>
                 <field name="wizard_ids">
-                <list editable="top">
+                <list editable="bottom">
                 <field name="payment_method_id"  options="{'no_create': True}" />
                     <field name="amount"/>
                  </list>

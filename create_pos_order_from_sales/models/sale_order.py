@@ -7,7 +7,7 @@ class SaleOrder(models.Model):
 
     session_id = fields.Many2one('pos.session',string="POS Session", required=True )
     config_id = fields.Many2one('pos.config')
-    orders_id = fields.Integer()
+    orders_id = fields.Many2one('pos.order')
     state = fields.Selection(
         selection_add=[
             ('pac', 'Paid at counter'),
@@ -58,5 +58,6 @@ class SaleOrder(models.Model):
                 'default_sale_order_id': self.id,
                 'default_total_amount':self.amount_untaxed,
                 'default_paid_amount':self.amount_paid,
+                'default_session_id':self.session_id.id,
             }
         }

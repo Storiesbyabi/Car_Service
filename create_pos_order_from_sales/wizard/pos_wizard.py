@@ -11,12 +11,13 @@ class PosWizard(models.TransientModel):
     total_amount = fields.Monetary(related="sale_order_id.amount_untaxed",currency_field='company_currency_id')
     paid_amount= fields.Float(related="sale_order_id.amount_paid", string='Paid Amount')
     remaining_amount= fields.Monetary(currency_field='company_currency_id',compute='_compute_remaining_amount',store=True)
-    session_id = fields.Many2one(related="sale_order_id.session_id")
-    pos_name_id = fields.Many2one('pos.config', related="session_id.config_id")
-    payment_method_id = fields.Many2one('pos.payment.method')
-
+    session_id = fields.Many2one('pos.session')
+    config_id = fields.Many2one('pos.config',related='sale_order_id.session_id.config_id')
+    data_ids = fields.Many2many('pos.payment.method',related='session_id.payment_method_ids')
     wizard_ids = fields.One2many('pos.wizard2', 'wizard_id', string="payment")
-    orders_id = fields.Integer(related='sale_order_id.orders_id')
+
+
+    orders_id = fields.Many2one(related='sale_order_id.orders_id')
 
 
 
@@ -41,6 +42,7 @@ class PosWizard(models.TransientModel):
 
     def action_payment(self):
         print('order_id', self.orders_id)
+        print('pay_ids', self.sale_order_id)
 
         for line in self.wizard_ids:
 
@@ -54,10 +56,10 @@ class PosWizard(models.TransientModel):
                     'amount': line.amount,
                     'payment_date': date.today(),
                     'payment_method_id': line.payment_method_id.id,
-                    'pos_order_id': self.orders_id
+                    'pos_order_id': self.orders_id.id
                 }
             )
-            order=self.env['pos.order'].browse(self.orders_id)
+            order=self.env['pos.order'].browse(self.orders_id.id)
             order.amount_paid += line.amount
             order._compute_prices()
         self.sale_order_id.amount_untaxed = self.remaining_amount
@@ -72,6 +74,10 @@ class PosWizard2(models.TransientModel):
     _name = "pos.wizard2"
 
     wizard_id=fields.Many2one('pos.wizard')
-    payment_method_id = fields.Many2one('pos.payment.method')
+    payment_method_id = fields.Many2one('pos.payment.method', domain="[('id','in',wizard_id.data_ids)]")
     amount = fields.Float(string='Amount',store=True)
+
+    @api.onchange('payment_method_id')
+    def onchange_payment_method_id(self):
+        print('wizard_id',self.payment_method_id)
 
