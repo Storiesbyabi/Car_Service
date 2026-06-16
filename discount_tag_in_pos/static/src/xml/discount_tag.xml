@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+<t t-name="discount_tag_in_pos.ProductCard"
+  t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension"
+  owl="1">
+   <xpath expr="//div[hasclass('product-content')]" position="inside">
+               <span class="value">
+                   <t t-esc="DiscountTag"/>
+               </span>
+   </xpath>
+</t>
+    </template>
