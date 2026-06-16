@@ -77,7 +77,7 @@ class PosWizard2(models.TransientModel):
     payment_method_id = fields.Many2one('pos.payment.method', domain="[('id','in',wizard_id.data_ids)]")
     amount = fields.Float(string='Amount',store=True)
 
+
     @api.onchange('payment_method_id')
     def onchange_payment_method_id(self):
-        print('wizard_id',self.payment_method_id)
-
+        print('wizard_id',self.wizard_id.data_ids)
