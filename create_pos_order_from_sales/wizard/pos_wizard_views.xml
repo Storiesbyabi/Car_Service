@@ -10,9 +10,10 @@
                     <field name="paid_amount"  options="{'no_create': True}" />
                     <field name="remaining_amount" readonly="True" options="{'no_create': True}" />
                 </group>
-                <field name="wizard_ids">
+
+                <field name="wizard_ids" context="{'default_available_methods_ids':data_ids}">
                 <list editable="bottom">
-                <field name="payment_method_id"  options="{'no_create': True}" />
+                <field name="payment_method_id"  options="{'no_create': True}" domain="[('id','in',context.get('default_available_methods_ids',[]))]"/>
                     <field name="amount"/>
                  </list>
                 </field>

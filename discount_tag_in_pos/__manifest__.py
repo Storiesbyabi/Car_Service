@@ -14,5 +14,13 @@
     'data': [
         'views/product_template_views.xml'
     ],
+    'assets':{
+      'point_of_sale._assets_pos': [
+        'discount_tag_in_pos/static/src/js/discount_tag.js',
+          'discount_tag_in_pos/static/src/css/discount_tag.css',
+        'discount_tag_in_pos/static/src/xml/discount_tag.xml',
+            'discount_tag_in_pos/static/src/js/order_line_discount.js',
+      ],
+    },
     'application': False,
 }

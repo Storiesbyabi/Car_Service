@@ -13,7 +13,7 @@ class PosWizard(models.TransientModel):
     remaining_amount= fields.Monetary(currency_field='company_currency_id',compute='_compute_remaining_amount',store=True)
     session_id = fields.Many2one('pos.session')
     config_id = fields.Many2one('pos.config',related='sale_order_id.session_id.config_id')
-    data_ids = fields.Many2many('pos.payment.method',related='session_id.payment_method_ids')
+    data_ids = fields.Many2many('pos.payment.method')
     wizard_ids = fields.One2many('pos.wizard2', 'wizard_id', string="payment")
 
 
@@ -24,7 +24,7 @@ class PosWizard(models.TransientModel):
     def _compute_company_currency_id(self):
         self.company_currency_id = self.env.company.currency_id
 
-    @api.depends('total_amount','paid_amount','wizard_ids.amount')
+    @api.depends('total_amount','paid_amount','wizard_ids.amount','data_ids')
     def _compute_remaining_amount(self):
         self.paid_amount = sum(self.wizard_ids.mapped('amount'))
         for rec in self.wizard_ids:
@@ -62,7 +62,7 @@ class PosWizard(models.TransientModel):
             order=self.env['pos.order'].browse(self.orders_id.id)
             order.amount_paid += line.amount
             order._compute_prices()
-        self.sale_order_id.amount_untaxed = self.remaining_amount
+        self.sale_order_id.amount_untaxewizard_idd = self.remaining_amount
         if self.sale_order_id.amount_untaxed == 0:
             self.sale_order_id.state = 'pac'
 
@@ -74,10 +74,6 @@ class PosWizard2(models.TransientModel):
     _name = "pos.wizard2"
 
     wizard_id=fields.Many2one('pos.wizard')
-    payment_method_id = fields.Many2one('pos.payment.method', domain="[('id','in',wizard_id.data_ids)]")
+    payment_method_id = fields.Many2one('pos.payment.method')
     amount = fields.Float(string='Amount',store=True)
 
-
-    @api.onchange('payment_method_id')
-    def onchange_payment_method_id(self):
-        print('wizard_id',self.wizard_id.data_ids)

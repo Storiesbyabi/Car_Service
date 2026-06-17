@@ -59,5 +59,6 @@ class SaleOrder(models.Model):
                 'default_total_amount':self.amount_untaxed,
                 'default_paid_amount':self.amount_paid,
                 'default_session_id':self.session_id.id,
+                'default_data_ids':self.session_id.payment_method_ids.ids,
             }
         }

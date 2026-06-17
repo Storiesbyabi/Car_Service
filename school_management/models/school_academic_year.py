@@ -3,7 +3,7 @@
 from odoo import fields,models
 
 
-class SchoolManagementAcademicYear(models.Model):
+class SchoolAcademicYear(models.Model):
     """The School academic year is created """
     _name = 'school.academic.year'
     _description = 'Academic year'
