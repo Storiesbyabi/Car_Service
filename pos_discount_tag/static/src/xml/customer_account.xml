@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+<t t-name="pos_discount_tag.PaymentScreenMethods"
+  t-inherit="point_of_sale.PaymentScreenMethods" t-inherit-mode="extension"
+  owl="1">
+   <xpath expr="//div[hasclass('paymentmethod')]" position="inside">
+       <t t-esc="CustomerAcc"/>
+   </xpath>
+</t>
+    </template>
