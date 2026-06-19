@@ -7,8 +7,8 @@ class ResPartner(models.Model):
 
     limit = fields.Boolean(string="Order Limit")
     limit_amount = fields.Integer(string="Limit Amount")
-    # qwerty = fields.Integer(string="Limit Amount")
     customer_limit = fields.Integer(string="Customer Limit")
+
 
     @api.model
     def _load_pos_data_fields(self, config_id):
