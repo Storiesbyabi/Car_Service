@@ -19,6 +19,7 @@
         'point_of_sale._assets_pos': [
             'pos_discount_tag/static/src/js/customer_account.js',
             'pos_discount_tag/static/src/js/order_line_discount.js',
+            'pos_discount_tag/static/src/js/product_order.js',
             'pos_discount_tag/static/src/js/partner.js',
             'pos_discount_tag/static/src/js/discount_tag.js',
             'pos_discount_tag/static/src/css/discount_tag.css',

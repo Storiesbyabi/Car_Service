@@ -6,6 +6,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     discount_tag = fields.Char(string="Discount Tag")
+    prd_quantity = fields.Integer(string="Quantity")
 
     @api.model
     def _load_pos_data_fields(self, config_id):
@@ -13,5 +14,5 @@ class ProductTemplate(models.Model):
         Adds the 'discount_tag' field to the list of fields loaded into the POS.
         """
         data = super()._load_pos_data_fields(config_id)
-        data += ['discount_tag']
+        data += ['discount_tag','prd_quantity']
         return data

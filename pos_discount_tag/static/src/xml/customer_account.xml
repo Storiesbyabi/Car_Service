@@ -5,7 +5,7 @@
   owl="1">
    <xpath expr="//div[hasclass('paymentmethod')]" position="inside">
        <t t-if="paymentMethod.id == 3">
-        / <t t-esc="CustomerAccLimit"/>
+       <t t-esc="CustomerPay"/> / <t t-esc="CustomerAccLimit"/>
        </t>
    </xpath>
 </t>
