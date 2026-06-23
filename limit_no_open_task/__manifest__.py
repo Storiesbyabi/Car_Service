@@ -14,6 +14,7 @@
     'data': [
         'security/project_task_groups.xml',
         'views/res_user_views.xml',
+        'wizard/partial_delivery.xml'
 
     ],
     'application': True,

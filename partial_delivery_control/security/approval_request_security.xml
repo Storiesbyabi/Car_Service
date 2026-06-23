@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<record id="group_approval_user" model="res.groups">
+        <field name="name">Approval User</field>
+        <field name="sequence">10</field>
+    </record>
+</odoo>

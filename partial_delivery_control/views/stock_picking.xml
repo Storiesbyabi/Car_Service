@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_picking_form_views" model="ir.ui.view">
+        <field name="name" >stock.picking.form.views</field>
+        <field name="model" >stock.picking</field>
+        <field name="inherit_id"  ref="stock.view_picking_form" />
+        <field name="arch" type="xml" >
+
+            <xpath expr="//button[@name='button_validate']" position="attributes" >
+                <attribute name="invisible" >state in ('draft', 'confirmed', 'done', 'cancel','not_approval')</attribute>
+                </xpath>
+
+            <xpath expr="//header" position="inside" >
+                <button groups="partial_delivery_control.group_approval_user" name="action_approve_req" string="Approve"/>
+                </xpath>
+
+
+
+        </field>
+    </record>
+
+
+</odoo>

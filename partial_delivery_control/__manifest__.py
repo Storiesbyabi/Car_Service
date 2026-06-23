@@ -10,7 +10,10 @@
     'depends': [
         'base','stock'],
     'data': [
-        'views/product_template_views.xml'
+        'security/approval_request_security.xml',
+        'views/stock_picking.xml',
+        'views/product_product_views.xml',
+        'wizard/partial_delivery.xml'
     ],
 'installable': True,
 }
