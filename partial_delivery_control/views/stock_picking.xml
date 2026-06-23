@@ -9,9 +9,12 @@
             <xpath expr="//button[@name='button_validate']" position="attributes" >
                 <attribute name="invisible" >state in ('draft', 'confirmed', 'done', 'cancel','not_approval')</attribute>
                 </xpath>
+<!--            <xpath expr="//button[@name='button_validate']" position="attributes" >-->
+<!--                <attribute name="invisible" >state in ('draft', 'confirmed', 'done', 'cancel','not_approval')</attribute>-->
+<!--                </xpath>-->
 
             <xpath expr="//header" position="inside" >
-                <button groups="partial_delivery_control.group_approval_user" name="action_approve_req" string="Approve"/>
+                <button groups="partial_delivery_control.group_approval_user" name="action_approve_req" string="Approve" type="object"/>
                 </xpath>
 
 
