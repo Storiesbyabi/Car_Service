@@ -13,23 +13,28 @@ class StockPicking(models.Model):
 
 
 
-    def validate_button(self):
+    def _action_generate_backorder_wizard(self, show_transfers=False):
         for rec in self.move_ids:
-            if not rec.product_id.allow_partial_delivery and approve_flag:
+            if not rec.product_id.allow_partial_delivery and self.approve_flag == True:
                 print('in', self.approve_flag)
                 if rec.product_uom_qty != rec.quantity:
                     print('pd', rec.product_uom_qty)
                     print('pd', rec.quantity)
-                return super(StockPicking, self.with_context(hide_button=False)).validate_button()
+                return super(StockPicking, self.with_context(hide_button=False))._action_generate_backorder_wizard(show_transfers=False)
 
             else:
-                self.approve_flag = True
+                self.approve_flag = False
                 print('out', self.approve_flag)
-                return super(StockPicking, self.with_context(hide_button=True)).validate_button()
+                return super(StockPicking, self.with_context(hide_button=True))._action_generate_backorder_wizard(show_transfers=False)
 
-    def action_approve_req(self):
-        self.approve_flag = False
-        return self.validate_button()
+    def button_validate(self):
+        if self.state == 'assigned':
+            self.approve_flag = True
+        else:
+            self.approve_flag = False
+        print('flag',self.approve_flag)
+        return super().button_validate()
+
 
 
 

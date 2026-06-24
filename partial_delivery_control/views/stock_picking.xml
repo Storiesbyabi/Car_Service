@@ -2,10 +2,14 @@
 <odoo>
     <record id="stock_picking_form_views" model="ir.ui.view">
         <field name="name" >stock.picking.form.views</field>
-        <field name="model" >stock.picking</field>
+        <field name="model">stock.picking</field>
         <field name="inherit_id"  ref="stock.view_picking_form" />
         <field name="arch" type="xml" >
 
+            <xpath expr="//button[@name='button_validate' and contains(@class,'o_btn_validate') ]" position="attributes" >
+                <attribute name="group" >partial_delivery_control.group_approval_user</attribute>
+                <attribute name="invisible" >state in ('not_approval','done','assigned')</attribute>
+                </xpath>
             <xpath expr="//button[@name='button_validate']" position="attributes" >
                 <attribute name="invisible" >state in ('draft', 'confirmed', 'done', 'cancel','not_approval')</attribute>
                 </xpath>
@@ -14,7 +18,7 @@
 <!--                </xpath>-->
 
             <xpath expr="//header" position="inside" >
-                <button groups="partial_delivery_control.group_approval_user" name="action_approve_req" string="Approve" type="object"/>
+                <button groups="partial_delivery_control.group_approval_user" name="button_validate" string="Approve" type="object" invisible="state == 'done'"/>
                 </xpath>
 
 
