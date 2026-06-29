@@ -31,12 +31,15 @@ class PaymentProvider(models.Model):
         """Override of `payment` to build the request headers."""
         if self.code != 'paytrail':
             return super()._build_request_headers(*args, **kwargs)
-
-
         return {
             'Accept': 'application/json',
-            'Authorization': f'Bearer {self.mollie_api_key}',
             'Content-Type': 'application/json',
+            'checkout-account': '375917',
+            'checkout-algorithm':'sha256',
+            'checkout-method':'POST',
+            'checkout-nonce':'123123',
+            'checkout-timestamp':'2018-07-05T11:19:25.950Z',
+            'signature': '1103b1f290198e9ce4935bff3fc9254f30393bd2d5c9da3a070a11319d3ff980'
 
         }
 
