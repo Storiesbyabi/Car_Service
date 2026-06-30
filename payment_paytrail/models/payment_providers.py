@@ -25,7 +25,7 @@ class PaymentProvider(models.Model):
         """Override of `payment` to build the request URL."""
         if self.code != 'paytrail':
             return super()._build_request_url(endpoint, **kwargs)
-        return urls.urljoin('services.paytrail.com/', endpoint.strip('/'))
+        return urls.urljoin('/payments', endpoint.strip('/'))
 
     def _build_request_headers(self, *args, **kwargs):
         """Override of `payment` to build the request headers."""

@@ -12,7 +12,7 @@ from odoo.addons.payment.logging import get_payment_logger
 _logger = get_payment_logger(__name__)
 
 
-class MollieController(http.Controller):
+class PaytrailController(http.Controller):
     _return_url = '/payment/return'
     _webhook_url = '/payment/webhook'
 
@@ -33,6 +33,7 @@ class MollieController(http.Controller):
         :param dict data: The payment data (only `id`) and the transaction reference (`ref`)
                           embedded in the return URL.
         """
+        print('checkout')
         _logger.info("handling redirection from Mollie with data:\n%s", pprint.pformat(data))
         self._verify_and_process(data)
         return request.redirect('/payment/status')
