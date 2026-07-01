@@ -5,10 +5,19 @@ from werkzeug.urls import url_decode, url_parse
 from odoo import _, api, models
 from odoo.exceptions import ValidationError
 from odoo.tools import urls
-
-from odoo.addons.payment.const import CURRENCY_MINOR_UNITS
 from odoo.addons.payment.logging import get_payment_logger
-from odoo.addons.payment_mollie import const
+from datetime import datetime, timezone
+from uuid import uuid4
+from encodings.utf_8 import encode
+import hashlib
+import hmac
+import json
+from ast import Bytes
+from hmac import HMAC
+
+
+
+
 
 
 _logger = get_payment_logger(__name__)
@@ -20,39 +29,95 @@ class PaymentTransaction(models.Model):
     _inherit = 'payment.transaction'
 
 
+
+    @staticmethod
+    def compute_sha256_hash(message: str, secret: str) -> str:
+
+        # whitespaces that were created during json parsing process must be removed
+        hash = hmac.new(secret.encode(), message.encode(), digestmod=hashlib.sha256)
+        return hash.hexdigest()
+
+    # /
+    # @param secret Merchant shared secret
+    # @param headerParams Headers or query string parameters
+    # @param body Request body or empty string for GET request
+    # @return
+    # /
+    def calculate_hmac(self, secret: str, headerParams: dict, body: str = '') -> str:
+
+
+
+
+        data = []
+        for key, value in headerParams.items():
+            if key.startswith('checkout-'):
+                data.append('{key}:{value}'.format(key=key, value=value))
+
+        data.append(body)
+        return self.compute_sha256_hash('\n'.join(data), secret)
+
+
+
     def _get_specific_rendering_values(self, processing_values):
-        """ Override of payment to return Mollie-specific rendering values.
+        """ Override of payment to return Flutterwave-specific rendering values.
 
         Note: self.ensure_one() from `_get_processing_values`
 
         :param dict processing_values: The generic and specific processing values of the transaction
-        :return: The dict of provider-specific rendering values
+        :return: The dict of provider-specific processing values.
         :rtype: dict
         """
-        print('val',processing_values)
+        res = super()._get_specific_rendering_values(processing_values)
         if self.provider_code != 'paytrail':
-            return super()._get_specific_rendering_values(processing_values)
+            return res
 
-        payload = self._paytrail_prepare_payment_request_payload()
+        # Initiate the payment and retrieve the payment link data.
+        print('hi')
+        base_url = self.provider_id.get_base_url()
+        payload = {
+            "stamp": "d2568f2a-e4c6-40ba-a7cd-d573382ce548",
+            "reference": "9187445",
+            "amount": self.amount,
+            "currency": "USD",
+            "language": "FI",
+            "items": [
+                {
+                    "unitPrice": self.amount,
+                    "units": 1,
+                    "vatPercentage": 25.5,
+                    "productCode": "#927502759",
+                    "stamp": "10743336-b969-4d5c-87f7-0ef8594d24ef"
+                }
+            ],
+            "customer": {
+                "email": "erja.esimerkki@example.org"
+            },
+            "redirectUrls": {
+                "success": "https://gizmo-yam-salsa.ngrok-free.dev/shop/confirmation",
+                "cancel": "https://gizmo-yam-salsa.ngrok-free.dev/shop"
+            },
+            "callbackUrls": {
+                "success": "https://ecom.example.org/success",
+                "cancel": "https://ecom.example.org/cancel"
+            }
+        }
         try:
-            payment_data = self._send_api_request('POST', '/payments', json=payload)
+            payment_link_data = self._send_api_request('POST', 'payments', json=payload)
         except ValidationError as error:
             self._set_error(str(error))
             return {}
 
-        # The provider reference is set now to allow fetching the payment status after redirection
-        self.provider_reference = payment_data.get('id')
+        # Extract the payment link URL and embed it in the redirect form.
+        return {'api_url': payment_link_data['link']}
 
-        # Extract the checkout URL from the payment data and add it with its query parameters to the
-        # rendering values. Passing the query parameters separately is necessary to prevent them
-        # from being stripped off when redirecting the user to the checkout URL, which can happen
-        # when only one payment method is enabled on Mollie and query parameters are provided.
-        checkout_url = self._return_url
-        parsed_url = url_parse(checkout_url)
-        url_params = url_decode(parsed_url.query)
-        # redirect_form_html= self.env['ir.qweb']._render(
-        #     self.provider_id.redirect_form_view_id.id)
-        return {'api_url': checkout_url, 'url_params': url_params}
+
+
+
+
+
+
+
+
 
 
     def _get_specific_processing_values(self, processing_values):
@@ -62,27 +127,68 @@ class PaymentTransaction(models.Model):
         override will redirect the user to the provided authorization page.
         Note: `self.ensure_one()`
     """
-        # if not self._flutterwave_is_authorization_pending():
-        #     return super()._get_specific_processing_values(processing_values)
+
 
         if self.provider_code != 'paytrail':
             return super()._get_specific_processing_values(processing_values)
 
-        print('url',self._return_url)
+        self._get_specific_rendering_values(processing_values)
 
+        # print('url', self._return_url)
+        secret = "SAIPPUAKAUPPIAS"
         checkout_url = self._return_url
         parsed_url = url_parse(checkout_url)
         url_params = url_decode(parsed_url.query)
 
+        payload = self._paytrail_prepare_payment_request_payload()
+        # print('body', payload)
+        headers = self._paytrail_headers()
+        # print('headers', type(headers))
+
+        body = json.dumps(payload, separators=(',', ':'))
+        print('body',body)
+        encData = self.calculate_hmac( secret, headers, body)
+        # print("Encrypted data: " + encData)
+
+        headers['signature']=encData
+        payload['signature'] = encData
+
+        # print(headers)
+
+        # try:
+        #     payment_data = self._send_api_request('POST', 'https://services.paytrail.com/payments', json=payload,headers=headers)
+        # except ValidationError as error:
+        #     self._set_error(str(error))
+        #     return {}
+
+
+
         # processing_values['redirect_form_html']= self.env['ir.qweb']._render('payment_paytrail.redirect_form')
-        print('specific', processing_values)
-        return    {'redirect_form_html': self.env['ir.qweb']._render(
+        # print('specific', processing_values)
+        return {'redirect_form_html': self.env['ir.qweb']._render(
             'payment_paytrail.redirect_form',
             {'auth_url': self.provider_reference,
              'api_url': checkout_url, 'url_params': url_params},
         )}
 
 
+
+
+    def _paytrail_headers(self):
+        # Ensure the object is timezone-aware and set to UTC
+        dt_now = datetime.now(timezone.utc)
+
+        # Hardcode the Z suffix safely
+        z_timestamp = dt_now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        # print(z_timestamp)
+
+        return dict({
+            'checkout-account':'375917',
+'checkout-method':'POST',
+'checkout-algorithm':'sha256',
+'checkout-timestamp':f"{z_timestamp}",
+'checkout-nonce':f"{uuid4()}"
+        })
 
     def _paytrail_prepare_payment_request_payload(self):
         """ Create the payload for the payment request based on the transaction values.
@@ -91,49 +197,39 @@ class PaymentTransaction(models.Model):
         :rtype: dict
         """
         user_lang = self.env.context.get('lang')
-        base_url = self.provider_id.get_base_url()
-        redirect_url = urls.urljoin(base_url, _return_url)
-        webhook_url = urls.urljoin(base_url, _webhook_url)
-        decimal_places = CURRENCY_MINOR_UNITS.get(
-            self.currency_id.name, self.currency_id.decimal_places
-        )
+        # base_url = self.provider_id.get_base_url()
+        # redirect_url = urls.urljoin(base_url, _return_url)
+        # webhook_url = urls.urljoin(base_url, _webhook_url)
 
-        print('aaaaa')
+        print('id', self.id)
+        print('amount', self.amount)
 
         return {
-            'description': self.reference,
-            'amount': {
-                'currency': self.currency_id.name,
-                'value': f"{self.amount:.{decimal_places}f}",
+            "stamp": "d2568f2a-e4c6-40ba-a7cd-d573382ce548",
+            "reference": "9187445",
+            "amount": self.amount,
+            "currency": "USD",
+            "language": "FI",
+            "items": [
+                {
+                    "unitPrice": self.amount,
+                    "units": 1,
+                    "vatPercentage": 25.5,
+                    "productCode": "#927502759",
+                    "stamp": "10743336-b969-4d5c-87f7-0ef8594d24ef"
+                }
+            ],
+            "customer": {
+                "email": "erja.esimerkki@example.org"
             },
-            'locale': user_lang if user_lang in const.SUPPORTED_LOCALES else 'en_US',
-            'method': [const.PAYMENT_METHODS_MAPPING.get(
-                self.payment_method_code, self.payment_method_code
-            )],
-            # Since Mollie does not provide the transaction reference when returning from
-            # redirection, we include it in the redirect URL to be able to match the transaction.
-            'redirectUrl': f'{redirect_url}?ref={self.reference}',
-            'webhookUrl': f'{webhook_url}?ref={self.reference}',
-        }
-
-    @api.model
-    def _extract_reference(self, provider_code, payment_data):
-        """Override of `payment` to extract the reference from the payment data."""
-        if provider_code != 'paytrail':
-            return super()._extract_reference(provider_code, payment_data)
-        return payment_data.get('ref')
-
-    def _extract_amount_data(self, payment_data):
-        """Override of `payment` to extract the amount and currency from the payment data."""
-        if self.provider_code != 'paytrail':
-            return super()._extract_amount_data(payment_data)
-
-        amount_data = payment_data.get('amount', {})
-        amount = amount_data.get('value')
-        currency_code = amount_data.get('currency')
-        return {
-            'amount': float(amount),
-            'currency_code': currency_code,
+            "redirectUrls": {
+                "success": "https://gizmo-yam-salsa.ngrok-free.dev/shop/confirmation",
+                "cancel": "https://gizmo-yam-salsa.ngrok-free.dev/shop"
+            },
+            "callbackUrls": {
+                "success": "https://ecom.example.org/success",
+                "cancel": "https://ecom.example.org/cancel"
+            }
         }
 
     def _apply_updates(self, payment_data):
@@ -166,3 +262,37 @@ class PaymentTransaction(models.Model):
                 payment_status, self.reference
             )
             self._set_error(_("Received data with invalid payment status: %s.", payment_status))
+
+    # def _get_specific_rendering_values(self, processing_values):
+    #     """ Override of payment to return Mollie-specific rendering values.
+    #
+    #     Note: self.ensure_one() from `_get_processing_values`
+    #
+    #     :param dict processing_values: The generic and specific processing values of the transaction
+    #     :return: The dict of provider-specific rendering values
+    #     :rtype: dict
+    #     """
+    #     print('val',processing_values)
+    #     if self.provider_code != 'paytrail':
+    #         return super()._get_specific_rendering_values(processing_values)
+    #
+    #     payload = self._paytrail_prepare_payment_request_payload()
+    #     try:
+    #         payment_data = self._send_api_request('POST', 'https://services.paytrail.com/payments', json=payload)
+    #     except ValidationError as error:
+    #         self._set_error(str(error))
+    #         return {}
+    #
+    #     # The provider reference is set now to allow fetching the payment status after redirection
+    #     self.provider_reference = payment_data.get('id')
+    #
+    #     # Extract the checkout URL from the payment data and add it with its query parameters to the
+    #     # rendering values. Passing the query parameters separately is necessary to prevent them
+    #     # from being stripped off when redirecting the user to the checkout URL, which can happen
+    #     # when only one payment method is enabled on Mollie and query parameters are provided.
+    #     checkout_url = self._return_url
+    #     parsed_url = url_parse(checkout_url)
+    #     url_params = url_decode(parsed_url.query)
+    #     # redirect_form_html= self.env['ir.qweb']._render(
+    #     #     self.provider_id.redirect_form_view_id.id)
+    #     return {'api_url': checkout_url, 'url_params': url_params}
