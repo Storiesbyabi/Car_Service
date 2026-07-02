@@ -12,8 +12,8 @@ from encodings.utf_8 import encode
 import hashlib
 import hmac
 import json
-from ast import Bytes
 from hmac import HMAC
+import requests
 
 
 
@@ -27,8 +27,6 @@ class PaymentTransaction(models.Model):
     _return_url = 'https://services.paytrail.com'
     _webhook_url = '/payment/webhook'
     _inherit = 'payment.transaction'
-
-
 
     @staticmethod
     def compute_sha256_hash(message: str, secret: str) -> str:
@@ -45,9 +43,6 @@ class PaymentTransaction(models.Model):
     # /
     def calculate_hmac(self, secret: str, headerParams: dict, body: str = '') -> str:
 
-
-
-
         data = []
         for key, value in headerParams.items():
             if key.startswith('checkout-'):
@@ -55,66 +50,6 @@ class PaymentTransaction(models.Model):
 
         data.append(body)
         return self.compute_sha256_hash('\n'.join(data), secret)
-
-
-
-    def _get_specific_rendering_values(self, processing_values):
-        """ Override of payment to return Flutterwave-specific rendering values.
-
-        Note: self.ensure_one() from `_get_processing_values`
-
-        :param dict processing_values: The generic and specific processing values of the transaction
-        :return: The dict of provider-specific processing values.
-        :rtype: dict
-        """
-        res = super()._get_specific_rendering_values(processing_values)
-        if self.provider_code != 'paytrail':
-            return res
-
-        # Initiate the payment and retrieve the payment link data.
-        print('hi')
-        base_url = self.provider_id.get_base_url()
-        payload = {
-            "stamp": "d2568f2a-e4c6-40ba-a7cd-d573382ce548",
-            "reference": "9187445",
-            "amount": self.amount,
-            "currency": "USD",
-            "language": "FI",
-            "items": [
-                {
-                    "unitPrice": self.amount,
-                    "units": 1,
-                    "vatPercentage": 25.5,
-                    "productCode": "#927502759",
-                    "stamp": "10743336-b969-4d5c-87f7-0ef8594d24ef"
-                }
-            ],
-            "customer": {
-                "email": "erja.esimerkki@example.org"
-            },
-            "redirectUrls": {
-                "success": "https://gizmo-yam-salsa.ngrok-free.dev/shop/confirmation",
-                "cancel": "https://gizmo-yam-salsa.ngrok-free.dev/shop"
-            },
-            "callbackUrls": {
-                "success": "https://ecom.example.org/success",
-                "cancel": "https://ecom.example.org/cancel"
-            }
-        }
-        try:
-            payment_link_data = self._send_api_request('POST', 'payments', json=payload)
-        except ValidationError as error:
-            self._set_error(str(error))
-            return {}
-
-        # Extract the payment link URL and embed it in the redirect form.
-        return {'api_url': payment_link_data['link']}
-
-
-
-
-
-
 
 
 
@@ -127,68 +62,68 @@ class PaymentTransaction(models.Model):
         override will redirect the user to the provided authorization page.
         Note: `self.ensure_one()`
     """
-
-
         if self.provider_code != 'paytrail':
             return super()._get_specific_processing_values(processing_values)
 
-        self._get_specific_rendering_values(processing_values)
-
-        # print('url', self._return_url)
-        secret = "SAIPPUAKAUPPIAS"
-        checkout_url = self._return_url
-        parsed_url = url_parse(checkout_url)
-        url_params = url_decode(parsed_url.query)
-
-        payload = self._paytrail_prepare_payment_request_payload()
-        # print('body', payload)
-        headers = self._paytrail_headers()
-        # print('headers', type(headers))
-
-        body = json.dumps(payload, separators=(',', ':'))
-        print('body',body)
-        encData = self.calculate_hmac( secret, headers, body)
-        # print("Encrypted data: " + encData)
-
-        headers['signature']=encData
-        payload['signature'] = encData
-
-        # print(headers)
-
-        # try:
-        #     payment_data = self._send_api_request('POST', 'https://services.paytrail.com/payments', json=payload,headers=headers)
-        # except ValidationError as error:
-        #     self._set_error(str(error))
-        #     return {}
 
 
-
-        # processing_values['redirect_form_html']= self.env['ir.qweb']._render('payment_paytrail.redirect_form')
-        # print('specific', processing_values)
         return {'redirect_form_html': self.env['ir.qweb']._render(
             'payment_paytrail.redirect_form',
-            {'auth_url': self.provider_reference,
-             'api_url': checkout_url, 'url_params': url_params},
         )}
 
+    def _get_specific_rendering_values(self, processing_values):
+        """ Override of payment to return Flutterwave-specific rendering values.
 
+        Note: self.ensure_one() from `_get_processing_values`
 
+        :param dict processing_values: The generic and specific processing values of the transaction
+        :return: The dict of provider-specific processing values.
+        :rtype: dict
+        """
+        print(123213213321)
+        res = super()._get_specific_rendering_values(processing_values)
+        if self.provider_code != 'paytrail':
+            return res
 
-    def _paytrail_headers(self):
-        # Ensure the object is timezone-aware and set to UTC
+        payload = self._paytrail_prepare_payment_request_payload()
+
         dt_now = datetime.now(timezone.utc)
+        secret = "SAIPPUAKAUPPIAS"
 
-        # Hardcode the Z suffix safely
         z_timestamp = dt_now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         # print(z_timestamp)
 
-        return dict({
-            'checkout-account':'375917',
-'checkout-method':'POST',
-'checkout-algorithm':'sha256',
-'checkout-timestamp':f"{z_timestamp}",
-'checkout-nonce':f"{uuid4()}"
+        headers = ({
+            'checkout-account': '375917',
+            'checkout-algorithm': 'sha256',
+            'checkout-method': 'POST',
+            'checkout-nonce': f"{uuid4()}",
+            'checkout-timestamp': f"{z_timestamp}",
+
         })
+
+        body = json.dumps(payload, separators=(',', ':'))
+        print('body', body)
+        encData = self.calculate_hmac(secret, headers, body)
+        print('encData', encData)
+        headers['signature'] = encData
+
+
+
+
+        try:
+            response = requests.request(
+                'POST','https://services.paytrail.com/payments', data=body,headers=headers,
+                timeout=10,
+            )
+            res_json = response.json()
+            print('res', res_json)
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+            raise ValidationError(_("Could not establish the connection to the payment provider."))
+
+        return {'api_'}
+
+
 
     def _paytrail_prepare_payment_request_payload(self):
         """ Create the payload for the payment request based on the transaction values.
@@ -201,36 +136,34 @@ class PaymentTransaction(models.Model):
         # redirect_url = urls.urljoin(base_url, _return_url)
         # webhook_url = urls.urljoin(base_url, _webhook_url)
 
-        print('id', self.id)
-        print('amount', self.amount)
+
 
         return {
-            "stamp": "d2568f2a-e4c6-40ba-a7cd-d573382ce548",
+            "stamp": f"{uuid4()}",
             "reference": "9187445",
-            "amount": self.amount,
-            "currency": "USD",
-            "language": "FI",
+            "amount": int(self.amount*100),
+            "currency": "EUR",
+            "language": "EN",
             "items": [
                 {
-                    "unitPrice": self.amount,
+                    "unitPrice": int(self.amount*100),
                     "units": 1,
-                    "vatPercentage": 25.5,
+                    "vatPercentage": 0,
                     "productCode": "#927502759",
-                    "stamp": "10743336-b969-4d5c-87f7-0ef8594d24ef"
+                    "stamp": f"{uuid4()}"
                 }
             ],
             "customer": {
                 "email": "erja.esimerkki@example.org"
             },
             "redirectUrls": {
-                "success": "https://gizmo-yam-salsa.ngrok-free.dev/shop/confirmation",
-                "cancel": "https://gizmo-yam-salsa.ngrok-free.dev/shop"
+                "success": "payment/paytrail/sucess",
+                "cancel": "payment/paytrail/cancel",
             },
-            "callbackUrls": {
-                "success": "https://ecom.example.org/success",
-                "cancel": "https://ecom.example.org/cancel"
-            }
+
         }
+
+
 
     def _apply_updates(self, payment_data):
         """Override of `payment` to update the transaction based on the payment data."""

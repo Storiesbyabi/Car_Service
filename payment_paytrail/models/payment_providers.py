@@ -2,6 +2,7 @@ from odoo import _, fields, models, service
 from odoo.tools import urls
 
 
+
 from odoo.addons.payment.logging import get_payment_logger
 
 
@@ -20,77 +21,40 @@ class PaymentProvider(models.Model):
     secret_key = fields.Char(string='Secret Key', required_if_provider='paytrail',)
 
 
-    def _build_request_url(self, endpoint, **kwargs):
-        """Override of `payment` to build the request URL."""
-        if self.code != 'paytrail':
-            return super()._build_request_url(endpoint, **kwargs)
-        print('request url')
-        return url_join('https://services.paytrail.com', endpoint)
 
-    def _build_request_headers(self, *args, **kwargs):
-        """Override of `payment` to build the request headers."""
-        if self.code != 'paytrail':
-            return super()._build_request_headers(*args, **kwargs)
+# def _build_request_url(self, endpoint, **kwargs):
+#     """Override of `payment` to build the request URL."""
+#     if self.code != 'paytrail':
+#         return super()._build_request_url(endpoint, **kwargs)
+#     print('request url')
+#     return url_join('https://services.paytrail.com', endpoint)
+#
+# def _build_request_headers(self, *args, **kwargs):
+#     print('hii')
+#     """Override of `payment` to build the request headers."""
+#     if self.code != 'paytrail':
+#         return super()._build_request_headers(*args, **kwargs)
+#
+#     dt_now = datetime.now(timezone.utc)
+#     secret = "SAIPPUAKAUPPIAS"
+#
+#     z_timestamp = dt_now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+#     # print(z_timestamp)
+#
+#     print('args', *args)
+#     headers =({
+#         'checkout-account': '375917',
+#         'checkout-algorithm': 'sha256',
+#         'checkout-method': 'POST',
+#         'checkout-nonce': f"{uuid4()}",
+#         'checkout-timestamp': f"{z_timestamp}",
+#
+#     })
+#
+#     body = json.dumps(*args, separators=(',', ':'))
+#     print('body', body)
+#     encData = self.calculate_hmac(secret, headers, body)
+#     print('encData', encData)
+#     headers['signature']=encData
+#     return headers
 
-
-        print('args',*args)
-
-
-
-        return {'Authorization': f'Bearer {self.flutterwave_secret_key}'}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def _build_request_url(self, endpoint, **kwargs):
-        """Override of `payment` to build the request URL."""
-        if self.code != 'paytrail':
-            return super()._build_request_url(endpoint, **kwargs)
-        return 'https://services.paytrail.com/payments'
-
-
-    def _build_request_headers(self, *args, **kwargs):
-        """Override of `payment` to build the request headers."""
-        if self.code != 'paytrail':
-            return super()._build_request_headers(*args, **kwargs)
-        print('id',self.merchant_id)
-        return {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'checkout-account': self.merchant_id,
-            'checkout-algorithm':'sha256',
-            'checkout-method':'POST',
-            'checkout-nonce':'123123',
-            'checkout-timestamp':'2018-07-05T11:19:25.950Z',
-        }
-
-
-
-    def _parse_response_error(self, response):
-        """Override of `payment` to parse the error message."""
-        if self.code != 'paytrail':
-            return super()._parse_response_error(response)
-
-        return response.json().get('detail', '')
