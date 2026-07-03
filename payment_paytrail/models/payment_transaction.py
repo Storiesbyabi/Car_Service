@@ -24,7 +24,7 @@ _logger = get_payment_logger(__name__)
 
 
 class PaymentTransaction(models.Model):
-    _return_url = 'https://services.paytrail.com'
+    _return_url = '/payment/paytrail'
     _webhook_url = '/payment/webhook'
     _inherit = 'payment.transaction'
 
@@ -55,6 +55,7 @@ class PaymentTransaction(models.Model):
 
 
 
+
     def _get_specific_processing_values(self, processing_values):
         """ Override of payment to redirect pending token-flow transactions.
 
@@ -64,12 +65,17 @@ class PaymentTransaction(models.Model):
     """
         if self.provider_code != 'paytrail':
             return super()._get_specific_processing_values(processing_values)
-
-
+        print('processing',processing_values)
+        print(1,self.operation)
+        print(2,self.provider_id.redirect_form_view_id)
 
         return {'redirect_form_html': self.env['ir.qweb']._render(
-            'payment_paytrail.redirect_form',
+            self.provider_id.redirect_form_view_id.id
         )}
+
+
+
+
 
     def _get_specific_rendering_values(self, processing_values):
         """ Override of payment to return Flutterwave-specific rendering values.
@@ -80,6 +86,7 @@ class PaymentTransaction(models.Model):
         :return: The dict of provider-specific processing values.
         :rtype: dict
         """
+        print('processing',processing_values)
         print(123213213321)
         res = super()._get_specific_rendering_values(processing_values)
         if self.provider_code != 'paytrail':
@@ -109,19 +116,18 @@ class PaymentTransaction(models.Model):
         headers['signature'] = encData
 
 
-
-
         try:
             response = requests.request(
                 'POST','https://services.paytrail.com/payments', data=body,headers=headers,
                 timeout=10,
             )
+            response.raise_for_status()
             res_json = response.json()
             print('res', res_json)
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
             raise ValidationError(_("Could not establish the connection to the payment provider."))
-
-        return {'api_'}
+        res_data = res_json.get('href')
+        return {'api_url':res_data}
 
 
 
@@ -132,11 +138,9 @@ class PaymentTransaction(models.Model):
         :rtype: dict
         """
         user_lang = self.env.context.get('lang')
-        # base_url = self.provider_id.get_base_url()
+        return_url = f"{self.get_base_url()}/payment/paytrail/return"
         # redirect_url = urls.urljoin(base_url, _return_url)
         # webhook_url = urls.urljoin(base_url, _webhook_url)
-
-
 
         return {
             "stamp": f"{uuid4()}",
@@ -157,44 +161,44 @@ class PaymentTransaction(models.Model):
                 "email": "erja.esimerkki@example.org"
             },
             "redirectUrls": {
-                "success": "payment/paytrail/sucess",
-                "cancel": "payment/paytrail/cancel",
+                "success": return_url,
+                "cancel": return_url,
             },
 
         }
 
 
 
-    def _apply_updates(self, payment_data):
-        """Override of `payment` to update the transaction based on the payment data."""
-        if self.provider_code != 'paytrail':
-            return super()._apply_updates(payment_data)
-
-        # Update the payment method.
-        payment_method_type = payment_data.get('method', '')
-        if payment_method_type == 'creditcard':
-            payment_method_type = payment_data.get('details', {}).get('cardLabel', '').lower()
-        payment_method = self.env['payment.method']._get_from_code(
-            payment_method_type, mapping=const.PAYMENT_METHODS_MAPPING
-        )
-        self.payment_method_id = payment_method or self.payment_method_id
-
-        # Update the payment state.
-        payment_status = payment_data.get('status')
-        if payment_status in ('pending', 'open'):
-            self._set_pending()
-        elif payment_status == 'authorized':
-            self._set_authorized()
-        elif payment_status == 'paid':
-            self._set_done()
-        elif payment_status in ['expired', 'canceled', 'failed']:
-            self._set_canceled(_("Cancelled payment with status: %s", payment_status))
-        else:
-            _logger.info(
-                "Received data with invalid payment status (%s) for transaction %s.",
-                payment_status, self.reference
-            )
-            self._set_error(_("Received data with invalid payment status: %s.", payment_status))
+    # def _apply_updates(self, payment_data):
+    #     """Override of `payment` to update the transaction based on the payment data."""
+    #     if self.provider_code != 'paytrail':
+    #         return super()._apply_updates(payment_data)
+    #
+    #     # Update the payment method.
+    #     payment_method_type = payment_data.get('method', '')
+    #     if payment_method_type == 'creditcard':
+    #         payment_method_type = payment_data.get('details', {}).get('cardLabel', '').lower()
+    #     payment_method = self.env['payment.method']._get_from_code(
+    #         payment_method_type, mapping=const.PAYMENT_METHODS_MAPPING
+    #     )
+    #     self.payment_method_id = payment_method or self.payment_method_id
+    #
+    #     # Update the payment state.
+    #     payment_status = payment_data.get('status')
+    #     if payment_status in ('pending', 'open'):
+    #         self._set_pending()
+    #     elif payment_status == 'authorized':
+    #         self._set_authorized()
+    #     elif payment_status == 'paid':
+    #         self._set_done()
+    #     elif payment_status in ['expired', 'canceled', 'failed']:
+    #         self._set_canceled(_("Cancelled payment with status: %s", payment_status))
+    #     else:
+    #         _logger.info(
+    #             "Received data with invalid payment status (%s) for transaction %s.",
+    #             payment_status, self.reference
+    #         )
+    #         self._set_error(_("Received data with invalid payment status: %s.", payment_status))
 
     # def _get_specific_rendering_values(self, processing_values):
     #     """ Override of payment to return Mollie-specific rendering values.
