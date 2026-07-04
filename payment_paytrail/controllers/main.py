@@ -26,14 +26,27 @@ class PaytrailController(http.Controller):
 
         print('checkout')
         print('data',data.get('checkout-status'))
-        txnid = data.get('checkout-transaction-id')
+        txnid = data.get('checkout-reference')
         status = data.get('checkout-status')
         print('status', status)
-        print('txnid', txnid)
+        print('data', txnid)
 
-        tx = self.env['payment.transaction'].search([('source_transaction_id', '=', txnid)], limit=1)
-        
+        tx = self.env['payment.transaction'].search([('reference', '=', txnid)], limit=1)
+
         print('tx', tx)
+        print('tx', tx.read())
+
+        if status == 'ok':
+            tx._set_done()
+        elif status == 'fail':
+            tx._set_canceled()
+        elif status == 'pending':
+            tx._set_pending()
+        else:
+            print('Transaction Error'
+                  )
+
+
         # Redirect the user to the status page.
         return request.redirect('/payment/status')
 
@@ -85,15 +98,15 @@ class PaytrailController(http.Controller):
     #
     #         tx = self.env['payment.transaction'].search([('reference', '=', txnid)],limit=1)
     #
-    #         if status == 'ok':
-    #             tx._set_done()
-    #         elif status == 'fail':
-    #             tx._set_canceled()
-    #         elif status == 'pending':
-    #             tx._set_pending()
-    #         else:
-    #             print('Transaction Error'
-    #                   )
+            # if status == 'ok':
+            #     tx._set_done()
+            # elif status == 'fail':
+            #     tx._set_canceled()
+            # elif status == 'pending':
+            #     tx._set_pending()
+            # else:
+            #     print('Transaction Error'
+            #           )
     #         return request.redirect('/payment/status')
 
 

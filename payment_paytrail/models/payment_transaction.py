@@ -18,8 +18,6 @@ import requests
 
 
 
-
-
 _logger = get_payment_logger(__name__)
 
 
@@ -142,15 +140,23 @@ class PaymentTransaction(models.Model):
         # redirect_url = urls.urljoin(base_url, _return_url)
         # webhook_url = urls.urljoin(base_url, _webhook_url)
 
+        currency = self.env['res.currency'].search([('name','=','EUR')])
+
+        print('currency',currency)
+        print('currency_rate',currency.rate)
+        eur_currency = currency.rate
+
+
+
         return {
             "stamp": f"{uuid4()}",
-            "reference": "9187445",
-            "amount": int(self.amount*100),
+            "reference": str(self.reference),
+            "amount": int(self.amount*eur_currency*100),
             "currency": "EUR",
             "language": "EN",
             "items": [
                 {
-                    "unitPrice": int(self.amount*100),
+                    "unitPrice": int(self.amount*eur_currency*100),
                     "units": 1,
                     "vatPercentage": 0,
                     "productCode": "#927502759",
@@ -166,70 +172,3 @@ class PaymentTransaction(models.Model):
             },
 
         }
-
-
-
-    # def _apply_updates(self, payment_data):
-    #     """Override of `payment` to update the transaction based on the payment data."""
-    #     if self.provider_code != 'paytrail':
-    #         return super()._apply_updates(payment_data)
-    #
-    #     # Update the payment method.
-    #     payment_method_type = payment_data.get('method', '')
-    #     if payment_method_type == 'creditcard':
-    #         payment_method_type = payment_data.get('details', {}).get('cardLabel', '').lower()
-    #     payment_method = self.env['payment.method']._get_from_code(
-    #         payment_method_type, mapping=const.PAYMENT_METHODS_MAPPING
-    #     )
-    #     self.payment_method_id = payment_method or self.payment_method_id
-    #
-    #     # Update the payment state.
-    #     payment_status = payment_data.get('status')
-    #     if payment_status in ('pending', 'open'):
-    #         self._set_pending()
-    #     elif payment_status == 'authorized':
-    #         self._set_authorized()
-    #     elif payment_status == 'paid':
-    #         self._set_done()
-    #     elif payment_status in ['expired', 'canceled', 'failed']:
-    #         self._set_canceled(_("Cancelled payment with status: %s", payment_status))
-    #     else:
-    #         _logger.info(
-    #             "Received data with invalid payment status (%s) for transaction %s.",
-    #             payment_status, self.reference
-    #         )
-    #         self._set_error(_("Received data with invalid payment status: %s.", payment_status))
-
-    # def _get_specific_rendering_values(self, processing_values):
-    #     """ Override of payment to return Mollie-specific rendering values.
-    #
-    #     Note: self.ensure_one() from `_get_processing_values`
-    #
-    #     :param dict processing_values: The generic and specific processing values of the transaction
-    #     :return: The dict of provider-specific rendering values
-    #     :rtype: dict
-    #     """
-    #     print('val',processing_values)
-    #     if self.provider_code != 'paytrail':
-    #         return super()._get_specific_rendering_values(processing_values)
-    #
-    #     payload = self._paytrail_prepare_payment_request_payload()
-    #     try:
-    #         payment_data = self._send_api_request('POST', 'https://services.paytrail.com/payments', json=payload)
-    #     except ValidationError as error:
-    #         self._set_error(str(error))
-    #         return {}
-    #
-    #     # The provider reference is set now to allow fetching the payment status after redirection
-    #     self.provider_reference = payment_data.get('id')
-    #
-    #     # Extract the checkout URL from the payment data and add it with its query parameters to the
-    #     # rendering values. Passing the query parameters separately is necessary to prevent them
-    #     # from being stripped off when redirecting the user to the checkout URL, which can happen
-    #     # when only one payment method is enabled on Mollie and query parameters are provided.
-    #     checkout_url = self._return_url
-    #     parsed_url = url_parse(checkout_url)
-    #     url_params = url_decode(parsed_url.query)
-    #     # redirect_form_html= self.env['ir.qweb']._render(
-    #     #     self.provider_id.redirect_form_view_id.id)
-    #     return {'api_url': checkout_url, 'url_params': url_params}
